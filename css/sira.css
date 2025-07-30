@@ -1,0 +1,199 @@
+<!-- filepath: vsls:/sidebar_menu/application_form.php -->
+<div id="page1" class="page active">
+    <div class="form-container">
+        <form action="" method="post">
+            <table class="form-table">
+                <thead>
+                    <tr>
+                        <th colspan="2"><h3>Personal Information</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label>Last Name</label></td>
+                        <td><input type="text" placeholder="Last Name"></td>
+                    </tr>
+                    <tr>
+                        <td><label>First Name</label></td>
+                        <td><input type="text" placeholder="First Name"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Middle Name</label></td>
+                        <td><input type="text" placeholder="Middle Name"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Region</label></td>
+                        <td><select><option>Select Region</option></select></td>
+                    </tr>
+                    <tr>
+                        <td><label>Municipality</label></td>
+                        <td><select><option>Select Municipality</option></select></td>
+                    </tr>
+                    <tr>
+                        <td><label>Barangay</label></td>
+                        <td><select><option>Select Barangay</option></select></td>
+                    </tr>
+                    <tr>
+                        <td><label>Street</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Email</label></td>
+                        <td><input type="email"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Contact No.</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Age</label></td>
+                        <td><input type="number"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Sex</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Civil Status</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Birth Date</label></td>
+                        <td><input type="date"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Birth Place</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Citizenship</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Religion</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Height (cm)</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Weight (kg)</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Any physical defects?</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Expected Compensation</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Upload Photo</label></td>
+                        <td><input type="file"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="form-table">
+                <thead>
+                    <tr>
+                        <th colspan="2"><h3>Family Background</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label>Father's Name</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Occupation</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Mother's Name</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Occupation</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Parent's Address</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Spouse's Name</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Occupation</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="form-table">
+                <thead>
+                    <tr>
+                        <th colspan="2"><h3>Educational Background</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label>College</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Degree & Honors</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>High School</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Degree & Honors</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Elementary</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Degree & Honors</label></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="form-table">
+                <thead>
+                    <tr>
+                        <th colspan="2"><h3>Expertise / Skills</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <textarea placeholder="Describe your skills or trainings here..."></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="confirmation">
+                I hereby certify that the above information is true and complete to the best of my knowledge.
+            </div>
+        </form>
+    </div>
+
+    <div class="navigation-box">
+        <div class="navigation">
+            <button onclick="showPage('page2')" type="button">Next</button>
+        </div>
+    </div>
+</div>
+
+no, i want you to design it to, i want it to be a 2 columns on the left side are personal info, educational background

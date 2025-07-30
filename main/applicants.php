@@ -1,0 +1,303 @@
+<?php
+include('../connection.php');
+$collection = $database->selectCollection("applicants");
+
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+$query = [];
+if (!empty($search)) {
+    $query = ['$or' => [
+        ['personal_info.first_name' => ['$regex' => $search, '$options' => 'i']],
+        ['personal_info.middle_name' => ['$regex' => $search, '$options' => 'i']],
+        ['personal_info.last_name' => ['$regex' => $search, '$options' => 'i']],
+        ['email' => ['$regex' => $search, '$options' => 'i']],
+        ['position_applied' => ['$regex' => $search, '$options' => 'i']]
+    ]];
+}
+$applicants = $collection->find($query);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicants</title>
+    <!-- <link rel="stylesheet" href="../styles.css"> -->
+    <style>       
+        .applicants-button {
+            background-color: #00124d;
+            border-left: 4px solid #ffffff;
+        }
+
+        .content {
+            padding: 20px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin-top: 2px;
+            background: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            word-break: break-word;
+        }
+
+        th {
+            background-color: #00124d;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 7px 10px;
+            font-size: small;
+
+
+        }
+
+        td a:hover {
+            background-color: rgba(133, 155, 197, 1);
+            border-radius: 7px;
+            padding: 7px 10px;
+
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            align-items: center;
+            max-width:  500px;
+            margin-bottom: 5px;
+            position: relative;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding:14px 100px 14px 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            width: 100%;
+        }
+
+        .search-container button {
+            background-color: #00124d;
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            margin-left: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .search-container button:hover {
+            background-color: #003080;
+        }
+        .search-container .clear-button {
+            background-color:rgba(0, 47, 128, 0);
+            color: black
+        }
+        .search-container .clear-button:hover {
+            background-color:rgba(0, 47, 128, 0);
+        }
+        .clear-button {
+            position: absolute;
+            right: 75px;
+            background: none;
+            border: none;
+            font-size: 20px; 
+            color: lightgray;
+            cursor: pointer;
+            display: none;
+            font-weight: bold;
+        }
+
+        .clear-button:hover {
+            color: black;
+        }
+
+        .box-header {
+            display: flex!important;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            margin-top: 6px;
+            margin-bottom: 20px;
+        }
+        .add-applicant-button {
+            background-color: #00124d; 
+            color: #ffffff; 
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            margin-top: 4px;
+        
+        }
+        .add-applicant-button:hover {
+            background-color: #003080; 
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .delete_act {
+            background-color: #B22222; 
+            border-radius: 7px;
+            padding: 7px 10px;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 7px 10px;
+            transition: background-color 0.3s ease;
+            color: white;
+            
+
+        }
+        .view_act{
+            background-color: #1E3A8A;
+            border-radius: 7px;
+            padding: 7px 10px;
+            text-decoration: none;
+            /* font-weight: bold; */
+            padding: 7px 10px;
+            transition: background-color 0.3s ease;
+            color: white;
+        }
+        .view_act:hover {
+            background-color: #3c49ffff;
+            /* color: #000000; */
+        }
+        .delete_act:hover {
+            background-color: #ff6347; /* Tomato color on hover */
+            /* color: #ffffff;  */
+        }
+    </style>
+    <script>
+        function searchApplicants() {
+    let searchValue = document.getElementById('searchInput').value;
+    window.location.href = 'applicants.php?search=' + encodeURIComponent(searchValue);
+}
+
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('clearBtn').style.display = 'none';
+    window.location.href = 'applicants.php';
+}
+
+function toggleClearButton() {
+    let searchInput = document.getElementById('searchInput');
+    let clearBtn = document.getElementById('clearBtn');
+    clearBtn.style.display = searchInput.value.trim() ? 'block' : 'none';
+}
+
+window.onload = function () {
+    toggleClearButton();
+};
+function addapplicant(){
+    window.location.href = 'application_form.php';
+}
+
+    </script>
+</head>
+<body>
+
+<?php include 'sidebar.php'; ?>
+  <div class="header">Applicants</div><br><br><br>
+<div class="content">
+    <div class="box-header">
+    <!-- <div class="top-section"> -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search applicants..." value="<?php echo htmlspecialchars($search); ?>" oninput="toggleClearButton()">
+            <button id="clearBtn" class="clear-button" onclick="clearSearch()">✕</button>
+            <button onclick="searchApplicants()">Search</button>
+        </div>
+    <!-- <button class="add-applicant-button" onclick="addapplicant()">+ Add Applicant</button> -->
+
+    <!-- </div> -->
+</div>  
+    <div class="box-body">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Position Applied</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($applicants as $applicant)
+                 { ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($applicant['personal_info']['first_name'] . ' ' . ($applicant['personal_info']['middle_name'] ?? '') . ' ' . $applicant['personal_info']['last_name']); ?></td>
+                        <td><?php echo htmlspecialchars($applicant['personal_info']['email']); ?></td>
+                        <td><?php echo htmlspecialchars($applicant['personal_info']['contact_no']); ?></td>
+                        <td><?php echo htmlspecialchars($applicant['position_applied']); ?></td>
+                        <td><?php echo htmlspecialchars($applicant['status']); ?></td>
+                        <td style="text-align: center">
+                            <a href="applicant_view.php?id=<?php echo $applicant['_id']; ?>" class="view_act">View</a>
+                            <a href="#" class="delete_act act_button" onclick="showConfirmModal('<?php echo $applicant['_id']; ?>'); return false;">Delete</a>
+
+                        </td>
+                    </tr>
+                <?php 
+                } ?>
+            </tbody>
+        </table>
+    </div>
+    
+    </div>
+<!-- Confirmation Modal -->
+<div id="confirmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+     background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+  <div style="background:white; padding:20px; border-radius:8px; text-align:center;">
+    <p>Are you sure you want to delete this applicant?</p>
+    <form method="POST" action="../handlers/delete_applicant.php">
+      <input type="hidden" name="delete_id" id="delete_id">
+      <button class="view_act" type="submit" style="margin-right:10px;" style="color: white;">Yes</button>
+      <button class="delete_act" type="button" onclick="hideConfirmModal()">No</button>
+    </form>
+  </div>
+</div>
+
+</div>
+
+</body>
+<script>
+  function showConfirmModal(id) {
+    document.getElementById('delete_id').value = id;
+    document.getElementById('confirmModal').style.display = 'flex';
+  }
+
+  function hideConfirmModal() {
+    document.getElementById('confirmModal').style.display = 'none';
+  }
+</script>
+</html>
