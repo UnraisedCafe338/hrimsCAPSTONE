@@ -1,0 +1,43 @@
+# Ignore AI model files (example: 8GB file/folder)
+ai/
+ai/*
+*.pt
+*.pth
+*.h5
+*.ckpt
+*.gguf
+
+# Ignore AI model files in assets/ai
+assets/ai/
+assets/ai/*
+
+# Ignore common system files
+.DS_Store
+Thumbs.db
+
+# Ignore Composer dependencies
+/vendor/
+
+# Ignore Node dependencies
+/node_modules/
+
+# Ignore environment files
+.env
+.env.*
+
+# Ignore log files
+*.log
+
+# Ignore IDE/project files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore OS generated files
+*.swp
+*.bak
+*.tmp
+
+# Ignore XAMPP specific files (if any)
+xamppfiles/
