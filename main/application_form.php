@@ -637,6 +637,9 @@
                             <input type="file" id="2x2_pic" name="2x2_pic[]" multiple hidden onchange="updateFileList(this)">
                             Select Files
                         </label>
+                          <h2>Scan and Upload Applicant Document</h2>
+  <button onclick="startScan()">Start Scan</button>
+  <div id="preview"></div>
                         <p>Formal Picture</p>
                         <div class="file-list" id="2x2_pic">
                             <p>No files selected</p>
@@ -778,24 +781,21 @@ function handleSubmitClick() {
     }
 }
 
-    // function previewPhoto(event) {
-    //     const reader = new FileReader();
-    //     reader.onload = function () {
-    //     const preview = document.getElementById("photoPreview");
-    //     preview.src = reader.result;
-    //     preview.style.display = "block";
-    //     };
-    //     reader.readAsDataURL(event.target.files[0]);
-    // }
-    // function previewPhoto(event) {
-    //     const reader = new FileReader();
-    //     reader.onload = function() {
-    //         const preview = document.getElementById("photoPreview");
-    //         preview.src = reader.result;
-    //         preview.style.display = "block";
-    //     };
-    //     reader.readAsDataURL(event.target.files[0]);
-    // }
+     function startScan() {
+      fetch("http://localhost:5000/scan")
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById("preview").innerHTML = `
+              <p>Scanned: ${data.filename}</p>
+              <img src="uploads/${data.filename}" width="300"><br>
+              <a href="upload.php?file=${data.filename}">Upload to MongoDB</a>
+            `;
+          } else {
+            alert("Scan failed: " + data.message);
+          }
+        });
+    }
     // Array of page IDs in order
     const pages = ['page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7'];
     let currentPageIndex = 0; // Starts at page1

@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>HRIMS Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+<!-- FullCalendar JS -->
+
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -96,7 +100,11 @@
 .wide-chart {
   grid-column: span 2;
 }
-
+#calendar {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
 @media screen and (max-width: 768px) {
   .wide-chart {
     grid-column: span 1; /* Make it stack on smaller screens */
@@ -146,11 +154,36 @@
       <canvas id="teachingTypeChart"></canvas>
     </div>
 
-    <div class="card">
-      <h2>🎉 Birthdays This Month</h2>
-      <div id="birthdayCards" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
-    </div>
+<div class="card wide-chart">
+  <h2>🎉 Events & Birthdays Calendar</h2>
+  <div id="calendar"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.19/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.19/index.global.min.js"></script>
+
+</div>
+
   </div>
+  <div id="eventModal" style="display: none; position: fixed; top: 50%; left: 50%; 
+  transform: translate(-50%, -50%); background: white; padding: 20px; 
+  border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 10000; 
+  width: 320px; max-width: 90%;">
+  
+  <div style="text-align: right;">
+    <button onclick="document.getElementById('eventModal').style.display='none'" 
+      style="border: none; background: transparent; font-size: 18px; cursor: pointer;">&times;</button>
+  </div>
+
+  <div id="modalImageContainer" style="text-align: center; margin-bottom: 10px;">
+    <img id="eventPhoto" src="" alt="Event Photo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; display: none;" />
+  </div>
+
+  <h3 id="eventTitle" style="text-align: center; margin: 0;"></h3>
+  <p id="eventDate" style="font-size: 14px; color: #666; text-align: center;"></p>
+  <hr>
+  <p id="eventDescription" style="font-size: 14px;"></p>
+</div>
+
 </div>
 
 <script src="../assets/js/chart.umd.js"></script>
@@ -242,30 +275,30 @@
     }
   }
 
-  fetch('../handlers/get_birthdays.php')
-    .then(res => res.json())
-    .then(employees => {
-      const container = document.getElementById('birthdayCards');
-      if (employees.length === 0) {
-        container.innerHTML = "<p>No birthdays this month.</p>";
-      } else {
-        employees.forEach(emp => {
-          const card = document.createElement('div');
-          card.className = 'birthday-card';
-          const photoUrl = emp.photo ? `../handlers/get_image.php?id=${emp.photo}` : '../image/placeholder.png';
-          card.innerHTML = `
-            <img src="${photoUrl}" alt="Photo of ${emp.name}">
-            <div class="birthday-name">${emp.name}</div>
-            <div class="birthday-date">${new Date(emp.birth_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</div>
-          `;
-          container.appendChild(card);
-        });
+  
+
+document.addEventListener('DOMContentLoaded', function () {
+  const calendarEl = document.getElementById('calendar');
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    height: 500,
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      // right: 'dayGridMonth,timeGridWeek'
+    },
+    events: '../handlers/get_events.php', // <-- change to your PHP file path
+    eventDidMount: function(info) {
+      // Example: Add tooltip for description
+      if (info.event.extendedProps.description) {
+        info.el.title = info.event.extendedProps.description;
       }
-    })
-    .catch(err => {
-      console.error('Error loading birthday data:', err);
-      alert("Failed to load birthday data. Please check the console.");
-    });
+    }
+  });
+
+  calendar.render();
+});
 </script>
 
 </body>

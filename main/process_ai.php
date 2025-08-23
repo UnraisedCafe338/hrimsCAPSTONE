@@ -5,31 +5,57 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $prompt = $_POST["prompt"] ?? '';
     $resumeFile = $_SESSION["latest_resume"] ?? '';
 
-    // Write full prompt to a temporary file
-    $tempFilePath = "temp/prompt" . time() . ".txt";
-    file_put_contents($tempFilePath, $prompt);
-
-    $python = "C:\\Users\\LENOVO\\AppData\\Local\\Programs\\Python\\Python312\\python.exe";
-    $script = escapeshellarg("ai_script.py");
-    $escaped_prompt_file = escapeshellarg($tempFilePath);
-
+    // If there is a resume file, read its text
+    $resume_text = '';
     if (!empty($resumeFile)) {
-        $escaped_resume = escapeshellarg(basename($resumeFile));
-        $command = "$python $script $escaped_prompt_file $escaped_resume";
-    } else {
-        $command = "$python $script $escaped_prompt_file";
+        $path = __DIR__ . "/../uploads/" . basename($resumeFile);
+        if (file_exists($path)) {
+            if (str_ends_with(strtolower($path), '.pdf')) {
+                // If you still need PDF parsing, you can keep ai_script.py for that
+                $resume_text = shell_exec(
+                    "C:\\Users\\LENOVO\\AppData\\Local\\Programs\\Python\\Python312\\python.exe " .
+                    escapeshellarg("extract_text.py") . " " . escapeshellarg($path)
+                );
+            } elseif (str_ends_with(strtolower($path), '.docx')) {
+                $resume_text = shell_exec(
+                    "C:\\Users\\LENOVO\\AppData\\Local\\Programs\\Python\\Python312\\python.exe " .
+                    escapeshellarg("extract_text.py") . " " . escapeshellarg($path)
+                );
+            }
+        }
     }
 
-    $output = [];
-    exec($command . " 2>&1", $output, $return_var);
+    // Construct the prompt
+    $system_prompt = !empty($resume_text)
+        ? "You are an HR AI assistant. Summarize this resume, highlight skills, and recommend roles."
+        : "You are an AI assistant inside a Human Resources Management System. Respond clearly.";
+    $full_prompt = "[INST] <<SYS>>\n{$system_prompt}\n<</SYS>>\n\n{$prompt}\n{$resume_text} [/INST]";
 
-    if ($return_var !== 0 || empty($output)) {
-        echo "AI failed to respond. Error details:\n" . implode("\n", $output);
+    // Send to llama.cpp server
+    $url = "http://127.0.0.1:8000/v1/completions";
+    $data = [
+        "model" => "your_model",  // The alias from --model_alias if you set it
+        "prompt" => $full_prompt,
+        "max_tokens" => 512,
+        "stop" => ["</s>"]
+    ];
+
+    $options = [
+        "http" => [
+            "header"  => "Content-Type: application/json\r\n",
+            "method"  => "POST",
+            "content" => json_encode($data),
+        ],
+    ];
+
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    if ($result === FALSE) {
+        echo "AI request failed.";
     } else {
-        echo implode("\n", $output);
+        $json = json_decode($result, true);
+        echo $json["choices"][0]["text"] ?? "No response";
     }
-
-    // Optionally clean up
-    unlink($tempFilePath);
 }
 ?>
