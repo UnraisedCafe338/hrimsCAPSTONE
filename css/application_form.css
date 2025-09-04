@@ -351,13 +351,19 @@ textarea {
   font-weight: 500;
   text-align: center;
   padding: 1.12em 0;
-  margin: auto;
+  margin: 0px;
   border-radius: 0.31em;
   cursor: pointer;
-  width: 100%; /* Remove fixed width */
+  /* width: auto; /* Remove fixed width */
   height: auto;
 }
-
+.file-upload-button {
+  padding-left: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  gap: 5px;
+}
 /* Optionally, add hover effect */
 .file-box label:hover {
   background-color: #1a75d1; /* Slightly darker blue */
@@ -454,12 +460,15 @@ resize: vertical;
 } */
 .custom-file-button {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 0px;
   background: #007bff;
   color: white;
-  font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
+  margin: 0px;
+  font-size: 1.12em;
+  width: 50%;
+  border: 0px;
 }
 
 .custom-file-button:hover {

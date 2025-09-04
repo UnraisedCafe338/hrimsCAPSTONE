@@ -417,7 +417,7 @@
                                 <td colspan="5">
                                     <!-- Street Input -->
                                     <div style="margin-bottom: 10px;">
-                                        <input type="text" id="emergency_street" placeholder="Street/Building/Blck" style="width: 100%;" required>
+                                        <input type="text" name="emergency_street" id="emergency_street" placeholder="Street/Building/Blck" style="width: 100%;" required>
                                     </div>
 
                                     <!-- Dropdowns: Region, Province, Municipality, Barangays -->
@@ -633,24 +633,31 @@
                 <h3>Upload Required Documents</h3>
                 <div class="file-upload-container">
                     <div class="file-box">
-                        <label class="custom-file-button">
-                            <input type="file" id="2x2_pic" name="2x2_pic[]" multiple hidden onchange="updateFileList(this)">
-                            Select Files
-                        </label>
-                          <h2>Scan and Upload Applicant Document</h2>
-  <button onclick="startScan()">Start Scan</button>
-  <div id="preview"></div>
+                        <div class="file-upload-button" style="display: flex;">
+                            <label class="custom-file-button">
+                                <input type="file" id="2x2_pic" name="2x2_pic[]" multiple hidden onchange="updateFileList(this)">
+                                Select Files
+                            </label>
+                            <button class="custom-file-button" onclick="startScan()">Scan File</button>
+                            <div id="preview"></div>
+                        </div>
+
                         <p>Formal Picture</p>
                         <div class="file-list" id="2x2_pic">
                             <p>No files selected</p>
                         </div>
-                    </div>
+                        </div>
 
                     <div class="file-box">
-                        <label class="custom-file-button">
-                            <input type="file" id="resumeInput" name="resume_applicant[]" multiple hidden onchange="updateFileList(this)">
-                            Select Files
-                        </label>
+                        <div class="file-upload-button" style="display: flex;">
+                            <label class="custom-file-button">
+                                <input type="file" id="resume_applicant" name="resume_applicant[]" multiple hidden onchange="updateFileList(this)">
+                                Select Files
+                            </label>
+                            <button class="custom-file-button" onclick="startScan()">Scan File</button>
+                            <div id="preview"></div>
+                        </div>
+
                         <p>Resume (Applicant)</p>
                         <div class="file-list" id="resumeList">
                             <p>No files selected</p>
@@ -658,10 +665,15 @@
                     </div>
 
                     <div class="file-box">
-                        <label class="custom-file-button">
-                            <input type="file" id="trainingInput" name="training_certificates[]" multiple hidden onchange="updateFileList(this)">
-                            Select Files
-                        </label>
+                        <div class="file-upload-button" style="display: flex;">
+                            <label class="custom-file-button">
+                                <input type="file" id="training_certificates" name="training_certificates[]" multiple hidden onchange="updateFileList(this)">
+                                Select Files
+                            </label>
+                            <button class="custom-file-button" onclick="startScan()">Scan File</button>
+                            <div id="preview"></div>
+                        </div>
+                        
                         <p>Training Certificates</p>
                         <div class="file-list" id="trainingList">
                             <p>No files selected</p>
@@ -669,10 +681,15 @@
                     </div>
 
                     <div class="file-box">
-                        <label class="custom-file-button">
-                            <input type="file" id="diplomaInput" name="diploma[]" multiple hidden onchange="updateFileList(this)">
-                            Select Files
-                        </label>
+                        <div class="file-upload-button" style="display: flex;">
+                            <label class="custom-file-button">
+                                <input type="file" id="diploma" name="diploma[]" multiple hidden onchange="updateFileList(this)">
+                                Select Files
+                            </label>
+                            <button class="custom-file-button" onclick="startScan()">Scan File</button>
+                            <div id="preview"></div>
+                        </div>
+
                         <p>Diploma</p>
                         <div class="file-list" id="diplomaList">
                             <p>No files selected</p>
@@ -680,10 +697,15 @@
                     </div>
 
                     <div class="file-box">
-                        <label class="custom-file-button">
-                            <input type="file" id="contractsInput" name="contracts[]" multiple hidden onchange="updateFileList(this)">
-                            Select Files
-                        </label>
+                       <div class="file-upload-button" style="display: flex;">
+                            <label class="custom-file-button">
+                                <input type="file" id="contracts" name="contracts[]" multiple hidden onchange="updateFileList(this)">
+                                Select Files
+                            </label>
+                            <button class="custom-file-button" onclick="startScan()">Scan File</button>
+                            <div id="preview"></div>
+                        </div>
+
                         <p>Contracts</p>
                         <div class="file-list" id="contractsList">
                             <p>No files selected</p>
@@ -692,10 +714,15 @@
 
 
                     <div class="file-box">
-                        <label class="custom-file-button">
-                            <input type="file" id="torInput" name="transcript_of_records[]" multiple hidden onchange="updateFileList(this)">
-                            Select Files
-                        </label>
+                        <div class="file-upload-button" style="display: flex;">
+                            <label class="custom-file-button">
+                                <input type="file" id="transcript_of_records" name="transcript_of_records[]" multiple hidden onchange="updateFileList(this)">
+                                Select Files
+                            </label>
+                            <button class="custom-file-button" onclick="startScan()">Scan File</button>
+                            <div id="preview"></div>
+                        </div>
+
                         <p>Transcript of Records (Bachelor, Masteral, and PhD)</p>
                         <div class="file-list" id="torList">
                             <p>No files selected</p>
@@ -781,7 +808,7 @@ function handleSubmitClick() {
     }
 }
 
-     function startScan() {
+    function startScan() {
       fetch("http://localhost:5000/scan")
         .then(res => res.json())
         .then(data => {

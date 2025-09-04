@@ -29,54 +29,6 @@ $applicants = $collection->find($query);
             border-left: 4px solid #ffffff;
         }
 
-        .content {
-            padding: 20px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        table {
-            width: 100%;
-            max-width: 100%;
-            border-collapse: collapse;
-            margin-top: 2px;
-            background: #ffffff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            word-break: break-word;
-        }
-
-        th {
-            background-color: #00124d;
-            color: #ffffff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        td a {
-            color: #0044cc;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        td a:hover {
-            background-color: rgb(181, 188, 202);
-            padding: 7px;
-            border-radius: 7px;
-        }
 
         /* Search Bar */
         .search-container {
@@ -153,38 +105,10 @@ $applicants = $collection->find($query);
             background-color: #003080; 
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
         }
-        .box-body{
-            /*padding-bottom: 100px!important ;
-            margin-bottom: 0px!important;
-        */}
+     
                 
     </style>
-    <script>
-        function searchApplicants() {
-    let searchValue = document.getElementById('searchInput').value;
-    window.location.href = 'employee.php?search=' + encodeURIComponent(searchValue);
-}
-
-function clearSearch() {
-    document.getElementById('searchInput').value = '';
-    document.getElementById('clearBtn').style.display = 'none';
-    window.location.href = 'applicants.php';
-}
-
-function toggleClearButton() {
-    let searchInput = document.getElementById('searchInput');
-    let clearBtn = document.getElementById('clearBtn');
-    clearBtn.style.display = searchInput.value.trim() ? 'block' : 'none';
-}
-
-window.onload = function () {
-    toggleClearButton();
-};
-function addapplicant(){
-    window.location.href = 'application_form.php';
-}
-
-    </script>
+    
 </head>
 <body>
 
@@ -237,4 +161,30 @@ function addapplicant(){
     </div>
 </div>
 </body>
+<script>
+        function searchApplicants() {
+    let searchValue = document.getElementById('searchInput').value;
+    window.location.href = 'employee.php?search=' + encodeURIComponent(searchValue);
+}
+
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('clearBtn').style.display = 'none';
+    window.location.href = 'applicants.php';
+}
+
+function toggleClearButton() {
+    let searchInput = document.getElementById('searchInput');
+    let clearBtn = document.getElementById('clearBtn');
+    clearBtn.style.display = searchInput.value.trim() ? 'block' : 'none';
+}
+
+window.onload = function () {
+    toggleClearButton();
+};
+function addapplicant(){
+    window.location.href = 'application_form.php';
+}
+
+</script>
 </html>

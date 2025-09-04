@@ -7,7 +7,59 @@
     font-family: "Poppins", sans-serif;
     display: flex;
   }
-   
+
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 2px;
+    background: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    
+}
+table td{
+    border-left: 1px solid #c4c4c4;
+}
+table th{
+    border-left: 1px solid #4b3c7f;
+}
+table td:first-child,
+table th:first-child {
+    border-left: none;
+}
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    word-break: break-word;
+}
+
+th {
+    background-color: #00124d;
+    color: #ffffff;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td a {
+    color: #0044cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+td a:hover {
+    background-color: rgba(128, 134, 193, 0.597);
+    padding: 5px 5px;
+    border-radius: 7px;
+}
 
   
 
@@ -199,23 +251,6 @@
     border-bottom: 5px solid #ffdd00; 
   }
 
-  /* table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-    table-layout: fixed;
-  } */
-  /* th, td { 
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  th {
-    background-color: #f2f2f2;
-  }
-  tr:hover {
-    background-color: #f2f2f2;
-  } */
   .box-body{ 
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -226,22 +261,10 @@
     text-align: center;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-   
+    margin-bottom: 50px;
+
  } 
-  /* .box-header{
-    max-height: 5%;
-    height: auto;
-    width: 103%;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    margin-bottom: 2px;
-    border: 3px solid #a0a0a0;
-    border-top: 10px solid #ffee00;
-    
-  } */
+
   .box-header h2{
     margin-top: 0px;
   }
@@ -340,31 +363,35 @@ body {
     color: #ffffff;
 }
 .content {
-    margin-top: 70px;
+    margin-top: 10px;
     margin-left: 247Px;
+    box-sizing: border-box;
+    margin-bottom: auto;
     z-index: 1;
     width: 100%;
-    /* padding: 100px 50px;   */
-   
+    height: auto;
+    padding: 90px 20px;  
+    padding-bottom: 30px;
     }
-    .box-footer {
-        background: #f5f5f5; 
-        border-top: 2px solid #ccc; 
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
-        padding: 10px 20px;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-        font-size: 14px;
-        color: #333;
-        width: calc(100% - 250px); 
-        margin-left: 248px; 
-        box-sizing: border-box;
-        position: fixed;
-        bottom: 0;
-        left: 0; 
-        z-index: 2;
-    }
+
+.box-footer {
+    background: #f5f5f5; 
+    border-top: 2px solid #ccc; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #333;
+    width: calc(100% - 250px); 
+    margin-left: 248px; 
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0; 
+    z-index: 2;
+}
     
     @media screen and (max-width: 1024px) {
         .box-footer {
@@ -472,6 +499,46 @@ body {
   font-weight: bold;
 
 }
+
+/* Global action buttons (View, Delete, Evaluate) */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.actions a {
+  border-radius: 7px;
+  padding: 0 12px;
+  text-decoration: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: 2px;
+  font-weight: 600;
+  white-space: nowrap;
+  height: 32px;
+  line-height: 1;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  background-color: transparent;
+  outline: none;
+}
+/* Prevent global td a:hover from shifting action links */
+.actions a:hover {
+  padding: 0 12px;
+}
+
+.btn-view { color: #0044cc; }
+.btn-view:hover { background-color: #e6f0ff; color: #003080; border-color: #cfe0ff; }
+
+.btn-delete { color: #d00000; }
+.btn-delete:hover { background-color: #ff3b30; color: #ffffff; border-color: #ffd0cc; }
+
+.btn-evaluate { color: #0a7a3d; }
+.btn-evaluate:hover { background-color: #e6fff3; color: #075c2e; border-color: #c7f1da; }
 
 * {
   box-sizing: border-box;

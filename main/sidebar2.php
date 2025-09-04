@@ -3,7 +3,7 @@
 
 </head>
 <link rel="icon" type="..image/png" href="../images/cutie_2.0.png">
-<link rel="stylesheet" href="../css/styles.css?v=1.0">
+<link rel="stylesheet" href="../css/applicant_styles.css?v=1.0">
 <link rel="stylesheet" href="../assets/css/all.min.css">
 <style>
 .aibutton {

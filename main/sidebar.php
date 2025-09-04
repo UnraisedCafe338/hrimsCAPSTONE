@@ -54,7 +54,7 @@
         <li class="applicants-button"><a href="applicants.php"><i class="fa-solid fa-user-plus"></i>Applicants Management</a></li>
         <li class="employee-button"><a href="employee.php"><i class="fa-solid fa-users"></i>Employee Records</a></li>
         <!-- <li class="password-button"><a href=""><i class="fa-solid fa-calendar-check"></i>Attendance Management</a></li> -->
-        <!-- <li class="performance-button"><a href="performance_appraisal.php"><i class="fa-solid fa-chart-line"></i>Performance Appraisal</a></li> -->
+        <li class="performance-button"><a href="performance_appraisal.php"><i class="fa-solid fa-chart-line"></i>Performance Appraisal</a></li>
         <li class="document-button"><a href="document_mgmt.php"><i class="fa-solid fa-file-lines"></i>Document Management</a></li>
         <li class="subject-button"><a href=""><i class="fa-solid fa-chart-pie"></i>Reports & Analytics</a></li>
         <li class="settings-button"><a href="settings.php"><i class="fa-solid fa-gear"></i>Settings</a></li>

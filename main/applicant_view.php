@@ -720,15 +720,15 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
               <?php foreach ($employment as $job): ?>
                 <tr>
                   <td>
-                <span class="view-mode"><?php echo htmlspecialchars($employment['company'] ?? ''); ?></span>
+                <span class="view-mode"><?php echo htmlspecialchars($job['company'] ?? ''); ?></span>
                   <input type="text" name="company" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($employment['company'] ?? ''); ?>">
                 </td>
                   <td>
-                  <span class="view-mode"><?php echo htmlspecialchars($employment['position'] ?? ''); ?></span>
+                  <span class="view-mode"><?php echo htmlspecialchars($job['position'] ?? ''); ?></span>
                   <input type="text" name="position" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($employment['company'] ?? ''); ?>">
                 </td>
                   <td>
-                <span class="view-mode"><?php echo htmlspecialchars($employment['reason_for_leaving'] ?? ''); ?></span>
+                <span class="view-mode"><?php echo htmlspecialchars($job['reason_for_leaving'] ?? ''); ?></span>
                   <input type="text" name="reason_for_leaving" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($employment['reason_for_leaving'] ?? ''); ?>">
                 </td>
                 </tr>
@@ -800,19 +800,19 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
               <?php foreach ($references as $ref): ?>
                 <tr>
                   <td>
-                <span class="view-mode"><?php echo htmlspecialchars($references['name'] ?? ''); ?></span>
+                <span class="view-mode"><?php echo htmlspecialchars($ref['name'] ?? ''); ?></span>
                   <input type="text" name="name" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['name'] ?? ''); ?>">
                 </td>
                   <td>
-                <span class="view-mode"><?php echo htmlspecialchars($references['company'] ?? ''); ?></span>
+                <span class="view-mode"><?php echo htmlspecialchars($ref['company'] ?? ''); ?></span>
                   <input type="text" name="company" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['company'] ?? ''); ?>">
                 </td>
                   <td>
-                <span class="view-mode"><?php echo htmlspecialchars($references['position'] ?? ''); ?></span>
+                <span class="view-mode"><?php echo htmlspecialchars($ref['position'] ?? ''); ?></span>
                   <input type="text" name="position" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['position'] ?? ''); ?>">
                 </td>
                   <td>
-                  <span class="view-mode"><?php echo htmlspecialchars($references['contact'] ?? ''); ?></span>
+                  <span class="view-mode"><?php echo htmlspecialchars($ref['contact'] ?? ''); ?></span>
                   <input type="text" name="contact" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['contact'] ?? ''); ?>">
                 </td>
                 </tr>

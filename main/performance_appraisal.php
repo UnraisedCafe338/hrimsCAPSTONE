@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Performance Appraisal</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <style>
-    .performance-button {
+
+  .performance-button {
     background-color: #00124d;
     border-left: 4px solid #ffffff;
-}
+  }
+  /* Fix Action column width */
+  table th:nth-child(4),
+  table td:nth-child(4) {
+    width: 180px;
+  }
+  .actions { min-width: 180px; }
+  
 </style>
 <body>
 <?php include 'sidebar.php'; ?>
@@ -23,8 +32,8 @@
   </div>
   
 <div class="box-body">
-  <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
-    <thead style="background-color: #00124d; color: white;">
+  <table>
+    <thead>
       <tr>
         <th>Full Name</th>
         <th>Overall Rating</th>
@@ -53,16 +62,16 @@ $collection = $database->selectCollection("employees");
           $isEvaluated = isset($emp['evaluated']) && $emp['evaluated'] === true;
 
           echo "<tr>";
-          echo "<td><strong>{$firstName} {$middleName} {$lastName}</strong></td>";
+          echo "<td>{$firstName} {$middleName} {$lastName}</td>";
           echo "<td style='color: {$ratingColor};'>{$rating}</td>";
           echo "<td style='color: #00124d;'>{$category}</td>";
-          echo "<td>";
+          echo "<td class='actions'>";
           if ($isEvaluated) {
               echo "<button disabled style='background-color: #00124d; color: gold; border: none; border-radius: 10px; padding: 5px 10px;'>Evaluated</button>";
           } else {
-              echo "<a href='evaluate.php?id={$emp['_id']}' style='background-color: #00124d; color: white; border-radius: 10px; padding: 5px 10px; text-decoration: none;'>Evaluate</a>";
+              echo "<a class='btn-evaluate' href='evaluate.php?id={$emp['_id']}'>Evaluate</a>";
           }
-          echo " <a href='view.php?id={$emp['_id']}' style='margin-left: 10px; color: #00124d;'>View</a>";
+          echo " <a class='btn-view' href='view.php?id={$emp['_id']}'>View</a>";
           echo "</td>";
           echo "</tr>";
       }

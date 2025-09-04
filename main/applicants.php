@@ -23,65 +23,11 @@ $applicants = $collection->find($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applicants</title>
-    <!-- <link rel="stylesheet" href="../styles.css"> -->
+    <link rel="stylesheet" href="../css/styles.css">
     <style>       
         .applicants-button {
             background-color: #00124d;
             border-left: 4px solid #ffffff;
-        }
-
-        .content {
-            padding: 20px;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        table {
-            width: 100%;
-            max-width: 100%;
-            border-collapse: collapse;
-            margin-top: 2px;
-            background: #ffffff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: center;
-            word-break: break-word;
-        }
-
-        th {
-            background-color: #00124d;
-            color: #ffffff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        td a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 7px 10px;
-            font-size: small;
-
-
-        }
-
-        td a:hover {
-            background-color: rgba(133, 155, 197, 1);
-            border-radius: 7px;
-            padding: 7px 10px;
-
         }
 
         /* Search Bar */
@@ -165,36 +111,7 @@ $applicants = $collection->find($query);
             background-color: #003080; 
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
         }
-        .delete_act {
-            background-color: #B22222; 
-            border-radius: 7px;
-            padding: 7px 10px;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 7px 10px;
-            transition: background-color 0.3s ease;
-            color: white;
-            
-
-        }
-        .view_act{
-            background-color: #1E3A8A;
-            border-radius: 7px;
-            padding: 7px 10px;
-            text-decoration: none;
-            /* font-weight: bold; */
-            padding: 7px 10px;
-            transition: background-color 0.3s ease;
-            color: white;
-        }
-        .view_act:hover {
-            background-color: #3c49ffff;
-            /* color: #000000; */
-        }
-        .delete_act:hover {
-            background-color: #ff6347; /* Tomato color on hover */
-            /* color: #ffffff;  */
-        }
+        
     </style>
     <script>
         function searchApplicants() {
@@ -261,9 +178,9 @@ function addapplicant(){
                         <td><?php echo htmlspecialchars($applicant['personal_info']['contact_no']); ?></td>
                         <td><?php echo htmlspecialchars($applicant['position_applied']); ?></td>
                         <td><?php echo htmlspecialchars($applicant['status']); ?></td>
-                        <td style="text-align: center">
-                            <a href="applicant_view.php?id=<?php echo $applicant['_id']; ?>" class="view_act">View</a>
-                            <a href="#" class="delete_act act_button" onclick="showConfirmModal('<?php echo $applicant['_id']; ?>'); return false;">Delete</a>
+                        <td class="actions">
+                            <a href="applicant_view.php?id=<?php echo $applicant['_id']; ?>" class="btn-view">View</a>
+                            <a href="#" class="btn-delete act_button" onclick="showConfirmModal('<?php echo $applicant['_id']; ?>'); return false;">Delete</a>
 
                         </td>
                     </tr>
@@ -281,8 +198,8 @@ function addapplicant(){
     <p>Are you sure you want to delete this applicant?</p>
     <form method="POST" action="../handlers/delete_applicant.php">
       <input type="hidden" name="delete_id" id="delete_id">
-      <button class="view_act" type="submit" style="margin-right:10px;" style="color: white;">Yes</button>
-      <button class="delete_act" type="button" onclick="hideConfirmModal()">No</button>
+      <button class="btn-view" type="submit" style="margin-right:10px;" style="color: white;">Yes</button>
+      <button class="btn-delete" type="button" onclick="hideConfirmModal()">No</button>
     </form>
   </div>
 </div>
