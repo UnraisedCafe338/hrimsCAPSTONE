@@ -1,11 +1,11 @@
 {
-    "require": {
-        "mongodb/mongodb": "^1.21",
-        "robthree/twofactorauth": "^3.0",
-        "phpmailer/phpmailer": "^6.10",
-        "endroid/qr-code": "^6.0",
-        "bacon/bacon-qr-code": "^3.0",
-        "sonata-project/google-authenticator": "^2.3",
-        "phpoffice/phpword": "^1.4"
-    }
+  "require": {
+    "mongodb/mongodb": "^1.21",
+    "robthree/twofactorauth": "^3.0",
+    "phpmailer/phpmailer": "^6.10",
+    "endroid/qr-code": "^6.0",
+    "bacon/bacon-qr-code": "^3.0",
+    "sonata-project/google-authenticator": "^2.3",
+    "phpoffice/phpword": "^1.4"
+  }
 }
