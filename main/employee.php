@@ -149,7 +149,7 @@ $applicants = $collection->find($query);
                         <td><?php echo htmlspecialchars($applicant['personal_info']['contact']); ?></td>
                         <td><?php echo htmlspecialchars($applicant['position_applied']); ?></td>
                         <td><?php echo htmlspecialchars($applicant['status']); ?></td>
-                        <td style="text-align: center">
+                        <td style="text-align: center" class="actions">
                             <a href="view_employee.php?id=<?php echo $applicant['_id']; ?>">View</a>
                         </td>
                     </tr>

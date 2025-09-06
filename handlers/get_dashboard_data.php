@@ -1,5 +1,4 @@
 <?php
-// Enable error reporting for debugging (optional but helpful)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -9,7 +8,6 @@ require '../connection.php';
 
 $collection = $database->selectCollection("employees"); 
 
-// 1. Yearly employment breakdown based on root-level date_hired (format: MM/DD/YYYY)
 $cursor = $collection->aggregate([
     [
         '$addFields' => [
