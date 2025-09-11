@@ -3,18 +3,72 @@ include('../connection.php');
 $collection = $database->selectCollection("employee");
 
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$selectedDepartment = isset($_GET['department']) ? $_GET['department'] : '';
 
+// =============================
+// Define headers
+// =============================
+
+// Headers for overview (All Departments) and default fallback (no dept-specific mapping)
+$overviewHeaders = ["Department", "Full Name", "Email", "Phone", "Position", "Action"];
+$defaultHeaders = ["Full Name", "Email", "Phone", "Position", "Action"];
+
+// Department-specific headers
+$departmentHeaders = [
+    "School Administrators" => ["Name", "Position/Designation", "Highest Educational Attainment", "Professional License No.", "Status", "Action"],
+    "Non-Teaching Personnel" => ["Name", "Position/Designation","When and Where Obtained","Professional License No. and Expiration Date", "Highest Educational Attainment", "Status", "Action"],
+    "Faculty - Maritime" => ["Name", "Position/Designation", "Highest Educational Attainment", "Professional License", "Sea Experience", "Teaching Experience","Trainings", "Subject Taught","Status of Appointment","Status of Appointment","Nature of Appointment", "Action"],
+    "Faculty - Nursing" => ["Name", "Position/Designation", "Highest Educational Attainment", "Professional License", "Teaching Experience", "Subjects Handled", "Status", "Action"],
+    "Faculty - Education" => ["Name", "Position/Designation", "Bachelor's Degree", "Master’s/PhD", "Professional License", "Teaching Experience", "Subjects Handled", "Status", "Action"],
+    "Faculty - Business" => ["Name", "Position/Designation", "Bachelor's Degree", "Master’s/PhD", "Professional License", "Teaching Experience", "Subjects Handled", "Status", "Action"],
+    "Faculty - Criminology" => ["Name", "Position/Designation", "Bachelor's Degree", "Master’s/PhD", "Professional License", "Teaching Experience", "Subjects Handled", "Status", "Action"],
+    "Faculty - Information System" => ["Name", "Position/Designation", "Bachelor's Degree", "Master’s/PhD", "Professional License", "Teaching Experience", "Subjects Handled", "Status", "Action"],
+];
+
+// Pick headers
+$isOverview = empty($selectedDepartment);
+$headers = $isOverview ? $overviewHeaders : ($departmentHeaders[$selectedDepartment] ?? $defaultHeaders);
+
+// =============================
+// Query employees
+// =============================
 $query = [];
 if (!empty($search)) {
-    $query = ['$or' => [
+    $query['$or'] = [
         ['personal_info.first_name' => ['$regex' => $search, '$options' => 'i']],
         ['personal_info.middle_name' => ['$regex' => $search, '$options' => 'i']],
         ['personal_info.last_name' => ['$regex' => $search, '$options' => 'i']],
         ['email' => ['$regex' => $search, '$options' => 'i']],
         ['position_applied' => ['$regex' => $search, '$options' => 'i']]
-    ]];
+    ];
 }
-$applicants = $collection->find($query);
+if (!empty($selectedDepartment)) {
+    $query['department'] = $selectedDepartment;
+}
+
+// Fetch list of departments
+$departments = [];
+try {
+    $distinct = $collection->distinct('department');
+    if (is_array($distinct)) {
+        $departments = array_values(array_filter(array_map(function($v){ return is_string($v) ? trim($v) : '';}, $distinct), function($v){ return $v !== ''; }));
+        sort($departments, SORT_NATURAL | SORT_FLAG_CASE);
+    }
+} catch (Exception $e) {
+    $departments = [];
+}
+
+$cursor = $collection->find($query);
+
+// Group employees by department
+$groupedByDepartment = [];
+foreach ($cursor as $doc) {
+    $deptName = isset($doc['department']) && $doc['department'] !== '' ? $doc['department'] : 'Unspecified';
+    if (!isset($groupedByDepartment[$deptName])) {
+        $groupedByDepartment[$deptName] = [];
+    }
+    $groupedByDepartment[$deptName][] = $doc;
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +82,6 @@ $applicants = $collection->find($query);
             background-color: #00124d;
             border-left: 4px solid #ffffff;
         }
-
-
-        /* Search Bar */
         .search-container {
             display: flex;
             align-items: center;
@@ -40,7 +91,6 @@ $applicants = $collection->find($query);
             margin-top: 5px;
             padding-left: 5px;
         }
-
         .search-container input {
             flex: 1;
             padding:14px 100px 14px 8px;
@@ -49,7 +99,6 @@ $applicants = $collection->find($query);
             outline: none;
             width: 100%;
         }
-
         .search-container button {
             background-color: #00124d;
             color: #ffffff;
@@ -59,17 +108,7 @@ $applicants = $collection->find($query);
             cursor: pointer;
             border-radius: 5px;
         }
-
-        .search-container button:hover {
-            background-color: #003080;
-        }
-        .search-container .clear-button {
-            background-color:rgba(0, 47, 128, 0);
-            color: black
-        }
-        .search-container .clear-button:hover {
-            background-color:rgba(0, 47, 128, 0);
-        }
+        .search-container button:hover { background-color: #003080; }
         .clear-button {
             position: absolute;
             right: 75px;
@@ -81,12 +120,7 @@ $applicants = $collection->find($query);
             display: none;
             font-weight: bold;
         }
-
-        .clear-button:hover {
-            color: black;
-        }
-
-
+        .clear-button:hover { color: black; }
         .add-applicant-button {
             background-color: #00124d; 
             color: #ffffff; 
@@ -99,78 +133,116 @@ $applicants = $collection->find($query);
             transition: all 0.3s ease;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             margin-top: 4px;
-        
         }
-        .add-applicant-button:hover {
-            background-color: #003080; 
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-        }
-     
-                
+        .add-applicant-button:hover { background-color: #003080; }
     </style>
-    
 </head>
 <body>
-
 <?php include 'sidebar.php'; ?>
     <div class="header">Employee List</div><br><br><br>
 <div class="content">
 
     <div class="box-header">
-    <!-- <div class="top-section"> -->
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Search employee..." value="<?php echo htmlspecialchars($search); ?>" oninput="toggleClearButton()">
             <button id="clearBtn" class="clear-button" onclick="clearSearch()">✕</button>
+            <select id="departmentSelect" style="margin-left:6px; padding: 12px 8px; border:1px solid #ccc; border-radius:5px;">
+                <option value="">All Departments (Overview)</option>
+                <?php foreach ($departments as $dept) { ?>
+                    <option value="<?php echo htmlspecialchars($dept); ?>" <?php echo $selectedDepartment === $dept ? 'selected' : ''; ?>><?php echo htmlspecialchars($dept); ?></option>
+                <?php } ?>
+            </select>
             <button onclick="searchApplicants()">Search</button>
         </div>
-    <!-- <button class="add-applicant-button" onclick="addapplicant()">+ Add Applicant</button> -->
+    </div>  
 
-    <!-- </div> -->
-</div>  
     <div class="box-body">
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Position</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($applicants as $applicant)
-                 { ?>
+    <?php if (empty($groupedByDepartment)) { ?>
+        <p style="padding:10px; color:#666;">No employees found.</p>
+    <?php } ?>
+    <?php if ($isOverview) { ?>
+        <div class="table-container" style="margin-bottom:20px;">
+            <table>
+                <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($applicant['personal_info']['first_name'] . ' ' . ($applicant['personal_info']['middle_name'] ?? '') . ' ' . $applicant['personal_info']['last_name']); ?></td>
-                        <td><?php echo htmlspecialchars($applicant['personal_info']['email']); ?></td>
-                        <td><?php echo htmlspecialchars($applicant['personal_info']['contact']); ?></td>
-                        <td><?php echo htmlspecialchars($applicant['position_applied']); ?></td>
-                        <td><?php echo htmlspecialchars($applicant['status']); ?></td>
-                        <td style="text-align: center" class="actions">
-                            <a href="view_employee.php?id=<?php echo $applicant['_id']; ?>">View</a>
-                        </td>
+                        <?php foreach ($headers as $header) { ?>
+                            <th><?php echo htmlspecialchars($header); ?></th>
+                        <?php } ?>
                     </tr>
-                <?php 
-                } ?>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                <?php foreach ($groupedByDepartment as $deptName => $employees) { ?>
+                    <?php foreach ($employees as $applicant) { ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($deptName); ?></td>
+                            <td><?php echo htmlspecialchars(($applicant['personal_info']['first_name'] ?? '') . ' ' . ($applicant['personal_info']['middle_name'] ?? '') . ' ' . ($applicant['personal_info']['last_name'] ?? '')); ?></td>
+                            <td><?php echo htmlspecialchars($applicant['personal_info']['email'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($applicant['personal_info']['contact'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($applicant['position_applied'] ?? ''); ?></td>
+                            <td style="text-align:center"><a href="view_employee.php?id=<?php echo $applicant['_id']; ?>">View</a></td>
+                        </tr>
+                    <?php } ?>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    <?php } else { ?>
+        <?php foreach ($groupedByDepartment as $deptName => $employees) { ?>
+            <div class="table-container" style="margin-bottom:20px;">
+                <div style="background:#00124d; color:#fff; padding:10px 12px; font-weight:bold; border-radius:6px;">
+                    <?php echo htmlspecialchars($deptName); ?>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <?php foreach ($headers as $header) { ?>
+                                <th><?php echo htmlspecialchars($header); ?></th>
+                            <?php } ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($employees as $applicant) { ?>
+                        <tr>
+                            <?php foreach ($headers as $header) { ?>
+                                <?php if ($header === "Full Name" || $header === "Name") { ?>
+                                    <td><?php echo htmlspecialchars(($applicant['personal_info']['first_name'] ?? '') . ' ' . ($applicant['personal_info']['middle_name'] ?? '') . ' ' . ($applicant['personal_info']['last_name'] ?? '')); ?></td>
+                                <?php } elseif ($header === "Email") { ?>
+                                    <td><?php echo htmlspecialchars($applicant['personal_info']['email'] ?? ''); ?></td>
+                                <?php } elseif ($header === "Phone") { ?>
+                                    <td><?php echo htmlspecialchars($applicant['personal_info']['contact'] ?? ''); ?></td>
+                                <?php } elseif ($header === "Position" || $header === "Position/Designation") { ?>
+                                    <td><?php echo htmlspecialchars($applicant['position_applied'] ?? ''); ?></td>
+                                <?php } elseif ($header === "Action") { ?>
+                                    <td style="text-align:center"><a href="view_employee.php?id=<?php echo $applicant['_id']; ?>">View</a></td>
+                                <?php } else { ?>
+                                    <td>—</td>
+                                <?php } ?>
+                            <?php } ?>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php } ?>
+    <?php } ?>
     </div>
 </div>
 </body>
 <script>
-        function searchApplicants() {
+function searchApplicants() {
     let searchValue = document.getElementById('searchInput').value;
-    window.location.href = 'employee.php?search=' + encodeURIComponent(searchValue);
+    let dept = document.getElementById('departmentSelect').value;
+    let params = new URLSearchParams();
+    if (searchValue) params.set('search', searchValue);
+    if (dept) params.set('department', dept);
+    window.location.href = 'employee.php' + (params.toString() ? ('?' + params.toString()) : '');
 }
 
 function clearSearch() {
     document.getElementById('searchInput').value = '';
     document.getElementById('clearBtn').style.display = 'none';
-    window.location.href = 'applicants.php';
+    document.getElementById('departmentSelect').value = '';
+    window.location.href = 'employee.php';
 }
 
 function toggleClearButton() {
@@ -185,6 +257,5 @@ window.onload = function () {
 function addapplicant(){
     window.location.href = 'application_form.php';
 }
-
 </script>
 </html>

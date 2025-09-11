@@ -104,19 +104,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         h2 { color: #00124d; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background: #00124d; color: white; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: fixed; 
+        }
+        th.rating, td.rating {
+            width: 120px;
+            min-width: 120px;
+            max-width: 120px;
+            text-align: center;
+        }
+        th, td {
+            vertical-align: middle;
+        }
         .submit-btn {
             background-color: #00124d; color: white; padding: 10px 15px;
             border: none; border-radius: 5px; cursor: pointer;
         }
-        .radio-group { display: flex; gap: 5px; }
-          .performance-button {
-    background-color: #00124d;
-    border-left: 4px solid #ffffff;
-  }
-    </style>
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        .radio-group label {
+            min-width: 36px;
+            text-align: center;
+            display: inline-block;
+        }
+        input[type="radio"] {
+            margin-right: 3px;
+            width: 18px;
+            height: 18px;
+        }
+                .performance-button {
+            background-color: #00124d;
+            border-left: 4px solid #ffffff;
+        }
+
+        .rating{ 
+                width: 30%;
+            }
+
+        .criteria{
+            width: 70%;
+        }
+            </style>
     <script>
         function calcAverage(section, totalItems) {
             let scores = [];
@@ -160,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- JOB KNOWLEDGE -->
     <h3>Job Knowledge & Skills (20%)</h3>
     <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $job_criteria = [
             "Has thorough knowledge and understanding of handled course/s",
@@ -189,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- CLASSROOM EFFECTIVENESS -->
     <h3>Classroom Effectiveness (20%)</h3>
     <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+       <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $class_criteria = [
             "Provides organized delivery of instruction",
@@ -218,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- PREPARATION -->
     <h3>Preparation & Use of Instructional Materials (15%)</h3>
     <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $prep_criteria = [
             "Instructional materials are clear and presentable",
@@ -246,7 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- CLASSROOM EFFECTIVENESS -->
     <h3>Dependability & Resourcefullness (10%)</h3>
     <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $dependres_criteria = [
             "A self-starter with outstanding initiative. Always makes wothwihile suggestions and ideas",
@@ -276,23 +311,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        <!-- CLASSROOM EFFECTIVENESS -->
     <h3>Human Relations (10%)</h3>
         <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $humanrel_criteria = [
-            "1. Trainees/Students",
-            "       Relates to trainees in ways which promotes mutual respect ",
-            "       Has good rapport with trainees. ",
-            "2. Other Employees and Superior",
-            "       Maintains harmonious relationship with co-workers or other employees. ",
-            "       Easily deals with people with whom he/she works and comes in contact. ",
-            "       Shows respect to subordinate, colleagues and superior. "
+            // Section 1
+            ["section" => "Trainees/Students"],
+            "Relates to trainees in ways which promotes mutual respect",
+            "Has good rapport with trainees.",
+            // Section 2
+            ["section" => "Other Employees and Superior"],
+            "Maintains harmonious relationship with co-workers or other employees.",
+            "Easily deals with people with whom he/she works and comes in contact.",
+            "Shows respect to subordinate, colleagues and superior."
         ];
+
         foreach ($humanrel_criteria as $i => $c) {
-            echo "<tr><td>$c</td><td class='radio-group'>";
-            for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='humanrel[$i]' value='$j' required onchange='calcAverage(\"humanrel\",5)'> $j</label>";
+            if (is_array($c) && isset($c['section'])) {
+                // Section label row
+                echo "<tr><td colspan='2'><strong>{$c['section']}</strong></td></tr>";
+            } else {
+                // Criteria with radio buttons
+                echo "<tr><td>$c</td><td class='radio-group'>";
+                for ($j=1; $j<=5; $j++) {
+                    echo "<label><input type='radio' name='humanrel[$i]' value='$j' required onchange='calcAverage(\"humanrel\",5)'> $j</label>";
+                }
+                echo "</td></tr>";
             }
-            echo "</td></tr>";
         }
         ?>
         <tr><td colspan="2">
@@ -306,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
            <!-- CLASSROOM EFFECTIVENESS -->
     <h3>Job Attitude/Cooperation (10%)</h3>
         <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $jobcoop_criteria = [
             "Gives whole-hearted cooperation with others and his superiors towards the 
@@ -336,7 +380,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <h3>PERSONAL QUALITIES (10%)</h3>
         <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $personal_criteria = [
             "Has very respectable personality and appearance.",
@@ -364,7 +408,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <h3>ATTENDANCE & PUNCTUALITY (5%)</h3>
         <table>
-        <tr><th>Criteria</th><th>Rating</th></tr>
+        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
         <?php 
         $attendance_criteria = [
             "Shows punctuality in observing work hours.",
