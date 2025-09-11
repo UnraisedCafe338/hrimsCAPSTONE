@@ -6,9 +6,27 @@ error_reporting(E_ALL);
 require '../vendor/autoload.php'; // MongoDB library
 require '../connection.php';
 
-$collection = $database->selectCollection("employees"); 
+$collection = $database->selectCollection("employee");
 
-$totalEmployees = $collection->countDocuments([]);
+// Optional department filter
+$department = isset($_GET['department']) ? trim($_GET['department']) : '';
+$baseFilter = [];
+if ($department !== '') {
+    $baseFilter['department'] = $department;
+}
+
+// Distinct list of departments for the dropdown
+$departments = [];
+try {
+    $departments = $collection->distinct('department');
+    // Normalize and sort
+    $departments = array_values(array_filter(array_map(function($d) { return is_string($d) ? trim($d) : ''; }, $departments), function($d) { return $d !== ''; }));
+    sort($departments, SORT_NATURAL | SORT_FLAG_CASE);
+} catch (Exception $e) {
+    $departments = [];
+}
+
+$totalEmployees = $collection->countDocuments($baseFilter);
 
 // Compute newly hired for the current month (based on date_hired in MM/DD/YYYY)
 $now = new DateTime('now');
@@ -16,7 +34,7 @@ $currentMonth = (int)$now->format('n');
 $currentYear = (int)$now->format('Y');
 
 $newlyHired = 0;
-$newlyHiredCursor = $collection->aggregate([
+$newlyHiredPipeline = [
     [
         '$addFields' => [
             'parsedDate' => [
@@ -40,13 +58,21 @@ $newlyHiredCursor = $collection->aggregate([
         ]
     ],
     [ '$count' => 'count' ]
-]);
+];
+
+// If filtering by department, inject into $match
+if (!empty($baseFilter)) {
+    // Merge department filter into the second stage $match (outside $expr)
+    $newlyHiredPipeline[1]['$match'] = array_merge($newlyHiredPipeline[1]['$match'], $baseFilter);
+}
+
+$newlyHiredCursor = $collection->aggregate($newlyHiredPipeline);
 
 foreach ($newlyHiredCursor as $doc) {
     $newlyHired = (int)($doc['count'] ?? 0);
 }
 
-$cursor = $collection->aggregate([
+$aggregation = [
     [
         '$addFields' => [
             'parsedDate' => [
@@ -59,6 +85,8 @@ $cursor = $collection->aggregate([
             ]
         ]
     ],
+    // Optional department filter stage
+    !empty($baseFilter) ? [ '$match' => $baseFilter ] : null,
     [
         '$project' => [
             'year' => ['$year' => '$parsedDate'],
@@ -74,7 +102,12 @@ $cursor = $collection->aggregate([
             'count' => ['$sum' => 1]
         ]
     ]
-]);
+];
+
+// Remove null entries from pipeline (when no filter)
+$aggregation = array_values(array_filter($aggregation));
+
+$cursor = $collection->aggregate($aggregation);
 
 $yearlyStats = [];
 foreach ($cursor as $row) {
@@ -93,24 +126,27 @@ foreach ($cursor as $row) {
 }
 
 // 2. Teaching vs Non-Teaching (using faculty_type at root)
-$teaching = $collection->countDocuments(['faculty_type' => 'Teaching']);
-$nonTeaching = $collection->countDocuments(['faculty_type' => 'Non-teaching']);
+$teachingFilter = array_merge($baseFilter, ['faculty_type' => 'Teaching']);
+$nonTeachingFilter = array_merge($baseFilter, ['faculty_type' => 'Non-teaching']);
+$teaching = $collection->countDocuments($teachingFilter);
+$nonTeaching = $collection->countDocuments($nonTeachingFilter);
 
 // 3. Teaching full-time vs part-time
-$teachingFullTime = $collection->countDocuments([
+$teachingFullTime = $collection->countDocuments(array_merge($baseFilter, [
     'faculty_type' => 'Teaching',
     'employment_type' => 'Full-time'
-]);
+]));
 
-$teachingPartTime = $collection->countDocuments([
+$teachingPartTime = $collection->countDocuments(array_merge($baseFilter, [
     'faculty_type' => 'Teaching',
     'employment_type' => 'Part-time'
-]);
+]));
 
 // Output results as JSON
 echo json_encode([
     'totalEmployees' => $totalEmployees,
     'newlyHired' => $newlyHired,
+    'departments' => $departments,
     'yearlyStats' => $yearlyStats,
     'teachingStats' => [
         'teaching' => $teaching,

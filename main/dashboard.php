@@ -188,82 +188,115 @@
 
 <script src="../assets/js/chart.umd.js"></script>
 <script>
-  fetch('../handlers/get_dashboard_data.php')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('totalEmployees').textContent = data.totalEmployees || 0;
+  let yearlyChartInstance = null;
+  let deptChartInstance = null;
+  let teachingTypeChartInstance = null;
 
-      const years = Object.keys(data.yearlyStats).sort();
-      const employmentTypes = ['full-time', 'part-time', 'permanent'];
-      const yearlyDatasets = employmentTypes.map(type => ({
-        label: type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
-        data: years.map(year => data.yearlyStats[year]?.[type] || 0),
-        backgroundColor: getColorForType(type)
-      }));
-      new Chart(document.getElementById('yearlyChart'), {
-        type: 'line',
-        data: {
-          labels: years.length > 0 ? years : ['No Data'],
-          datasets: years.length > 0 ? yearlyDatasets.map(dataset => ({
-            ...dataset,
-            fill: false,
-            borderColor: dataset.backgroundColor,
-            tension: 0.3
-          })) : [{ label: 'No Data', data: [0], fill: false, borderColor: '#ccc' }]
+  function populateDepartments(departments) {
+    const select = document.getElementById('deptFilter');
+    // Keep the first option (All Departments), replace the rest
+    const currentValue = select.value;
+    select.innerHTML = '<option value="">All Departments</option>' + (departments || []).map(d => `<option value="${encodeURIComponent(d)}">${d}</option>`).join('');
+    // Try to preserve selection if still present
+    if ([...select.options].some(o => o.value === currentValue)) {
+      select.value = currentValue;
+    }
+  }
+
+  function render(data) {
+    document.getElementById('totalEmployees').textContent = data.totalEmployees || 0;
+    document.getElementById('newlyHired').textContent = data.newlyHired || 0;
+    populateDepartments(data.departments || []);
+
+    const years = Object.keys(data.yearlyStats || {}).sort();
+    const employmentTypes = ['full-time', 'part-time', 'permanent'];
+    const yearlyDatasets = employmentTypes.map(type => ({
+      label: type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      data: years.map(year => (data.yearlyStats?.[year]?.[type]) || 0),
+      backgroundColor: getColorForType(type)
+    }));
+
+    // Destroy existing charts if any
+    if (yearlyChartInstance) yearlyChartInstance.destroy();
+    if (deptChartInstance) deptChartInstance.destroy();
+    if (teachingTypeChartInstance) teachingTypeChartInstance.destroy();
+
+    yearlyChartInstance = new Chart(document.getElementById('yearlyChart'), {
+      type: 'line',
+      data: {
+        labels: years.length > 0 ? years : ['No Data'],
+        datasets: years.length > 0 ? yearlyDatasets.map(dataset => ({
+          ...dataset,
+          fill: false,
+          borderColor: dataset.backgroundColor,
+          tension: 0.3
+        })) : [{ label: 'No Data', data: [0], fill: false, borderColor: '#ccc' }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          title: { display: true, text: 'Employee Types by Year' }
         },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' },
-            title: { display: true, text: 'Employee Types by Year' }
-          },
-          scales: {
-            y: { beginAtZero: true, title: { display: true, text: 'Number of Employees' } },
-            x: { title: { display: true, text: 'Year' } }
-          }
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: 'Number of Employees' } },
+          x: { title: { display: true, text: 'Year' } }
         }
-      });
-
-      new Chart(document.getElementById('deptChart'), {
-        type: 'pie',
-        data: {
-          labels: ['Teaching', 'Non-Teaching'],
-          datasets: [{
-            data: [data.teachingStats.teaching, data.teachingStats.non_teaching].some(n => n > 0) ? [data.teachingStats.teaching, data.teachingStats.non_teaching] : [1, 0],
-            backgroundColor: ['#5700FF', '#FFF500']
-          }]
-        }
-      });
-
-      const teachTypeData = [data.teachingType.full_time, data.teachingType.part_time];
-      const hasData = teachTypeData.some(n => n > 0);
-
-      new Chart(document.getElementById('teachingTypeChart'), {
-        type: 'doughnut',
-        data: {
-          labels: ['Full-time', 'Part-time'],
-          datasets: [{
-            data: hasData ? teachTypeData : [1, 1],
-            backgroundColor: hasData ? ['#3498db', '#f39c12'] : ['#e0e0e0', '#e0e0e0'],
-            borderColor: '#ccc',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          plugins: {
-            title: {
-              display: true,
-              text: hasData ? 'Teaching: Full-time vs Part-time' : 'No data available'
-            },
-            tooltip: { enabled: hasData }
-          }
-        }
-      });
-    })
-    .catch(err => {
-      console.error('Dashboard error:', err);
-      alert("Failed to load dashboard data. Please check the console.");
+      }
     });
+
+    deptChartInstance = new Chart(document.getElementById('deptChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Teaching', 'Non-Teaching'],
+        datasets: [{
+          data: [data.teachingStats?.teaching || 0, data.teachingStats?.non_teaching || 0].some(n => n > 0)
+            ? [data.teachingStats?.teaching || 0, data.teachingStats?.non_teaching || 0]
+            : [1, 0],
+          backgroundColor: ['#5700FF', '#FFF500']
+        }]
+      }
+    });
+
+    const teachTypeData = [data.teachingType?.full_time || 0, data.teachingType?.part_time || 0];
+    const hasData = teachTypeData.some(n => n > 0);
+
+    teachingTypeChartInstance = new Chart(document.getElementById('teachingTypeChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Full-time', 'Part-time'],
+        datasets: [{
+          data: hasData ? teachTypeData : [1, 1],
+          backgroundColor: hasData ? ['#3498db', '#f39c12'] : ['#e0e0e0', '#e0e0e0'],
+          borderColor: '#ccc',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: hasData ? 'Teaching: Full-time vs Part-time' : 'No data available'
+          },
+          tooltip: { enabled: hasData }
+        }
+      }
+    });
+  }
+
+  function loadData() {
+    const select = document.getElementById('deptFilter');
+    const raw = select.value || '';
+    const dept = raw ? decodeURIComponent(raw) : '';
+    const url = '../handlers/get_dashboard_data.php' + (dept ? ('?department=' + encodeURIComponent(dept)) : '');
+    fetch(url)
+      .then(res => res.json())
+      .then(render)
+      .catch(err => {
+        console.error('Dashboard error:', err);
+        alert('Failed to load dashboard data. Please check the console.');
+      });
+  }
 
   function getColorForType(type) {
     switch (type) {
@@ -279,6 +312,9 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
+  const deptFilterEl = document.getElementById('deptFilter');
+  deptFilterEl.addEventListener('change', loadData);
+  loadData();
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',

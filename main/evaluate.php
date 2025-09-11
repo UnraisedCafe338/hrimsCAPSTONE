@@ -185,6 +185,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .criteria{
             width: 70%;
         }
+        /* Pagination */
+        .page { display: none; }
+        .page.active { display: block; }
+        .nav-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px; }
+        .btn { background-color: #00124d; color: #ffffff; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+        /* Modal */
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal { background: #ffffff; border-radius: 8px; width: 100%; max-width: 520px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; }
+        .modal-header { background: #00124d; color: #ffffff; padding: 14px 16px; font-weight: bold; }
+        .modal-body { padding: 16px; max-height: 50vh; overflow: auto; }
+        .modal-footer { padding: 12px 16px; display: flex; gap: 10px; justify-content: flex-end; border-top: 1px solid #eee; }
+        .btn-secondary { background-color: #6b7280; }
+        .list { margin: 8px 0 0 18px; }
+        .list li { margin: 6px 0; display: flex; align-items: center; gap: 8px; }
+        .btn-small { padding: 6px 10px; font-size: 12px; border-radius: 4px; }
+        .hidden { display: none !important; }
             </style>
     <script>
         function calcAverage(section, totalItems) {
@@ -211,6 +228,154 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 document.getElementById(section + "_percent").innerText = percent;
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const pages = Array.from(document.querySelectorAll('.page'));
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('evalForm');
+            const modalBackdrop = document.getElementById('modalBackdrop');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const modalList = document.getElementById('modalList');
+            const modalOk = document.getElementById('modalOk');
+            const modalNo = document.getElementById('modalNo');
+            const modalYes = document.getElementById('modalYes');
+            let currentPageIndex = 0;
+
+            function setRequiredForPage(pageEl, required) {
+                const inputs = pageEl.querySelectorAll('input[type="radio"]');
+                inputs.forEach(inp => {
+                    if (required) {
+                        inp.setAttribute('required', 'required');
+                    } else {
+                        inp.removeAttribute('required');
+                    }
+                });
+            }
+
+            function showPage(index) {
+                pages.forEach((p, i) => {
+                    p.classList.toggle('active', i === index);
+                    setRequiredForPage(p, i === index);
+                });
+                prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
+                nextBtn.style.display = index === pages.length - 1 ? 'none' : 'inline-block';
+                submitBtn.style.display = index === pages.length - 1 ? 'inline-block' : 'none';
+            }
+
+            prevBtn.addEventListener('click', function () {
+                if (currentPageIndex > 0) {
+                    currentPageIndex -= 1;
+                    showPage(currentPageIndex);
+                }
+            });
+
+            nextBtn.addEventListener('click', function () {
+                // Optionally, ensure current page complete before next
+                currentPageIndex = Math.min(currentPageIndex + 1, pages.length - 1);
+                showPage(currentPageIndex);
+            });
+
+            function openModal() { modalBackdrop.style.display = 'flex'; }
+            function closeModal() { modalBackdrop.style.display = 'none'; }
+
+            function getIncompleteSections() {
+                const sections = [
+                    { key: 'job', label: 'Job Knowledge & Skills', count: 5, pageIndex: 0 },
+                    { key: 'class', label: 'Classroom Effectiveness', count: 5, pageIndex: 1 },
+                    { key: 'prep', label: 'Preparation & Use of Instructional Materials', count: 5, pageIndex: 2 },
+                    { key: 'dependres', label: 'Dependability & Resourcefullness', count: 5, pageIndex: 3 },
+                    { key: 'humanrel', label: 'Human Relations', count: (function(){
+                        const list = document.querySelectorAll('input[name^="humanrel["]');
+                        // Count unique indexes for humanrel
+                        const idxs = new Set();
+                        list.forEach(inp => {
+                            const m = inp.name.match(/humanrel\[(\d+)\]/);
+                            if (m) idxs.add(m[1]);
+                        });
+                        return idxs.size || 0;
+                    })(), pageIndex: 4 },
+                    { key: 'jobcoop', label: 'Job Attitude/Cooperation', count: 5, pageIndex: 5 },
+                    { key: 'personal', label: 'Personal Qualities', count: 5, pageIndex: 6 },
+                    { key: 'attendance', label: 'Attendance & Punctuality', count: 5, pageIndex: 7 }
+                ];
+                const incomplete = [];
+                sections.forEach(s => {
+                    let selected = 0;
+                    for (let i = 0; i < s.count; i++) {
+                        if (document.querySelector(`input[name="${s.key}[${i}]"]:checked`)) {
+                            selected++;
+                        }
+                    }
+                    if (selected < s.count) incomplete.push({ label: s.label, pageIndex: s.pageIndex });
+                });
+                return incomplete;
+            }
+
+            function showIncompleteModal(missing) {
+                modalTitle.textContent = 'Incomplete Evaluation';
+                modalMessage.textContent = 'Please complete all ratings. Missing sections:';
+                modalList.innerHTML = '';
+                missing.forEach(m => {
+                    const li = document.createElement('li');
+                    const span = document.createElement('span');
+                    span.textContent = m.label;
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn btn-small';
+                    btn.textContent = 'Jump to page';
+                    btn.addEventListener('click', function(){
+                        currentPageIndex = m.pageIndex;
+                        showPage(currentPageIndex);
+                        closeModal();
+                    });
+                    li.appendChild(span);
+                    li.appendChild(btn);
+                    modalList.appendChild(li);
+                });
+                modalOk.classList.remove('hidden');
+                modalNo.classList.add('hidden');
+                modalYes.classList.add('hidden');
+                openModal();
+            }
+
+            function showConfirmModal() {
+                modalTitle.textContent = 'Submit Evaluation';
+                modalMessage.textContent = 'Are you sure you want to submit?';
+                modalList.innerHTML = '';
+                modalOk.classList.add('hidden');
+                modalNo.classList.remove('hidden');
+                modalYes.classList.remove('hidden');
+                openModal();
+            }
+
+            modalOk.addEventListener('click', function(){ closeModal(); });
+            modalNo.addEventListener('click', function(){ closeModal(); });
+            modalYes.addEventListener('click', function(){
+                closeModal();
+                form.submit();
+            });
+
+            form.addEventListener('submit', function (e) {
+                // Only manage custom flow on last page
+                if (currentPageIndex === pages.length - 1) {
+                    e.preventDefault();
+                    const missing = getIncompleteSections();
+                    if (missing.length > 0) {
+                        showIncompleteModal(missing);
+                        return false;
+                    }
+                    showConfirmModal();
+                    return false;
+                }
+            });
+
+            // Initialize
+            pages.forEach(p => setRequiredForPage(p, false));
+            showPage(currentPageIndex);
+        });
     </script>
 </head>
 <body>
@@ -229,8 +394,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?></h2>
     </div>
 <div class="box-body">
-<form method="POST">
+<form method="POST" id="evalForm">
     <!-- JOB KNOWLEDGE -->
+    <div class="page active" data-section="job">
     <h3>Job Knowledge & Skills (20%)</h3>
     <table>
         <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -245,7 +411,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($job_criteria as $i => $c) {
             echo "<tr><td>$c</td><td class='radio-group'>";
             for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='job[$i]' value='$j' required onchange='calcAverage(\"job\",5)'> $j</label>";
+                echo "<label><input type='radio' name='job[$i]' value='$j' onchange='calcAverage(\\\"job\\\",5)'> $j</label>";
             }
             echo "</td></tr>";
         }
@@ -258,8 +424,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea name="job_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
+    </div>
 
     <!-- CLASSROOM EFFECTIVENESS -->
+    <div class="page" data-section="class">
     <h3>Classroom Effectiveness (20%)</h3>
     <table>
        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -274,7 +442,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($class_criteria as $i => $c) {
             echo "<tr><td>$c</td><td class='radio-group'>";
             for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='class[$i]' value='$j' required onchange='calcAverage(\"class\",5)'> $j</label>";
+                echo "<label><input type='radio' name='class[$i]' value='$j' onchange='calcAverage(\\\"class\\\",5)'> $j</label>";
             }
             echo "</td></tr>";
         }
@@ -287,8 +455,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea name="class_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
+    </div>
 
     <!-- PREPARATION -->
+    <div class="page" data-section="prep">
     <h3>Preparation & Use of Instructional Materials (15%)</h3>
     <table>
         <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -303,7 +473,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($prep_criteria as $i => $c) {
             echo "<tr><td>$c</td><td class='radio-group'>";
             for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='prep[$i]' value='$j' required onchange='calcAverage(\"prep\",5)'> $j</label>";
+                echo "<label><input type='radio' name='prep[$i]' value='$j' onchange='calcAverage(\\\"prep\\\",5)'> $j</label>";
             }
             echo "</td></tr>";
         }
@@ -316,7 +486,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea name="prep_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
+    </div>
     <!-- CLASSROOM EFFECTIVENESS -->
+    <div class="page" data-section="dependres">
     <h3>Dependability & Resourcefullness (10%)</h3>
     <table>
         <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -333,7 +505,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($dependres_criteria as $i => $c) {
             echo "<tr><td>$c</td><td class='radio-group'>";
             for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='dependres[$i]' value='$j' required onchange='calcAverage(\"dependres\",5)'> $j</label>";
+                echo "<label><input type='radio' name='dependres[$i]' value='$j' onchange='calcAverage(\\\"dependres\\\",5)'> $j</label>";
             }
             echo "</td></tr>";
         }
@@ -346,7 +518,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <textarea name="dependres_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
+    </div>
        <!-- CLASSROOM EFFECTIVENESS -->
+    <div class="page" data-section="humanrel">
 <h3>Human Relations (10%)</h3>
 <table>
 <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -377,7 +551,7 @@ $humanrel_criteria = [
                 // Criteria with radio buttons
                 echo "<tr><td class='criteria'>$c</td><td class='rating'><div class='radio-group'>";
                 for ($j=1; $j<=5; $j++) {
-                    echo "<label><input type='radio' name='humanrel[$humanrel_index]' value='$j' required onchange='calcAverage(\"humanrel\",$humanrel_criteria_count)'> $j</label>";
+                    echo "<label><input type='radio' name='humanrel[$humanrel_index]' value='$j' onchange='calcAverage(\\\"humanrel\\\",$humanrel_criteria_count)'> $j</label>";
                 }
                 echo "</div></td></tr>";
                 $humanrel_index++;
@@ -393,7 +567,9 @@ $humanrel_criteria = [
             <textarea name="humanrel_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
+    </div>
            <!-- CLASSROOM EFFECTIVENESS -->
+    <div class="page" data-section="jobcoop">
     <h3>Job Attitude/Cooperation (10%)</h3>
         <table>
         <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -410,7 +586,7 @@ $humanrel_criteria = [
         foreach ($jobcoop_criteria as $i => $c) {
             echo "<tr><td>$c</td><td class='radio-group'>";
             for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='jobcoop[$i]' value='$j' required onchange='calcAverage(\"jobcoop\",5)'> $j</label>";
+                echo "<label><input type='radio' name='jobcoop[$i]' value='$j' onchange='calcAverage(\\\"jobcoop\\\",5)'> $j</label>";
             }
             echo "</td></tr>";
         }
@@ -423,7 +599,9 @@ $humanrel_criteria = [
             <textarea name="jobcoop_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
+    </div>
 
+    <div class="page" data-section="personal">
     <h3>PERSONAL QUALITIES (10%)</h3>
         <table>
         <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -438,7 +616,7 @@ $humanrel_criteria = [
         foreach ($personal_criteria as $i => $c) {
             echo "<tr><td>$c</td><td class='radio-group'>";
             for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='personal[$i]' value='$j' required onchange='calcAverage(\"personal\",5)'> $j</label>";
+                echo "<label><input type='radio' name='personal[$i]' value='$j' onchange='calcAverage(\\\"personal\\\",5)'> $j</label>";
             }
             echo "</td></tr>";
         }
@@ -451,7 +629,9 @@ $humanrel_criteria = [
             <textarea name="personal_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
+    </div>
 
+    <div class="page" data-section="attendance">
     <h3>ATTENDANCE & PUNCTUALITY (5%)</h3>
         <table>
         <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
@@ -467,7 +647,7 @@ $humanrel_criteria = [
         foreach ($attendance_criteria as $i => $c) {
             echo "<tr><td>$c</td><td class='radio-group'>";
             for ($j=1; $j<=5; $j++) {
-                echo "<label><input type='radio' name='attendance[$i]' value='$j' required onchange='calcAverage(\"attendance\",5)'> $j</label>";
+                echo "<label><input type='radio' name='attendance[$i]' value='$j' onchange='calcAverage(\\\"attendance\\\",5)'> $j</label>";
             }
             echo "</td></tr>";
         }
@@ -480,9 +660,32 @@ $humanrel_criteria = [
             <textarea name="attendance_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>
     </table>
-    
-    <button type="submit" class="submit-btn">Save Evaluation</button>
+    </div>
+
+    <div class="nav-controls">
+        <button type="button" id="prevBtn" class="btn">Previous</button>
+        <div style="flex:1"></div>
+        <button type="button" id="nextBtn" class="btn">Next</button>
+        <button type="submit" id="submitBtn" class="btn" style="display:none;">Submit</button>
+    </div>
 </form>
+
+<!-- Modal Markup -->
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header" id="modalTitle">Modal</div>
+        <div class="modal-body">
+            <div id="modalMessage">Message</div>
+            <ul class="list" id="modalList"></ul>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" id="modalYes">Yes</button>
+            <button type="button" class="btn btn-secondary" id="modalNo">No</button>
+            <button type="button" class="btn" id="modalOk">OK</button>
+        </div>
+    </div>
+    
+</div>
     </div>
 </div>
 </body>
