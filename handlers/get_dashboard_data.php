@@ -8,13 +8,53 @@ require '../connection.php';
 
 $collection = $database->selectCollection("employees"); 
 
+$totalEmployees = $collection->countDocuments([]);
+
+// Compute newly hired for the current month (based on date_hired in MM/DD/YYYY)
+$now = new DateTime('now');
+$currentMonth = (int)$now->format('n');
+$currentYear = (int)$now->format('Y');
+
+$newlyHired = 0;
+$newlyHiredCursor = $collection->aggregate([
+    [
+        '$addFields' => [
+            'parsedDate' => [
+                '$dateFromString' => [
+                    'dateString' => '$date_hired',
+                    'format' => "%m/%d/%Y",
+                    'onError' => null,
+                    'onNull' => null
+                ]
+            ]
+        ]
+    ],
+    [
+        '$match' => [
+            '$expr' => [
+                '$and' => [
+                    ['$eq' => [ ['$month' => '$parsedDate'], $currentMonth ]],
+                    ['$eq' => [ ['$year' => '$parsedDate'], $currentYear ]]
+                ]
+            ]
+        ]
+    ],
+    [ '$count' => 'count' ]
+]);
+
+foreach ($newlyHiredCursor as $doc) {
+    $newlyHired = (int)($doc['count'] ?? 0);
+}
+
 $cursor = $collection->aggregate([
     [
         '$addFields' => [
             'parsedDate' => [
                 '$dateFromString' => [
                     'dateString' => '$date_hired',
-                    'format' => "%m/%d/%Y"
+                    'format' => "%m/%d/%Y",
+                    'onError' => null,
+                    'onNull' => null
                 ]
             ]
         ]
@@ -69,6 +109,8 @@ $teachingPartTime = $collection->countDocuments([
 
 // Output results as JSON
 echo json_encode([
+    'totalEmployees' => $totalEmployees,
+    'newlyHired' => $newlyHired,
     'yearlyStats' => $yearlyStats,
     'teachingStats' => [
         'teaching' => $teaching,

@@ -1,14 +1,15 @@
 <?php
 include('../connection.php');
-$employees = $database->selectCollection("employees");
-$evaluations = $database->selectCollection("performance_evaluations");
+$employeesCol = $database->selectCollection("employee");
+// 🔹 Store evaluations in performance_evaluations instead of evaluations
+$evalsCol = $database->selectCollection("performance_evaluations");
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
     die("No employee selected.");
 }
 
-$emp = $employees->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+$emp = $employeesCol->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
 if (!$emp) {
     die("Employee not found.");
 }
@@ -21,19 +22,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dependres_scores = $_POST['dependres'] ?? [];
     $humanrel_scores = $_POST['humanrel'] ?? [];
     $jobcoop_scores = $_POST['jobcoop'] ?? [];
+    $personal_scores = $_POST['personal'] ?? [];
+    $attendance_scores = $_POST['attendance'] ?? [];
 
     // Average per category
-    $job_avg = array_sum($job_scores) / count($job_scores);
-    $class_avg = array_sum($class_scores) / count($class_scores);
-    $prep_avg = array_sum($prep_scores) / count($prep_scores);
-    $dependres_avg = array_sum($dependres_scores) / count($dependres_scores);  
-    $humanrel_avg = array_sum($humanrel_scores) / count($humanrel_scores);  
-    $jobcoop_avg = array_sum($jobcoop_scores) / count($jobcoop_scores); 
-    $attendance_avg = array_sum($_POST['attendance'] ?? []) / count($_POST['attendance'] ?? []);
-    $personal_avg = array_sum($_POST['personal'] ?? []) / count($_POST['personal'] ?? []);
+    $job_avg = count($job_scores) ? array_sum($job_scores) / count($job_scores) : 0;
+    $class_avg = count($class_scores) ? array_sum($class_scores) / count($class_scores) : 0;
+    $prep_avg = count($prep_scores) ? array_sum($prep_scores) / count($prep_scores) : 0;
+    $dependres_avg = count($dependres_scores) ? array_sum($dependres_scores) / count($dependres_scores) : 0;
+    $humanrel_avg = count($humanrel_scores) ? array_sum($humanrel_scores) / count($humanrel_scores) : 0;
+    $jobcoop_avg = count($jobcoop_scores) ? array_sum($jobcoop_scores) / count($jobcoop_scores) : 0;
+    $personal_avg = count($personal_scores) ? array_sum($personal_scores) / count($personal_scores) : 0;
+    $attendance_avg = count($attendance_scores) ? array_sum($attendance_scores) / count($attendance_scores) : 0;
 
-    
-    
     // Weighted scores
     $job_percent = $job_avg * 0.20;
     $class_percent = $class_avg * 0.20;
@@ -41,55 +42,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dependres_percent = $dependres_avg * 0.10;
     $humanrel_percent = $humanrel_avg * 0.10;
     $jobcoop_percent = $jobcoop_avg * 0.10;
-    $attendance_percent = $attendance_avg * 0.10;
     $personal_percent = $personal_avg * 0.10;
+    $attendance_percent = $attendance_avg * 0.05;
 
-    $total = $job_percent + $class_percent + $prep_percent;
+    $total = $job_percent + $class_percent + $prep_percent + $dependres_percent +
+             $humanrel_percent + $jobcoop_percent + $personal_percent + $attendance_percent;
 
     // Convert numeric rating to category
-    if ($total >= 4.5) {
-        $category = "Excellent";
-    } elseif ($total >= 3.5) {
-        $category = "Very Good";
-    } elseif ($total >= 2.5) {
-        $category = "Good";
-    } elseif ($total >= 1.5) {
-        $category = "Fair";
+    if ($total >= 4.1) {
+        $category = "Outstanding";
+    } elseif ($total >= 3.1) {
+        $category = "Very Satisfactory";
+    } elseif ($total >= 2.1) {
+        $category = "Satisfactory";
+    } elseif ($total >= 1.1) {
+        $category = "Unsatisfactory";
     } else {
-        $category = "Poor";
+        $category = "Very Unsatisfactory";
     }
 
-    // Save evaluation record in separate collection
-    $evaluations->insertOne([
+    // Store evaluation in performance_evaluations collection
+    $evaluationData = [
         'employee_id' => new MongoDB\BSON\ObjectId($id),
-        'evaluated_at' => new MongoDB\BSON\UTCDateTime(), // timestamp
+        'evaluated_at' => new MongoDB\BSON\UTCDateTime(),
         'rating' => number_format($total, 2),
         'category' => $category,
-        'evaluation' => [
-            'job_avg' => $job_avg,
-            'job_percent' => $job_percent,
-            'class_avg' => $class_avg,
-            'class_percent' => $class_percent,
-            'prep_avg' => $prep_avg,
-            'prep_percent' => $prep_percent,
-            'dependres_avg' => $dependres_avg,
-            'dependres_percent' => $dependres_percent,
-            'humanrel_avg' => $humanrel_avg,
-            'humanrel_percent' => $humanrel_percent,
-            'jobcoop_avg' => $jobcoop_avg,
-            'jobcoop_percent' => $jobcoop_percent,
-            'comments' => [
-                'job' => $_POST['job_comments'] ?? '',
-                'class' => $_POST['class_comments'] ?? '',
-                'prep' => $_POST['prep_comments'] ?? '',
-                'dependres' => $_POST['dependres_comments'] ?? '',
-                'humanrel' => $_POST['humanrel_comments'] ?? '',
-                'attendance' => $_POST['attendance_comments'] ?? '',
-                'jobcoop' => $_POST['jobcoop_comments'] ?? '',
-                'personal' => $_POST['personal_comments'] ?? ''
+        'sections' => [
+            'job' => [
+                'scores' => $job_scores,
+                'average' => $job_avg,
+                'percent' => $job_percent,
+                'comments' => $_POST['job_comments'] ?? ''
+            ],
+            'class' => [
+                'scores' => $class_scores,
+                'average' => $class_avg,
+                'percent' => $class_percent,
+                'comments' => $_POST['class_comments'] ?? ''
+            ],
+            'prep' => [
+                'scores' => $prep_scores,
+                'average' => $prep_avg,
+                'percent' => $prep_percent,
+                'comments' => $_POST['prep_comments'] ?? ''
+            ],
+            'dependres' => [
+                'scores' => $dependres_scores,
+                'average' => $dependres_avg,
+                'percent' => $dependres_percent,
+                'comments' => $_POST['dependres_comments'] ?? ''
+            ],
+            'humanrel' => [
+                'scores' => $humanrel_scores,
+                'average' => $humanrel_avg,
+                'percent' => $humanrel_percent,
+                'comments' => $_POST['humanrel_comments'] ?? ''
+            ],
+            'jobcoop' => [
+                'scores' => $jobcoop_scores,
+                'average' => $jobcoop_avg,
+                'percent' => $jobcoop_percent,
+                'comments' => $_POST['jobcoop_comments'] ?? ''
+            ],
+            'personal' => [
+                'scores' => $personal_scores,
+                'average' => $personal_avg,
+                'percent' => $personal_percent,
+                'comments' => $_POST['personal_comments'] ?? ''
+            ],
+            'attendance' => [
+                'scores' => $attendance_scores,
+                'average' => $attendance_avg,
+                'percent' => $attendance_percent,
+                'comments' => $_POST['attendance_comments'] ?? ''
             ]
         ]
-    ]);
+    ];
+
+    $evalsCol->insertOne($evaluationData);
 
     header("Location: performance_appraisal.php");
     exit;
@@ -102,6 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Evaluate Employee</title>
     <style>
+    .performance-button {
+    background-color: #00124d;
+    border-left: 4px solid #ffffff;
+  }
         body { font-family: Arial, sans-serif; padding: 20px; }
         h2 { color: #00124d; }
         table {
@@ -173,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (section === "humanrel") percent = (avg * 0.10).toFixed(2);
                 if (section === "jobcoop") percent = (avg * 0.10).toFixed(2);
                 if (section === "personal") percent = (avg * 0.10).toFixed(2);
-                if (section === "attendance") percent = (avg * 0.10).toFixed(2);
+                if (section === "attendance") percent = (avg * 0.05).toFixed(2);
                 document.getElementById(section + "_percent").innerText = percent;
             }
         }
@@ -188,6 +222,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo ($emp['personal_info']['first_name'] ?? '') . " " .
                 ($emp['personal_info']['middle_name'] ?? '') . " " .
                 ($emp['personal_info']['last_name'] ?? '');
+        ?></h2>
+                <h2>Department: <?php 
+            echo ($emp['department'] ?? '') . " " ;
+;
         ?></h2>
     </div>
 <div class="box-body">
@@ -309,11 +347,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </td></tr>
     </table>
        <!-- CLASSROOM EFFECTIVENESS -->
-    <h3>Human Relations (10%)</h3>
-        <table>
-        <tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
-        <?php 
-        $humanrel_criteria = [
+<h3>Human Relations (10%)</h3>
+<table>
+<tr><th class="criteria">Criteria</th><th class="rating">Rating</th></tr>
+<?php 
+$humanrel_criteria = [
             // Section 1
             ["section" => "Trainees/Students"],
             "Relates to trainees in ways which promotes mutual respect",
@@ -325,24 +363,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "Shows respect to subordinate, colleagues and superior."
         ];
 
+        // Only count criteria that are not section labels
+        $humanrel_criteria_count = 0;
+        foreach ($humanrel_criteria as $c) {
+            if (!is_array($c)) $humanrel_criteria_count++;
+        }
+        $humanrel_index = 0;
         foreach ($humanrel_criteria as $i => $c) {
             if (is_array($c) && isset($c['section'])) {
                 // Section label row
                 echo "<tr><td colspan='2'><strong>{$c['section']}</strong></td></tr>";
             } else {
                 // Criteria with radio buttons
-                echo "<tr><td>$c</td><td class='radio-group'>";
+                echo "<tr><td class='criteria'>$c</td><td class='rating'><div class='radio-group'>";
                 for ($j=1; $j<=5; $j++) {
-                    echo "<label><input type='radio' name='humanrel[$i]' value='$j' required onchange='calcAverage(\"humanrel\",5)'> $j</label>";
+                    echo "<label><input type='radio' name='humanrel[$humanrel_index]' value='$j' required onchange='calcAverage(\"humanrel\",$humanrel_criteria_count)'> $j</label>";
                 }
-                echo "</td></tr>";
+                echo "</div></td></tr>";
+                $humanrel_index++;
             }
         }
-        ?>
-        <tr><td colspan="2">
-            <strong>Ave:</strong> <span id="humanrel_avg">0</span> |
-            <strong>%:</strong> <span id="humanrel_percent">0</span>
-        </td></tr>
+?>
+<tr><td colspan="2">
+    <strong>Ave:</strong> <span id="humanrel_avg">0</span> |
+    <strong>%:</strong> <span id="humanrel_percent">0</span>
+</td></tr>
+
         <tr><td colspan="2">
             <textarea name="humanrel_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
         </td></tr>

@@ -46,7 +46,7 @@
     <tbody>
       <?php
       include('../connection.php');
-      $employees = $database->selectCollection("employees");
+      $employees = $database->selectCollection("employee");
       $evaluations = $database->selectCollection("performance_evaluations");
 
       $search = isset($_GET['search']) ? trim($_GET['search']) : '';
