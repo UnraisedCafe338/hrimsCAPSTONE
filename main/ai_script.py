@@ -15,21 +15,20 @@ def looks_like_db_question(text):
     return any(word in text.lower() for word in keywords)
 
 # --- AI Server Configuration ---
-AI_SERVER_URL = "http://127.0.0.1:8001/v1/completions"  # Your FastAPI AI server
+AI_SERVER_URL = "http://127.0.0.1:8000/v1/completions"  # Your FastAPI AI server
 AI_SERVER_HEADERS = {
     "Content-Type": "application/json"
 }
 
-def query_employee_data(search_term, query_type="general", collection="employee", action="search"):
+def query_employee_data(search_term, query_type="general", collection="employee"):
     """Query employee/applicant data via PHP endpoint or direct MongoDB"""
-    # First try PHP endpoint with enhanced capabilities
+    # First try PHP endpoint
     try:
         url = "http://localhost/hrims/handlers/ai_data_query.php"
         params = {
             "search": search_term,
             "type": query_type,
-            "collection": collection,
-            "action": action  # New parameter for advanced queries
+            "collection": collection
         }
         
         response = requests.get(url, params=params, timeout=5)
@@ -48,27 +47,7 @@ def query_employee_data(search_term, query_type="general", collection="employee"
             mongo_collection = db[collection]
             
             # Build query based on type
-            if query_type == "person":
-                # Search for specific person by name
-                name_parts = search_term.split()
-                if len(name_parts) >= 2:
-                    first_name = name_parts[0]
-                    last_name = name_parts[1]
-                    query = {
-                        '$and': [
-                            {'personal_info.first_name': {'$regex': first_name, '$options': 'i'}},
-                            {'personal_info.last_name': {'$regex': last_name, '$options': 'i'}}
-                        ]
-                    }
-                else:
-                    # Single name search
-                    query = {
-                        '$or': [
-                            {'personal_info.first_name': {'$regex': search_term, '$options': 'i'}},
-                            {'personal_info.last_name': {'$regex': search_term, '$options': 'i'}}
-                        ]
-                    }
-            elif query_type == "education":
+            if query_type == "education":
                 # Search multiple education-related fields
                 query = {
                     '$or': [
@@ -124,38 +103,7 @@ def analyze_query_and_search(prompt):
     """Analyze the prompt and determine what to search for"""
     prompt_lower = prompt.lower()
     
-    # Check for percentage/comparison queries
-    if "percentage" in prompt_lower or "compared to" in prompt_lower or "%" in prompt_lower:
-        return "percentage", prompt, "percentage"
-    
-    # Check for person detail queries (role, skills, about someone)
-    person_detail_patterns = ["role of", "skills of", "what is", "tell me about", "about"]
-    name_patterns = re.findall(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b', prompt)  # Detect proper names
-    
-    if name_patterns and any(pattern in prompt_lower for pattern in person_detail_patterns):
-        person_name = name_patterns[0]
-        return "person", person_name, "person_details"
-    
-    # Check for course comparison queries
-    if ("what course" in prompt_lower or "which course" in prompt_lower) and ("more" in prompt_lower or "most" in prompt_lower or "count" in prompt_lower):
-        return "general", prompt, "course_comparison"
-    
-    # Check if asking about a specific person (name-based query)
-    person_indicators = ["who is", "what is the role of", "about", "tell me about", "find"]
-    
-    is_person_query = False
-    if name_patterns:
-        # Check if it's asking about a specific person
-        if any(indicator in prompt_lower for indicator in person_indicators):
-            is_person_query = True
-    
-    # If it's a person query, extract the name and search for that person
-    if is_person_query and name_patterns:
-        person_name = name_patterns[0]  # Get the first name found
-        return "person", person_name, "search"
-    
-    # Determine search type and terms for general queries
-    query_type = "general"  # Initialize with default value
+    # Determine search type and terms
     if any(word in prompt_lower for word in ["skills", "skill", "programming", "java", "python", "php"]):
         query_type = "skills"
     elif any(word in prompt_lower for word in ["graduate", "degree", "education", "course", "masteral", "bachelor", "masters", "phd"]):
@@ -164,6 +112,8 @@ def analyze_query_and_search(prompt):
         query_type = "position"
     elif any(word in prompt_lower for word in ["department", "faculty", "nursing", "maritime", "business", "criminology"]):
         query_type = "department"
+    else:
+        query_type = "general"
     
     # Extract search terms - improved pattern matching
     search_terms = []
@@ -192,6 +142,7 @@ def analyze_query_and_search(prompt):
         query_type = "education"
     else:
         # Extract course name from patterns like "Find a [COURSE] graduate"
+        import re
         course_match = re.search(r"find (?:a |an )?([\w\s]+?)\s+graduate", prompt_lower)
         if course_match:
             course_name = course_match.group(1).strip()
@@ -200,7 +151,7 @@ def analyze_query_and_search(prompt):
         else:
             # Common degree/course patterns
             degree_patterns = [
-                r"\b(information system|information technology|computer science|IT|IS|CS|BSIS)\b",
+                r"\b(information system|information technology|computer science|computer engineering|IT|IS|CS|BSIS|BSCS|BSCE)\b",
                 r"\b(nursing|maritime|business|criminology|education)\b",
                 r"\b(bachelor|masters?|masteral|phd|doctorate)\b",
                 r"\b(graduate|degree)\b",
@@ -217,7 +168,7 @@ def analyze_query_and_search(prompt):
         important_words = [w for w in words if len(w) > 2 and w not in ['find', 'search', 'show', 'list', 'get', 'what', 'who', 'how', 'many', 'the', 'and', 'are', 'with', 'graduate', 'degree']]
         search_terms = important_words[:3]  # Take first 3 important words
     
-    return query_type, ' '.join(search_terms) if search_terms else prompt, "search"
+    return query_type, ' '.join(search_terms) if search_terms else prompt
 
 def search_both_collections(search_term, query_type):
     """Search both employee and applicant collections"""
@@ -242,56 +193,11 @@ def search_both_collections(search_term, query_type):
     print(f"DEBUG: No results found in either collection", file=sys.stderr)
     return applicant_result
 
-def get_intelligent_fallback_response(prompt, db_result=None, search_term="", query_type="general"):
-    """Provide intelligent responses when AI server is unavailable"""
-    prompt_lower = prompt.lower()
-    
-    # Handle conversational queries with intelligent responses
-    if "percentage" in prompt_lower or "compared to" in prompt_lower or "comparison" in prompt_lower:
-        if db_result and db_result.get("success") and db_result.get("data"):
-            # Extract course types from previous context or current query
-            courses_mentioned = []
-            if "is" in prompt_lower or "information system" in prompt_lower:
-                courses_mentioned.append("IS")
-            if "nursing" in prompt_lower:
-                courses_mentioned.append("Nursing")
-            if "maritime" in prompt_lower:
-                courses_mentioned.append("Maritime")
-            if "business" in prompt_lower:
-                courses_mentioned.append("Business")
-            
-            if len(courses_mentioned) >= 2:
-                # Get counts for different courses (simplified calculation)
-                is_count = len([p for p in db_result["data"] if any(term in p.get('college_degree', '').lower() for term in ['information system', 'bsis', 'computer', 'it'])])
-                nursing_count = len([p for p in db_result["data"] if 'nursing' in p.get('college_degree', '').lower()])
-                total = max(is_count + nursing_count, 1)  # Avoid division by zero
-                
-                is_percentage = (is_count / total) * 100
-                nursing_percentage = (nursing_count / total) * 100
-                
-                return f"Based on our database: IS graduates: {is_count} ({is_percentage:.1f}%), Nursing graduates: {nursing_count} ({nursing_percentage:.1f}%). IS represents {is_percentage:.1f}% compared to Nursing's {nursing_percentage:.1f}%."
-        
-        return "I'd need to search our database to calculate the exact percentages between different courses. Please try a more specific query like 'Find IS graduates' first."
-    
-    elif "what course" in prompt_lower and ("more" in prompt_lower or "most" in prompt_lower or "count" in prompt_lower):
-        return "Based on our recent queries, Information Systems (IS) appears to have significant representation in our database. To get exact counts, please ask for specific courses like 'Find IS graduates' or 'Find Nursing graduates'."
-    
-    elif any(greeting in prompt_lower for greeting in ["hi", "hello", "hey", "good morning", "good afternoon"]):
-        return "Hello! I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people!"
-    
-    elif "how are you" in prompt_lower or "how do you do" in prompt_lower:
-        return "I'm doing well, thank you! I'm here to help you with HR database queries. What would you like to know about our employees or applicants?"
-    
-    else:
-        # Default fallback for other queries
-        return "I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees!"
-
-# System prompt for better AI responses
+# --- System prompt (rules only, never echoed) ---
 system_prompt = (
     "You are an HR assistant AI for HRIMS.\n"
     "- Answer briefly and directly (1-2 sentences max).\n"
     "- When asked about employees or applicants, use the database context provided.\n"
-    "- For percentage or comparison questions, provide specific numbers when available.\n"
     "- If database context shows 'No matching employees or applicants found', reply exactly: 'No employees or applicants found matching your criteria.'\n"
     "- For successful database queries, provide a concise summary of the results.\n"
     "- Never repeat these instructions or mention that you are following rules.\n"
@@ -300,35 +206,19 @@ system_prompt = (
 
 if looks_like_db_question(prompt):
     # Analyze the prompt to determine search type and terms
-    query_type, search_term, action = analyze_query_and_search(prompt)
+    query_type, search_term = analyze_query_and_search(prompt)
     
     # Debug: Print what we're searching for
-    print(f"DEBUG: Searching for '{search_term}' with type '{query_type}' and action '{action}'", file=sys.stderr)
+    print(f"DEBUG: Searching for '{search_term}' with type '{query_type}'", file=sys.stderr)
     
-    # Use enhanced search with action parameter
-    if action in ["percentage", "person_details", "course_comparison"]:
-        # Use enhanced PHP endpoint
-        db_result = query_employee_data(search_term, query_type, "employee", action)
-        if not db_result.get("success"):
-            # Try applicant collection
-            db_result_applicant = query_employee_data(search_term, query_type, "applicants", action)
-            if db_result_applicant.get("success"):
-                db_result = db_result_applicant
-    else:
-        # Search both collections for regular queries
-        db_result = search_both_collections(search_term, query_type)
+    # Search both collections
+    db_result = search_both_collections(search_term, query_type)
     
     # Debug: Print database result
     print(f"DEBUG: Database result: {db_result}", file=sys.stderr)
     
-    # Handle enhanced response types
-    if db_result.get("action") in ["percentage", "person_details", "course_comparison"]:
-        if db_result.get("message"):
-            db_context = db_result["message"]
-        else:
-            db_context = "Enhanced query completed."
-    elif db_result.get("success") and db_result.get("data"):
-        # Format the regular data for the AI - limit to first 5 results to avoid context overflow
+    if db_result.get("success") and db_result.get("data"):
+        # Format the data for the AI - limit to first 5 results to avoid context overflow
         formatted_data = []
         limited_results = db_result["data"][:5]  # Only take first 5 results
         
@@ -347,14 +237,10 @@ if looks_like_db_question(prompt):
         db_result = None  # Clear the variable for safe access later
         db_context = "No matching employees or applicants found in the database."
         search_term = ""  # Set default value
-        query_type = "general"  # Set default value
-        action = "search"  # Set default value
 else:
     db_result = None
     db_context = "None"
     search_term = ""  # Set default value
-    query_type = "general"  # Set default value
-    action = "search"  # Set default value
 
 # --- Build proper Mistral instruct prompt ---
 input_text = (
@@ -366,7 +252,7 @@ input_text = (
 # --- Call AI Server with fallback ---
 try:
     # First check if AI server is reachable
-    health_check = requests.get("http://127.0.0.1:8001/status", timeout=2)
+    health_check = requests.get("http://127.0.0.1:8000/status", timeout=2)
     
     if health_check.status_code == 200:
         payload = {
@@ -398,130 +284,93 @@ try:
         raise Exception("AI server health check failed")
         
 except Exception as e:
-    # Enhanced fallback with intelligent responses
-    prompt_lower = prompt.lower()
-    
-    # Check if this is a simple greeting or conversational query
-    if any(greeting in prompt_lower for greeting in ["hi", "hello", "hey", "good morning", "good afternoon", "how are you", "how do you do"]):
-        answer = get_intelligent_fallback_response(prompt)
-    elif "percentage" in prompt_lower or "compared to" in prompt_lower or "what course" in prompt_lower:
-        # For analytical queries, try to provide intelligent analysis
-        if 'db_result' in locals() and db_result and db_result.get("message"):
-            # Use enhanced PHP response if available
-            answer = db_result["message"]
-        else:
-            answer = get_intelligent_fallback_response(prompt, db_result if 'db_result' in locals() else None, search_term if 'search_term' in locals() else "", query_type if 'query_type' in locals() else "general")
-    elif 'action' in locals() and action == "person_details" and 'db_result' in locals() and db_result and db_result.get("message"):
-        # Use enhanced person details response
-        answer = db_result["message"]
-    elif 'action' in locals() and action == "course_comparison" and 'db_result' in locals() and db_result and db_result.get("message"):
-        # Use enhanced course comparison response
-        answer = db_result["message"]
-    elif db_context != "None" and "No matching employees" not in db_context:
-        # For database queries, show results but keep it clean
+    # Fallback: provide direct database response without AI processing
+    if db_context != "None" and "No matching employees" not in db_context:
+        # For fallback, show more results but keep it clean
         if db_result and db_result.get("success") and db_result.get("data"):
             total_count = len(db_result["data"])
+            graduates = []
             
             # Get the search term to determine what we're looking for
             search_term_lower = search_term.lower() if 'search_term' in locals() else ''
             
-            # Handle person-specific queries differently
-            if query_type == "person":
-                # For person queries, show the specific person's info
-                if db_result["data"]:
-                    person = db_result["data"][0]  # Get the first (most relevant) match
-                    collection_type = "employee" if db_result.get('collection_searched') == "employee" else "applicant"
-                    answer = f"Based on our HR database, {person['name']} is an {collection_type} for the {person['position']} position within our company."
-                    
-                    # Add additional info if available
-                    if person.get('department'):
-                        answer += f" They are in the {person['department']} department."
-                    if person.get('college_degree'):
-                        answer += f" Their educational background includes {person['college_degree']}."
+            for person in db_result["data"][:20]:  # Check more results
+                degree = person.get('college_degree', '').lower()
+                school = person.get('college_school', '').lower()
+                
+                # Dynamic matching based on search term
+                is_match = False
+                
+                if 'nursing' in search_term_lower:
+                    is_match = 'nursing' in degree or 'nursing' in school
+                elif 'maritime' in search_term_lower:
+                    is_match = 'maritime' in degree or 'maritime' in school or 'marine' in degree
+                elif 'business' in search_term_lower:
+                    is_match = 'business' in degree or 'business' in school or 'management' in degree
+                elif 'criminology' in search_term_lower:
+                    is_match = 'criminology' in degree or 'criminology' in school
+                elif 'education' in search_term_lower:
+                    is_match = 'education' in degree or 'education' in school or 'teaching' in degree
+                elif any(term in search_term_lower for term in ['information system', 'bsis', 'is']):
+                    is_match = any([
+                        'information system' in degree,
+                        'bsis' in degree,
+                        'information' in degree and 'system' in degree,
+                        'information system' in school,
+                        'computer' in degree,
+                        'it' in degree and len(degree) < 10
+                    ])
                 else:
-                    answer = f"No information found for {search_term} in our database."
+                    # General search - look for the search term in degree or school
+                    for term in search_term_lower.split():
+                        if len(term) > 2:  # Only search for meaningful terms
+                            if term in degree or term in school:
+                                is_match = True
+                                break
+                
+                if is_match:
+                    graduate_info = f"{person['name']} - {person['position']}"
+                    graduates.append(graduate_info)
+            
+            # Remove duplicates and create numbered list
+            unique_graduates = list(set(graduates))  # Remove duplicates
+            if unique_graduates:
+                # Determine what type of graduates we found
+                graduate_type = "graduates"
+                if 'nursing' in search_term_lower:
+                    graduate_type = "Nursing graduates"
+                elif 'maritime' in search_term_lower:
+                    graduate_type = "Maritime graduates"
+                elif 'business' in search_term_lower:
+                    graduate_type = "Business graduates"
+                elif 'criminology' in search_term_lower:
+                    graduate_type = "Criminology graduates"
+                elif 'education' in search_term_lower:
+                    graduate_type = "Education graduates"
+                elif any(term in search_term_lower for term in ['information system', 'bsis', 'is']):
+                    graduate_type = "IS graduates"
+                
+                # Show all graduates if 30 or fewer, otherwise limit to 25
+                display_limit = len(unique_graduates) if len(unique_graduates) <= 30 else 25
+                numbered_list = []
+                for i, graduate_info in enumerate(unique_graduates[:display_limit], 1):
+                    numbered_list.append(f"{i}. {graduate_info}")
+                
+                # Show count info
+                count_info = f"Found {len(unique_graduates)} {graduate_type}"
+                if len(unique_graduates) > display_limit:
+                    count_info += f" (showing first {display_limit})"
+                count_info += ":\n\n"
+                
+                answer = count_info + "\n".join(numbered_list)
             else:
-                # Handle graduate/education queries
-                graduates = []
-                
-                for person in db_result["data"][:20]:  # Check more results
-                    degree = person.get('college_degree', '').lower()
-                    school = person.get('college_school', '').lower()
-                    
-                    # Dynamic matching based on search term
-                    is_match = False
-                    
-                    if 'nursing' in search_term_lower:
-                        is_match = 'nursing' in degree or 'nursing' in school
-                    elif 'maritime' in search_term_lower:
-                        is_match = 'maritime' in degree or 'maritime' in school or 'marine' in degree
-                    elif 'business' in search_term_lower:
-                        is_match = 'business' in degree or 'business' in school or 'management' in degree
-                    elif 'criminology' in search_term_lower:
-                        is_match = 'criminology' in degree or 'criminology' in school
-                    elif 'education' in search_term_lower:
-                        is_match = 'education' in degree or 'education' in school or 'teaching' in degree
-                    elif any(term in search_term_lower for term in ['information system', 'bsis', 'is']):
-                        is_match = any([
-                            'information system' in degree,
-                            'bsis' in degree,
-                            'information' in degree and 'system' in degree,
-                            'information system' in school,
-                            'computer' in degree,
-                            'it' in degree and len(degree) < 10
-                        ])
-                    else:
-                        # General search - look for the search term in degree or school
-                        for term in search_term_lower.split():
-                            if len(term) > 2:  # Only search for meaningful terms
-                                if term in degree or term in school:
-                                    is_match = True
-                                    break
-                    
-                    if is_match:
-                        graduate_info = f"{person['name']} - {person['position']}"
-                        graduates.append(graduate_info)
-                
-                # Remove duplicates and create numbered list
-                unique_graduates = list(set(graduates))  # Remove duplicates
-                if unique_graduates:
-                    # Determine what type of graduates we found
-                    graduate_type = "graduates"
-                    if 'nursing' in search_term_lower:
-                        graduate_type = "Nursing graduates"
-                    elif 'maritime' in search_term_lower:
-                        graduate_type = "Maritime graduates"
-                    elif 'business' in search_term_lower:
-                        graduate_type = "Business graduates"
-                    elif 'criminology' in search_term_lower:
-                        graduate_type = "Criminology graduates"
-                    elif 'education' in search_term_lower:
-                        graduate_type = "Education graduates"
-                    elif any(term in search_term_lower for term in ['information system', 'bsis', 'is']):
-                        graduate_type = "IS graduates"
-                    
-                    # Show all graduates if 30 or fewer, otherwise limit to 25
-                    display_limit = len(unique_graduates) if len(unique_graduates) <= 30 else 25
-                    numbered_list = []
-                    for i, graduate_info in enumerate(unique_graduates[:display_limit], 1):
-                        numbered_list.append(f"{i}. {graduate_info}")
-                    
-                    # Show count info
-                    count_info = f"Found {len(unique_graduates)} {graduate_type}"
-                    if len(unique_graduates) > display_limit:
-                        count_info += f" (showing first {display_limit})"
-                    count_info += ":\n\n"
-                    
-                    answer = count_info + "\n".join(numbered_list)
-                else:
-                    answer = f"Found {total_count} employees but none match '{search_term}' graduate criteria."
+                answer = f"Found {total_count} employees but none match '{search_term}' graduate criteria."
         else:
             answer = db_context
     elif "No matching employees" in db_context:
         answer = "No employees or applicants found matching your criteria."
     else:
-        # Provide intelligent fallback response
-        answer = get_intelligent_fallback_response(prompt)   
+        answer = f"AI server connection failed: {str(e)}"
 
 if not answer:
     answer = "No response available."
