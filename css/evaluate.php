@@ -133,10 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Evaluate Employee</title>
     <style>
-        tr:nth-child(even) {
-            background-color: none!important;
-        }
-       .performance-button {
+        .performance-button {
             background-color: #00124d;
             border-left: 4px solid #ffffff;
         }
@@ -287,8 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .list {
-            margin: 8px 0 0 8px;
-            padding: 0px;
+            margin: 8px 0 0 18px;
         }
 
         .list li {
@@ -469,23 +465,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             function showIncompleteModal(missing) {
                 modalTitle.textContent = 'Incomplete Evaluation';
                 modalMessage.textContent = 'Please complete all ratings. Missing sections:';
-                // Use a flexbox list for missing sections (no table)
-                const listDiv = document.createElement('div');
-                listDiv.style.display = 'flex';
-                listDiv.style.flexDirection = 'column';
-                listDiv.style.gap = '8px';
+                // Create a table for missing sections (no header, invisible borders)
+                const table = document.createElement('table');
+                table.style.width = '100%';
+                table.style.borderCollapse = 'collapse';
+                table.style.background = 'none';
+                table.style.border = 'none';
                 missing.forEach(m => {
-                    const rowDiv = document.createElement('div');
-                    rowDiv.style.display = 'flex';
-                    rowDiv.style.justifyContent = 'space-between';
-                    rowDiv.style.alignItems = 'center';
-                    rowDiv.style.padding = '6px 0';
-                    rowDiv.style.borderRadius = '6px';
-                    rowDiv.style.background = 'none';
-                    const labelSpan = document.createElement('span');
-                    labelSpan.textContent = m.label;
-                    labelSpan.style.fontWeight = '500';
-                    labelSpan.style.fontSize = '15px';
+                    const tr = document.createElement('tr');
+                    const tdLabel = document.createElement('td');
+                    tdLabel.textContent = m.label;
+                    tdLabel.style.padding = '8px';
+                    tdLabel.style.border = 'none';
+                    tdLabel.style.background = 'none';
+                    const tdBtn = document.createElement('td');
+                    tdBtn.style.textAlign = 'center';
+                    tdBtn.style.padding = '8px';
+                    tdBtn.style.border = 'none';
+                    tdBtn.style.background = 'none';
                     const btn = document.createElement('button');
                     btn.type = 'button';
                     btn.className = 'btn btn-small';
@@ -495,12 +492,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         showPage(currentPageIndex);
                         closeModal();
                     });
-                    rowDiv.appendChild(labelSpan);
-                    rowDiv.appendChild(btn);
-                    listDiv.appendChild(rowDiv);
+                    tdBtn.appendChild(btn);
+                    tr.appendChild(tdLabel);
+                    tr.appendChild(tdBtn);
+                    table.appendChild(tr);
                 });
                 modalList.innerHTML = '';
-                modalList.appendChild(listDiv);
+                modalList.appendChild(table);
                 modalOk.classList.remove('hidden');
                 modalNo.classList.add('hidden');
                 modalYes.classList.add('hidden');

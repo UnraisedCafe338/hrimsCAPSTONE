@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ],
         "skills" => $_POST["skills"] ?? "",
         "emergency_contact" => [
-            "name" => $_POST["ref_name"] ?? "",
+            "name" => $_POST["emergency_name"] ?? "",
             "relationship" => $_POST["emergency_relationship"] ?? "",
             "emergency_street" => $_POST["emergency_street"] ?? "",
             "emergency_region" => $_POST["emergency_region"] ?? "",

@@ -22,7 +22,7 @@ if ($action === "start") {
     $serverInfo = null;
     for ($i = 0; $i < 6; $i++) { // 6 x 2s ≈ 12s total
         usleep(500000); // 0.5s
-        $result = @file_get_contents('http://127.0.0.1:8000/status', false, $context);
+        $result = @file_get_contents('http://127.0.0.1:8001/status', false, $context);
         if ($result !== false) {
             $ok = true;
             $serverInfo = json_decode($result, true);

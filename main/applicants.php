@@ -111,32 +111,100 @@ $applicants = $collection->find($query);
             background-color: #003080; 
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
         }
+
+        /* Loading Popup Styles */
+        .loading-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(3px);
+        }
+
+        .loading-content {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: popupSlideIn 0.3s ease-out;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00124d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #00124d;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
         
     </style>
     <script>
+        function showLoadingPopup() {
+            document.getElementById('loadingPopup').style.display = 'flex';
+        }
+
+        function hideLoadingPopup() {
+            document.getElementById('loadingPopup').style.display = 'none';
+        }
+
         function searchApplicants() {
-    let searchValue = document.getElementById('searchInput').value;
-    window.location.href = 'applicants.php?search=' + encodeURIComponent(searchValue);
-}
+            showLoadingPopup();
+            let searchValue = document.getElementById('searchInput').value;
+            window.location.href = 'applicants.php?search=' + encodeURIComponent(searchValue);
+        }
 
-function clearSearch() {
-    document.getElementById('searchInput').value = '';
-    document.getElementById('clearBtn').style.display = 'none';
-    window.location.href = 'applicants.php';
-}
+        function clearSearch() {
+            showLoadingPopup();
+            document.getElementById('searchInput').value = '';
+            document.getElementById('clearBtn').style.display = 'none';
+            window.location.href = 'applicants.php';
+        }
 
-function toggleClearButton() {
-    let searchInput = document.getElementById('searchInput');
-    let clearBtn = document.getElementById('clearBtn');
-    clearBtn.style.display = searchInput.value.trim() ? 'block' : 'none';
-}
+        function toggleClearButton() {
+            let searchInput = document.getElementById('searchInput');
+            let clearBtn = document.getElementById('clearBtn');
+            clearBtn.style.display = searchInput.value.trim() ? 'block' : 'none';
+        }
 
-window.onload = function () {
-    toggleClearButton();
-};
-function addapplicant(){
-    window.location.href = 'application_form.php';
-}
+        window.onload = function () {
+            toggleClearButton();
+        };
+        
+        function addapplicant(){
+            window.location.href = 'application_form.php';
+        }
 
     </script>
 </head>
@@ -191,6 +259,14 @@ function addapplicant(){
     </div>
     
     </div>
+<!-- Loading Popup -->
+<div id="loadingPopup" class="loading-popup">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Filtering...</p>
+    </div>
+</div>
+
 <!-- Confirmation Modal -->
 <div id="confirmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
      background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">

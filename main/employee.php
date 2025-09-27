@@ -135,6 +135,63 @@ foreach ($cursor as $doc) {
             margin-top: 4px;
         }
         .add-applicant-button:hover { background-color: #003080; }
+
+        /* Loading Popup Styles */
+        .loading-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(3px);
+        }
+
+        .loading-content {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: popupSlideIn 0.3s ease-out;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00124d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #00124d;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -179,7 +236,7 @@ foreach ($cursor as $doc) {
                             <td><?php echo htmlspecialchars($applicant['personal_info']['email'] ?? ''); ?></td>
                             <td><?php echo htmlspecialchars($applicant['personal_info']['contact'] ?? ''); ?></td>
                             <td><?php echo htmlspecialchars($applicant['position_applied'] ?? ''); ?></td>
-                            <td style="text-align:center"><a href="view_employee.php?id=<?php echo $applicant['_id']; ?>">View</a></td>
+                            <td style="text-align:center"><a class="btn-view" href="view_employee.php?id=<?php echo $applicant['_id']; ?>">View</a></td>
                         </tr>
                     <?php } ?>
                 <?php } ?>
@@ -227,9 +284,27 @@ foreach ($cursor as $doc) {
     <?php } ?>
     </div>
 </div>
+
+<!-- Loading Popup -->
+<div id="loadingPopup" class="loading-popup">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Filtering...</p>
+    </div>
+</div>
+
 </body>
 <script>
+function showLoadingPopup() {
+    document.getElementById('loadingPopup').style.display = 'flex';
+}
+
+function hideLoadingPopup() {
+    document.getElementById('loadingPopup').style.display = 'none';
+}
+
 function searchApplicants() {
+    showLoadingPopup();
     let searchValue = document.getElementById('searchInput').value;
     let dept = document.getElementById('departmentSelect').value;
     let params = new URLSearchParams();
@@ -239,6 +314,7 @@ function searchApplicants() {
 }
 
 function clearSearch() {
+    showLoadingPopup();
     document.getElementById('searchInput').value = '';
     document.getElementById('clearBtn').style.display = 'none';
     document.getElementById('departmentSelect').value = '';

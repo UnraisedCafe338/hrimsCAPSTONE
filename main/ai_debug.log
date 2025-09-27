@@ -1625,3 +1625,1343 @@ User Query: what [/INST]" "" 2>&1
 Output:
 I'm an HR assistant AI with no access to a database at the moment. I can only provide general HR information or answer questions based on common knowledge. If you have a specific query, feel free to ask and I'll do my best to help.
 
+[Thu 09/18/2025 23:13:40.08] ===== Starting ai_server.py ===== 
+INFO:     Started server process [14568]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:56319 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57263 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56323 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60830 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60831 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53932 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64602 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58591 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63552 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65377 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55672 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61762 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58000 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61832 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52196 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49682 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58513 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56702 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64746 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58380 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60225 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49209 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49210 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49211 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52696 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59624 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59625 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58096 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58097 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65186 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65187 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60984 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60986 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58250 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51070 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52678 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60288 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57872 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52688 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54765 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49417 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59590 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57967 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64294 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54408 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61905 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61780 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52445 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52227 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60498 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53436 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53437 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63465 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63466 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62526 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62527 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53183 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53184 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63457 - "GET /status HTTP/1.1" 200 OK
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "[INST] <<SYS>>
+You are an HR AI assistant. 
+- Always prioritize faculty/employee data before applicants.
+- Only use the Database Context for numbers. 
+- Do not invent or assume data.
+- If the Database Context says 'No data found', you must reply the same.
+- Use resume text only for extra context, not for counts.
+- Keep answers short and direct.
+<</SYS>>
+
+Resume Text:
+
+
+Database Context:
+
+
+User Query: hi [/INST]" "" 2>&1
+Output:
+AI server unavailable. Please start the AI server or check database connection.
+
+[Thu 09/18/2025 23:35:51.12] ===== Starting ai_server.py ===== 
+INFO:     Started server process [13328]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:51291 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58269 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65381 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65387 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62481 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63200 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61126 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61140 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61348 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61141 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61360 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61361 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49655 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53024 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52107 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56857 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56869 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56870 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56886 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56887 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56898 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56899 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61296 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61322 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61323 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64042 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56551 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51328 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51339 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55693 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55694 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55408 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56139 - "GET /status HTTP/1.1" 200 OK
+[Thu 09/18/2025 23:48:50.15] ===== ai_server.py stopped ===== 
+[Thu 09/18/2025 23:53:01.45] ===== Starting ai_server.py ===== 
+INFO:     Started server process [27904]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:53062 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63968 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57736 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52438 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52864 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57153 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62558 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60632 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60721 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50299 - "GET /status HTTP/1.1" 200 OK
+[Thu 09/18/2025 23:55:20.84] ===== ai_server.py stopped ===== 
+[Fri 09/19/2025  0:00:01.49] ===== Starting ai_server.py ===== 
+INFO:     Started server process [15944]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:62991 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62198 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62201 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55693 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50602 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59651 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61114 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49216 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49218 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49219 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55279 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49854 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56420 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63038 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54525 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50020 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60729 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61921 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62174 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50285 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50286 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61235 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57089 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57091 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65141 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65144 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63309 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63310 - "POST /v1/completions HTTP/1.1" 200 OK
+[Fri 09/19/2025  0:08:18.87] ===== ai_server.py stopped ===== 
+[Fri 09/19/2025  0:08:31.63] ===== Starting ai_server.py ===== 
+INFO:     Started server process [25476]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:56120 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57369 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65469 - "GET /status HTTP/1.1" 200 OK
+[Fri 09/19/2025  0:09:16.92] ===== ai_server.py stopped ===== 
+[Fri 09/19/2025  0:13:04.65] ===== Starting ai_server.py ===== 
+INFO:     Started server process [14256]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:50749 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50751 - "GET /status HTTP/1.1" 200 OK
+[Fri 09/19/2025  0:13:15.83] ===== ai_server.py stopped ===== 
+[Fri 09/19/2025  0:13:40.68] ===== Starting ai_server.py ===== 
+INFO:     Started server process [20484]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:54003 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63014 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53852 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56101 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53754 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53755 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52292 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58303 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64976 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58738 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58739 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64740 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56969 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62621 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57354 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57356 - "GET /status HTTP/1.1" 200 OK
+[Fri 09/19/2025  0:16:25.53] ===== ai_server.py stopped ===== 
+[Fri 09/19/2025  0:16:30.61] ===== Starting ai_server.py ===== 
+INFO:     Started server process [16580]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:58778 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55904 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58315 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51845 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49913 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49914 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56893 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56894 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56129 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56130 - "POST /v1/completions HTTP/1.1" 200 OK
+[Fri 09/19/2025  0:17:46.47] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "hello" 2>&1
+Output:
+AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x0000018E7F7746B0>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+[Fri 09/19/2025  0:18:25.52] ===== Starting ai_server.py ===== 
+INFO:     Started server process [12768]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:64028 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50937 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62875 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62877 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62880 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62886 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61551 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61291 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62710 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65196 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62711 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49956 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61056 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53175 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53176 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55378 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55569 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55379 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53523 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50952 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62936 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62938 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62945 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57430 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55931 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65109 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65112 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65248 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52367 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62096 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51465 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49981 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57651 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57652 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58497 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52795 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55152 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55153 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54938 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55883 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60301 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58193 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58194 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55355 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55362 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55363 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54475 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52694 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62749 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59487 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55643 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53369 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52804 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61770 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63745 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64439 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59441 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65167 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61795 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54916 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54917 - "POST /v1/completions HTTP/1.1" 200 OK
+[Fri 09/19/2025  0:33:09.36] ===== ai_server.py stopped ===== 
+[Fri 09/19/2025  0:33:25.30] ===== Starting ai_server.py ===== 
+INFO:     Started server process [2212]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:58243 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54766 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60746 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52641 - "GET /status HTTP/1.1" 200 OK
+[Fri 09/19/2025  0:33:59.97] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "what can you do?" 2>&1
+Output:
+AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001A19D1CF920>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+[Fri 09/19/2025  0:34:42.89] ===== Starting ai_server.py ===== 
+INFO:     Started server process [10448]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:64933 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50252 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64227 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62039 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55315 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62238 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57971 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62239 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58436 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50938 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64778 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62688 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56578 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57590 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64603 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60855 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60646 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58038 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59772 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61608 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54002 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62044 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61973 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49211 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58673 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60403 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59493 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61431 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65260 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50629 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59301 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62710 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57438 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57516 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57517 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60917 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60918 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53509 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51230 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55241 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62966 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49278 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57952 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65141 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56689 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51234 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57973 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62731 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54085 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55508 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56863 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56163 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62949 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63329 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61326 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65035 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60731 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63036 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50850 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53414 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54543 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55979 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51715 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53774 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49807 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64671 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62801 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60039 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50648 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61610 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64710 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53707 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65402 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55738 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60411 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60412 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55713 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51868 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53837 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65304 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54794 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53505 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61466 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64085 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59093 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51208 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52571 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60773 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57019 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51510 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51150 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59801 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51151 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56791 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56792 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56793 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53790 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53791 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55326 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51281 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51282 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51283 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59512 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59513 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56350 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49988 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52376 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64164 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61141 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61142 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61144 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56133 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55974 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55975 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55976 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64362 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64363 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57899 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56337 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53696 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62426 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64092 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63120 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64093 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56766 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51298 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58041 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63163 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63164 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65432 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64618 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63646 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53994 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58769 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64223 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52946 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61325 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59421 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59422 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60479 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59389 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54100 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59874 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60473 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51812 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59547 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59552 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59914 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49931 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49932 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49933 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49927 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64769 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60191 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60193 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55206 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55207 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55209 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64783 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56835 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59088 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62772 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57131 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61274 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51232 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52490 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58879 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49858 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57961 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60308 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57923 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50914 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61217 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57647 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52590 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63314 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62731 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54811 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57391 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50279 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50280 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56642 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61951 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61952 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61953 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63157 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53930 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55966 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63045 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49961 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63265 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64593 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55734 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64424 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51647 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64296 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62914 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61756 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61757 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52841 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56226 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57652 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63522 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58924 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63523 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54955 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65263 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59966 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59967 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59968 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51483 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51484 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51485 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60951 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61133 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50764 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53640 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54404 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58751 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64253 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52703 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55470 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62845 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59017 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55209 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55210 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64598 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50111 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53260 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54029 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60282 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57513 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63644 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52907 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53766 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55375 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61098 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53928 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64845 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64758 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58936 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62057 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57591 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52560 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53900 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65267 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60092 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54619 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60764 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58414 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50847 - "GET /status HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [10448]
+[Wed 09/24/2025  9:53:49.82] ===== ai_server.py stopped ===== 
+[Wed 09/24/2025 10:48:41.54] ===== Starting ai_server.py ===== 
+INFO:     Started server process [13472]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:58904 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58912 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58916 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64088 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59761 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60948 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59047 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62879 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62880 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59401 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59407 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60309 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54139 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63679 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54632 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58007 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58008 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60342 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57845 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53766 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61477 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51254 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55527 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64638 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60606 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60607 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65423 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63727 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63731 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63734 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63739 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55566 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55568 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62874 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55816 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53985 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57221 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53933 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53953 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58332 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63875 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54981 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54982 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54984 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50042 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49462 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65153 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65157 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54689 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54659 - "GET /status HTTP/1.1" 200 OK
+[Wed 09/24/2025 10:58:54.26] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "Previous conversation context:
+User: what is the role of Maria Garcia in our databse employee?
+AI: Found 18 IS graduates:
+
+1. Mark Reyes - Registrar
+2. Maria Garcia - Admin Assistant
+3. Anna Cruz - Programmer
+4. Christelle Marie  Cura - maging baby mo
+5. Jessa Cruz - Admin Assistant
+6. Jonathan Olano - Guidance Counselor
+7. Jonathan Santos - Programmer
+8. Mark Reyes - Programmer
+9. Mark Cruz - Teacher
+10. Christelle Marie  Cura - registrar
+11. Jessa Delos Reyes - Teacher
+12. Jessa Santos - Registrar
+13. Jonathan Cruz - Guidance Counselor
+14. Jessa Olano - Admin Assistant
+15. Jessa Garcia - Teacher
+16. Jessa Garcia - Admin Assistant
+17. Jonathan Reyes - Teacher
+18. Anna Santos - Registrar
+
+User: find IS graduates
+AI: Found 20 IS graduates:
+
+1. Jessa Cruz - Admin Assistant
+2. Jonathan Santos - Programmer
+3. Mark Reyes - Registrar
+4. Maria Garcia - Guidance Counselor
+5. Jessa Olano - Admin Assistant
+6. Jessa Santos - Registrar
+7. Jonathan Olano - Guidance Counselor
+8. Jonathan Reyes - Teacher
+9. Maria Garcia - Admin Assistant
+10. Anna Santos - Registrar
+11. Anna Cruz - Programmer
+12. Mark Cruz - Teacher
+13. Jessa Garcia - Admin Assistant
+14. Jonathan Garcia - Teacher
+15. Jessa Delos Reyes - Teacher
+16. Jessa Garcia - Teacher
+17. Mark Reyes - Programmer
+18. Jonathan Cruz - Guidance Counselor
+19. Carlos Reyes - Programmer
+20. Christelle Marie  Cura - maging baby mo
+
+User: what is the role of Jessa Cruz on that list
+AI: AI server connection failed: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+Current follow-up question: what is the role of Jessa Cruz on that IS list" 2>&1
+Output:
+AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000002E359559610>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "Previous conversation context:
+User: find IS graduates
+AI: Found 20 IS graduates:
+
+1. Jessa Cruz - Admin Assistant
+2. Jonathan Santos - Programmer
+3. Mark Reyes - Registrar
+4. Maria Garcia - Guidance Counselor
+5. Jessa Olano - Admin Assistant
+6. Jessa Santos - Registrar
+7. Jonathan Olano - Guidance Counselor
+8. Jonathan Reyes - Teacher
+9. Maria Garcia - Admin Assistant
+10. Anna Santos - Registrar
+11. Anna Cruz - Programmer
+12. Mark Cruz - Teacher
+13. Jessa Garcia - Admin Assistant
+14. Jonathan Garcia - Teacher
+15. Jessa Delos Reyes - Teacher
+16. Jessa Garcia - Teacher
+17. Mark Reyes - Programmer
+18. Jonathan Cruz - Guidance Counselor
+19. Carlos Reyes - Programmer
+20. Christelle Marie  Cura - maging baby mo
+
+User: what is the role of Jessa Cruz on that list
+AI: AI server connection failed: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+User: what is the role of Jessa Cruz on that IS list
+AI: AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000002E359559610>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+Current follow-up question: who is Jessa Cruz on that list" 2>&1
+Output:
+AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001620BD69610>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+[Wed 09/24/2025 10:59:36.90] ===== Starting ai_server.py ===== 
+INFO:     Started server process [9492]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:56750 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56751 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56753 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56758 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52024 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52028 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58395 - "GET /status HTTP/1.1" 200 OK
+[Wed 09/24/2025 11:00:11.03] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "Previous conversation context:
+User: who is Jessa Cruz on that list
+AI: AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001620BD69610>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+User: what is the role of Jessa Cruz on that list
+AI: AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=10)
+
+User: who is Jessa Cruz
+AI: AI server connection failed: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+Current follow-up question: how many percentage count of the IS graduates compared to other courses" 2>&1
+Output:
+AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001D2D7F89610>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+[Wed 09/24/2025 11:12:44.59] ===== Starting ai_server.py ===== 
+INFO:     Started server process [19820]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8000
+Check /status for server information
+INFO:     127.0.0.1:59103 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59106 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59110 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61193 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56545 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58914 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52938 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54315 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58431 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57833 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54238 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57061 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59342 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55809 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52191 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52192 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52193 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51250 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52207 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55450 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54373 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60387 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51969 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51970 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51971 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51972 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51975 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49207 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57247 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58903 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58904 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61618 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50221 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65516 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52225 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65243 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50164 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54564 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52113 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51222 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51172 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51173 - "GET /status HTTP/1.1" 200 OK
+[Wed 09/24/2025 11:32:10.51] ===== ai_server.py stopped ===== 
+[Wed 09/24/2025 11:32:35.41] ===== Starting ai_server.py ===== 
+INFO:     Started server process [4828]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:50032 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50033 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50035 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52627 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52630 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64055 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51105 - "GET /status HTTP/1.1" 200 OK
+[Wed 09/24/2025 11:33:39.57] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "Previous conversation context:
+User: hi
+AI: AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8001): Read timed out. (read timeout=10)
+
+User: hello
+AI: AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8001): Read timed out. (read timeout=10)
+
+User: how many is IS graduates
+AI: Found 20 IS graduates:
+
+1. Anna Cruz - Programmer
+2. Christelle Marie  Cura - maging baby mo
+3. Maria Garcia - Guidance Counselor
+4. Jonathan Garcia - Teacher
+5. Jonathan Cruz - Guidance Counselor
+6. Jonathan Reyes - Teacher
+7. Maria Garcia - Admin Assistant
+8. Mark Reyes - Registrar
+9. Jessa Santos - Registrar
+10. Mark Reyes - Programmer
+11. Mark Cruz - Teacher
+12. Jonathan Santos - Programmer
+13. Jessa Delos Reyes - Teacher
+14. Anna Santos - Registrar
+15. Carlos Reyes - Programmer
+16. Jessa Garcia - Admin Assistant
+17. Jonathan Olano - Guidance Counselor
+18. Jessa Olano - Admin Assistant
+19. Jessa Cruz - Admin Assistant
+20. Jessa Garcia - Teacher
+
+Current follow-up question: how many percentage is IS compared to nursing" 2>&1
+Output:
+AI server connection failed: HTTPConnectionPool(host='127.0.0.1', port=8001): Max retries exceeded with url: /status (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001F35AD39610>, 'Connection to 127.0.0.1 timed out. (connect timeout=2)'))
+
+[Wed 09/24/2025 11:34:44.70] ===== Starting ai_server.py ===== 
+INFO:     Started server process [6624]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 10
+Batch Size: 64
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:56787 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56789 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63371 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60795 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54013 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49940 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49941 - "POST /v1/completions HTTP/1.1" 200 OK
+[Wed 09/24/2025 11:36:17.57] ===== ai_server.py stopped ===== 
+[Wed 09/24/2025 11:42:55.96] ===== Starting ai_server.py ===== 
+INFO:     Started server process [24356]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 5
+Batch Size: 32
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:52225 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53755 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61145 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65384 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64028 - "GET /status HTTP/1.1" 200 OK
+ggml_tallocr_alloc: not enough space in the buffer (needed 1835008, largest block available 1359904)
+GGML_ASSERT: C:\Users\LENOVO\AppData\Local\Temp\pip-install-44j6xhx4\llama-cpp-python_206b1d934d704db793c1edc549c08b28\vendor\llama.cpp\ggml-alloc.c:116: !"not enough space in the buffer"
+[Wed 09/24/2025 11:45:14.87] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "find me IS graduates (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'information system BSIS IS' with type 'education'
+DEBUG: Searching employee collection first
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'$or': [{'education.college.degree': {'$regex': 'information system BSIS IS', '$options': 'i'}}, {'education.college.school': {'$regex': 'information system BSIS IS', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information system', '$options': 'i'}}, {'education.college.degree': {'$regex': 'BSIS', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information', '$options': 'i'}}, {'education.college.school': {'$regex': 'information', '$options': 'i'}}]}
+DEBUG: Found 36 results in employee collection
+DEBUG: Database result: {'success': True, 'count': 36, 'data': [{'name': 'Christelle Marie  Cura', 'position': 'maging baby mo', 'department': 'Faculty - Maritime', 'college_school': ' Exact Colleges of Asia', 'college_degree': 'Information System', 'skills': 'i baby ka...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Olano', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Cruz', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Delos Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Santos', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}], 'collection_searched': 'employee'}
+Found 20 IS graduates:
+
+1. Christelle Marie  Cura - maging baby mo
+2. Mark Cruz - Teacher
+3. Jessa Garcia - Admin Assistant
+4. Anna Santos - Registrar
+5. Jonathan Cruz - Guidance Counselor
+6. Jessa Cruz - Admin Assistant
+7. Mark Reyes - Registrar
+8. Anna Cruz - Programmer
+9. Maria Garcia - Admin Assistant
+10. Jonathan Olano - Guidance Counselor
+11. Jessa Garcia - Teacher
+12. Jessa Delos Reyes - Teacher
+13. Carlos Reyes - Programmer
+14. Jonathan Garcia - Teacher
+15. Jessa Santos - Registrar
+16. Jonathan Santos - Programmer
+17. Jonathan Reyes - Teacher
+18. Mark Reyes - Programmer
+19. Maria Garcia - Guidance Counselor
+20. Jessa Olano - Admin Assistant
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "hello (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+Hello! I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people!
+
+[Wed 09/24/2025 11:45:49.84] ===== Starting ai_server.py ===== 
+INFO:     Started server process [24856]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 5
+Batch Size: 32
+Model loaded successfully with CUDA acceleration.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:56064 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56062 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56067 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62974 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62977 - "GET /status HTTP/1.1" 200 OK
+ggml_tallocr_alloc: not enough space in the buffer (needed 1835008, largest block available 1359904)
+GGML_ASSERT: C:\Users\LENOVO\AppData\Local\Temp\pip-install-44j6xhx4\llama-cpp-python_206b1d934d704db793c1edc549c08b28\vendor\llama.cpp\ggml-alloc.c:116: !"not enough space in the buffer"
+[Wed 09/24/2025 11:46:15.25] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "hi" 2>&1
+Output:
+Hello! I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people!
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "find a nursing (Note: I have 1 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'nursing' with type 'department'
+DEBUG: Searching employee collection first
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'$or': [{'personal_info.first_name': {'$regex': 'nursing', '$options': 'i'}}, {'personal_info.last_name': {'$regex': 'nursing', '$options': 'i'}}, {'position_applied': {'$regex': 'nursing', '$options': 'i'}}, {'skills': {'$regex': 'nursing', '$options': 'i'}}, {'education.college.degree': {'$regex': 'nursing', '$options': 'i'}}]}
+DEBUG: Found 2 results in employee collection
+DEBUG: Database result: {'success': True, 'count': 2, 'data': [{'name': 'Christelle Marie  Cura', 'position': 'maging baby mo', 'department': 'Non-Teaching Personnel', 'college_school': 'Exact Colleges of Asia', 'college_degree': 'Nursing', 'skills': 'i baby ka...', 'collection': 'employee'}, {'name': 'Mark Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'Bachelor Of Science In Nursing', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}], 'collection_searched': 'employee'}
+Found 2 Nursing graduates:
+
+1. Mark Delos Reyes - Programmer
+2. Christelle Marie  Cura - maging baby mo
+
+[Wed 09/24/2025 11:52:00.94] ===== Starting ai_server.py ===== 
+INFO:     Started server process [12920]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 0
+Batch Size: 8
+Model loaded successfully in CPU-only low-memory mode.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:51213 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51216 - "GET /status HTTP/1.1" 200 OK
+ggml_tallocr_alloc: not enough space in the buffer (needed 458752, largest block available 331808)
+GGML_ASSERT: C:\Users\LENOVO\AppData\Local\Temp\pip-install-44j6xhx4\llama-cpp-python_206b1d934d704db793c1edc549c08b28\vendor\llama.cpp\ggml-alloc.c:116: !"not enough space in the buffer"
+[Wed 09/24/2025 11:52:18.21] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "Previous conversation context:
+User: hello
+AI: Hello  I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people 
+
+User: how many is IS graduates compared to Nursing
+AI: I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees 
+
+User: hi
+AI: Hello  I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people 
+
+Current follow-up question: how much percentage is IS compared to Nursing" 2>&1
+Output:
+I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees!
+
+[Wed 09/24/2025 12:03:14.47] ===== Starting ai_server.py ===== 
+INFO:     Started server process [8828]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 0
+Batch Size: 8
+Model loaded successfully in CPU-only low-memory mode.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:58066 - "GET /status HTTP/1.1" 200 OK
+ggml_tallocr_alloc: not enough space in the buffer (needed 458752, largest block available 331808)
+GGML_ASSERT: C:\Users\LENOVO\AppData\Local\Temp\pip-install-44j6xhx4\llama-cpp-python_206b1d934d704db793c1edc549c08b28\vendor\llama.cpp\ggml-alloc.c:116: !"not enough space in the buffer"
+[Wed 09/24/2025 12:03:29.68] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "Previous conversation context:
+User: hi
+AI: Hello  I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people 
+
+User: how much percentage is IS compared to Nursing
+AI: I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees 
+
+User: hi
+AI: Hello  I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people 
+
+Current follow-up question: how much percentage is IS graduates compare to Nursing" 2>&1
+Output:
+I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees!
+
+[Wed 09/24/2025 12:04:17.21] ===== Starting ai_server.py ===== 
+INFO:     Started server process [24660]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 0
+Batch Size: 8
+Model loaded successfully in CPU-only low-memory mode.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:50727 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62932 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60630 - "GET /status HTTP/1.1" 200 OK
+ggml_tallocr_alloc: not enough space in the buffer (needed 458752, largest block available 331808)
+GGML_ASSERT: C:\Users\LENOVO\AppData\Local\Temp\pip-install-44j6xhx4\llama-cpp-python_206b1d934d704db793c1edc549c08b28\vendor\llama.cpp\ggml-alloc.c:116: !"not enough space in the buffer"
+[Wed 09/24/2025 12:04:43.21] ===== ai_server.py stopped ===== 
+Output:
+I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees!
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "find me IS graduates (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'information system BSIS IS' with type 'education' and action 'search'
+DEBUG: Searching employee collection first
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'$or': [{'education.college.degree': {'$regex': 'information system BSIS IS', '$options': 'i'}}, {'education.college.school': {'$regex': 'information system BSIS IS', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information system', '$options': 'i'}}, {'education.college.degree': {'$regex': 'BSIS', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information', '$options': 'i'}}, {'education.college.school': {'$regex': 'information', '$options': 'i'}}]}
+DEBUG: Found 36 results in employee collection
+DEBUG: Database result: {'success': True, 'count': 36, 'data': [{'name': 'Christelle Marie  Cura', 'position': 'maging baby mo', 'department': 'Faculty - Maritime', 'college_school': ' Exact Colleges of Asia', 'college_degree': 'Information System', 'skills': 'i baby ka...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Olano', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Cruz', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Delos Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Santos', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}], 'collection_searched': 'employee'}
+Found 20 IS graduates:
+
+1. Jessa Garcia - Teacher
+2. Maria Garcia - Guidance Counselor
+3. Jonathan Garcia - Teacher
+4. Jonathan Cruz - Guidance Counselor
+5. Jessa Garcia - Admin Assistant
+6. Mark Reyes - Programmer
+7. Jessa Olano - Admin Assistant
+8. Jessa Delos Reyes - Teacher
+9. Christelle Marie  Cura - maging baby mo
+10. Jonathan Olano - Guidance Counselor
+11. Jonathan Reyes - Teacher
+12. Mark Reyes - Registrar
+13. Anna Santos - Registrar
+14. Jonathan Santos - Programmer
+15. Carlos Reyes - Programmer
+16. Jessa Cruz - Admin Assistant
+17. Jessa Santos - Registrar
+18. Anna Cruz - Programmer
+19. Mark Cruz - Teacher
+20. Maria Garcia - Admin Assistant
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "what is the skills of Jessa Garcia (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'Jessa Garcia' with type 'person' and action 'person_details'
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'$and': [{'personal_info.first_name': {'$regex': 'Jessa', '$options': 'i'}}, {'personal_info.last_name': {'$regex': 'Garcia', '$options': 'i'}}]}
+DEBUG: Database result: {'success': True, 'count': 3, 'data': [{'name': 'Jessa Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}], 'collection_searched': 'employee'}
+Based on our HR database, Jessa Garcia is an employee for the Admin Assistant position within our company. Their educational background includes BSIS.
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "on the IS list what position is Mark Cruz (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'is is' with type 'position' and action 'search'
+DEBUG: Searching employee collection first
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'$or': [{'personal_info.first_name': {'$regex': 'is is', '$options': 'i'}}, {'personal_info.last_name': {'$regex': 'is is', '$options': 'i'}}, {'position_applied': {'$regex': 'is is', '$options': 'i'}}, {'skills': {'$regex': 'is is', '$options': 'i'}}, {'education.college.degree': {'$regex': 'is is', '$options': 'i'}}]}
+DEBUG: No employees found, searching applicant collection
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for applicants: {'$or': [{'personal_info.first_name': {'$regex': 'is is', '$options': 'i'}}, {'personal_info.last_name': {'$regex': 'is is', '$options': 'i'}}, {'position_applied': {'$regex': 'is is', '$options': 'i'}}, {'skills': {'$regex': 'is is', '$options': 'i'}}, {'education.college.degree': {'$regex': 'is is', '$options': 'i'}}]}
+DEBUG: No results found in either collection
+DEBUG: Database result: {'success': True, 'count': 0, 'data': [], 'collection_searched': 'applicants'}
+No employees or applicants found matching your criteria.
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "who is Mark Cruz (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees!
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "hi" 2>&1
+Output:
+Hello! I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people!
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "Previous conversation context:
+User: hi
+AI: Hello  I'm your HR assistant AI for HRIMS. I can help you find information about employees and applicants in our database. Try asking me to find graduates by course, or ask about specific people 
+
+Current follow-up question: can you search me if theres an employee named  Jonathan Carlos Olano " 2>&1
+Output:
+I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees!
+
+[Wed 09/24/2025 12:08:25.84] ===== Starting ai_server.py ===== 
+INFO:     Started server process [6532]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 0
+Batch Size: 8
+Model loaded successfully in CPU-only low-memory mode.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:63417 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54941 - "GET /status HTTP/1.1" 200 OK
+ggml_tallocr_alloc: not enough space in the buffer (needed 458752, largest block available 331808)
+GGML_ASSERT: C:\Users\LENOVO\AppData\Local\Temp\pip-install-44j6xhx4\llama-cpp-python_206b1d934d704db793c1edc549c08b28\vendor\llama.cpp\ggml-alloc.c:116: !"not enough space in the buffer"
+INFO:     127.0.0.1:54946 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54948 - "GET /status HTTP/1.1" 200 OK
+[Wed 09/24/2025 12:08:53.21] ===== ai_server.py stopped ===== 
+[Wed 09/24/2025 12:13:07.58] ===== Starting ai_server.py ===== 
+INFO:     Started server process [26920]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+Starting AI Server with CUDA acceleration...
+Model: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+GPU Layers: 0
+Batch Size: 8
+Model loaded successfully in CPU-only low-memory mode.
+Starting FastAPI server on http://127.0.0.1:8001
+Check /status for server information
+INFO:     127.0.0.1:56053 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50224 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59170 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51656 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58689 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53086 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53984 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54785 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54788 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53033 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53174 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53614 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54004 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54005 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54006 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58728 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56551 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56552 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56553 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57391 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57392 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54703 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54710 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54711 - "POST /v1/completions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54054 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61537 - "GET /status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56330 - "GET /status HTTP/1.1" 200 OK
+ggml_tallocr_alloc: not enough space in the buffer (needed 458752, largest block available 331808)
+GGML_ASSERT: C:\Users\LENOVO\AppData\Local\Temp\pip-install-44j6xhx4\llama-cpp-python_206b1d934d704db793c1edc549c08b28\vendor\llama.cpp\ggml-alloc.c:116: !"not enough space in the buffer"
+INFO:     127.0.0.1:50598 - "GET /status HTTP/1.1" 200 OK
+[Wed 09/24/2025 12:19:22.56] ===== ai_server.py stopped ===== 
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "list me IS graduates (Note: I have 9 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'information system BSIS IS' with type 'education' and action 'search'
+DEBUG: Searching employee collection first
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'$or': [{'education.college.degree': {'$regex': 'information system BSIS IS', '$options': 'i'}}, {'education.college.school': {'$regex': 'information system BSIS IS', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information system', '$options': 'i'}}, {'education.college.degree': {'$regex': 'BSIS', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information', '$options': 'i'}}, {'education.college.school': {'$regex': 'information', '$options': 'i'}}]}
+DEBUG: Found 36 results in employee collection
+DEBUG: Database result: {'success': True, 'count': 36, 'data': [{'name': 'Christelle Marie  Cura', 'position': 'maging baby mo', 'department': 'Faculty - Maritime', 'college_school': ' Exact Colleges of Asia', 'college_degree': 'Information System', 'skills': 'i baby ka...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Olano', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Cruz', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Delos Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Santos', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}], 'collection_searched': 'employee'}
+Found 20 IS graduates:
+
+1. Maria Garcia - Admin Assistant
+2. Jessa Garcia - Admin Assistant
+3. Jonathan Cruz - Guidance Counselor
+4. Mark Cruz - Teacher
+5. Anna Santos - Registrar
+6. Jessa Cruz - Admin Assistant
+7. Jonathan Reyes - Teacher
+8. Jessa Garcia - Teacher
+9. Christelle Marie  Cura - maging baby mo
+10. Jessa Delos Reyes - Teacher
+11. Jonathan Santos - Programmer
+12. Carlos Reyes - Programmer
+13. Anna Cruz - Programmer
+14. Maria Garcia - Guidance Counselor
+15. Jonathan Olano - Guidance Counselor
+16. Mark Reyes - Registrar
+17. Jessa Olano - Admin Assistant
+18. Jessa Santos - Registrar
+19. Jonathan Garcia - Teacher
+20. Mark Reyes - Programmer
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "on number 1, what is her role and skills (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'is' with type 'skills' and action 'search'
+DEBUG: Searching employee collection first
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'skills': {'$regex': 'is', '$options': 'i'}}
+DEBUG: Found 1 results in employee collection
+DEBUG: Database result: {'success': True, 'count': 1, 'data': [{'name': 'Jonathan Carlos Olano', 'position': 'Software Engineer', 'department': 'Teaching', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'Honor X9c', 'skills': 'Web Development: HTML, CSS, JavaScript, PHP, XAMPP, MongoDB, MySQL\r\nProgramming: Critical thinking &...', 'collection': 'employee'}], 'collection_searched': 'employee'}
+Found 1 employees but none match 'is' graduate criteria.
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "i mean is Maria Garcia (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+I'm currently experiencing connectivity issues with my advanced AI processing. However, I can still help you search our HR database. Try asking me to find graduates by course (IS, Nursing, Maritime, etc.) or ask about specific employees!
+
+Command: C:\Users\LENOVO\AppData\Local\Programs\Python\Python312\python.exe "C:\xampp\htdocs\hrims\main\ai_script.py" "find a maritime graduate (Note: I have 10 previous exchanges in context if relevant)" 2>&1
+Output:
+DEBUG: Searching for 'maritime' with type 'education' and action 'search'
+DEBUG: Searching employee collection first
+DEBUG: PHP endpoint failed (PHP endpoint failed: HTTP 404), trying direct MongoDB
+DEBUG: MongoDB query for employee: {'$or': [{'education.college.degree': {'$regex': 'maritime', '$options': 'i'}}, {'education.college.school': {'$regex': 'maritime', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information system', '$options': 'i'}}, {'education.college.degree': {'$regex': 'BSIS', '$options': 'i'}}, {'education.college.degree': {'$regex': 'information', '$options': 'i'}}, {'education.college.school': {'$regex': 'information', '$options': 'i'}}]}
+DEBUG: Found 37 results in employee collection
+DEBUG: Database result: {'success': True, 'count': 37, 'data': [{'name': 'Christelle Marie  Cura', 'position': 'maging baby mo', 'department': 'Faculty - Maritime', 'college_school': ' Exact Colleges of Asia', 'college_degree': 'Information System', 'skills': 'i baby ka...', 'collection': 'employee'}, {'name': 'Christelle Marie  Cura', 'position': 'registrar', 'department': '', 'college_school': ' Exact Colleges of Asia', 'college_degree': 'Maritime', 'skills': 'i baby ka...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Olano', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Cruz', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Delos Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Reyes', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Santos', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Garcia', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Cruz', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Carlos Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Delos Reyes', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jessa Garcia', 'position': 'Teacher', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Olano', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Delos Reyes', 'position': 'Programmer', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Cruz', 'position': 'Guidance Counselor', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Jonathan Olano', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Mark Santos', 'position': 'Registrar', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Maria Santos', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}, {'name': 'Anna Garcia', 'position': 'Admin Assistant', 'department': '', 'college_school': 'Exact Colleges Of Asia', 'college_degree': 'BSIS', 'skills': 'Web Development, Office Management...', 'collection': 'employee'}], 'collection_searched': 'employee'}
+Found 1 Maritime graduates:
+
+1. Christelle Marie  Cura - registrar
+

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>Enhanced AI Conversation Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .chat-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+        .ai-message {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+        }
+        .enhanced-feature {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+            font-weight: bold;
+        }
+        .demo-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-list li:before {
+            content: \"✅ \";
+            color: #4caf50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class=\"chat-container\">
+        <h1>🤖 Enhanced AI Conversation System</h1>
+        <p>Your HRIMS AI now supports advanced conversational queries!</p>
+        
+        <div class=\"demo-section\">
+            <h2>🚀 New Features</h2>
+            <ul class=\"feature-list\">
+                <li><strong>Percentage Calculations:</strong> \"How much percentage of IS compared to nursing?\"</li>
+                <li><strong>Person Details:</strong> \"What is the role of Maria Garcia?\" → Shows full profile</li>
+                <li><strong>Skills Information:</strong> \"What are the skills of Jonathan Santos?\"</li>
+                <li><strong>Course Comparisons:</strong> \"What course has more graduates?\"</li>
+                <li><strong>Follow-up Context:</strong> Remembers previous conversations</li>
+                <li><strong>Intelligent Fallback:</strong> Works even when AI server is down</li>
+            </ul>
+        </div>
+        
+        <div class=\"demo-section\">
+            <h2>💬 Example Conversation Flow:</h2>
+            
+            <div class=\"message user-message\">
+                <strong>You:</strong> Find IS graduates
+            </div>
+            <div class=\"message ai-message\">
+                <strong>AI:</strong> Found 20 IS graduates:<br>
+                1. Maria Garcia - Admin Assistant<br>
+                2. Jonathan Santos - Programmer<br>
+                3. Anna Cruz - Programmer<br>
+                ...
+            </div>
+            
+            <div class=\"message user-message\">
+                <strong>You:</strong> What is the role of Maria Garcia?
+            </div>
+            <div class=\"message enhanced-feature\">
+                🔗 Follow-up detected - using conversation context
+            </div>
+            <div class=\"message ai-message\">
+                <strong>AI:</strong> 👤 Employee Profile: Maria Garcia<br><br>
+                🏢 Position: Admin Assistant<br>
+                📧 Email: maria.garcia@company.com<br>
+                🎓 Education: BSIS from Exact Colleges Of Asia<br>
+                🛠️ Skills: Web Development, Office Management<br>
+                💼 Status: Employee
+            </div>
+            
+            <div class=\"message user-message\">
+                <strong>You:</strong> How much percentage of IS compared to nursing?
+            </div>
+            <div class=\"message enhanced-feature\">
+                🔗 Follow-up detected - using conversation context
+            </div>
+            <div class=\"message ai-message\">
+                <strong>AI:</strong> 📊 Course Distribution Analysis:<br><br>
+                • IS: 20 graduates (87.0%)<br>
+                • Nursing: 3 graduates (13.0%)<br><br>
+                🏆 IS has the highest representation at 87.0%.
+            </div>
+            
+            <div class=\"message user-message\">
+                <strong>You:</strong> What course has more graduates?
+            </div>
+            <div class=\"message enhanced-feature\">
+                🔗 Follow-up detected - using conversation context
+            </div>
+            <div class=\"message ai-message\">
+                <strong>AI:</strong> 📈 Course Comparison Results:<br><br>
+                1. IS: 20 graduates<br>
+                2. Nursing: 3 graduates<br>
+                3. Maritime: 2 graduates<br>
+                4. Business: 1 graduate<br><br>
+                🏆 IS leads with the most graduates.
+            </div>
+        </div>
+        
+        <div class=\"demo-section\">
+            <h2>🔧 Technical Implementation:</h2>
+            <ul class=\"feature-list\">
+                <li><strong>Enhanced PHP Endpoint:</strong> ai_data_query.php with percentage/comparison/person detail actions</li>
+                <li><strong>Smart Query Analysis:</strong> Detects query type and routes to appropriate handler</li>
+                <li><strong>Context Awareness:</strong> Maintains conversation history for follow-up questions</li>
+                <li><strong>Graceful Fallback:</strong> Works even when AI server has memory issues</li>
+                <li><strong>Rich Responses:</strong> Formatted messages with emojis and structured data</li>
+            </ul>
+        </div>
+        
+        <div class=\"demo-section\">
+            <h2>🎯 How to Use:</h2>
+            <p>Simply ask natural questions in your AI sidebar:</p>
+            <ul>
+                <li>\"Find nursing graduates\"</li>
+                <li>\"What is the role of [Name]?\"</li>
+                <li>\"How many percentage of IS compared to nursing?\"</li>
+                <li>\"What are the skills of [Name]?\"</li>
+                <li>\"What course has more graduates?\"</li>
+            </ul>
+            <p><strong>The system will automatically detect follow-up questions and provide context-aware responses!</strong></p>
+        </div>
+        
+        <div class=\"message enhanced-feature\">
+            <strong>✅ Status:</strong> Enhanced conversation system is now active! Your AI can handle complex conversational queries, remember context, and provide detailed analysis even when the AI server has connectivity issues.
+        </div>
+    </div>
+</body>
+</html>"

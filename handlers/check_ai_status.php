@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 
 function checkAIServer() {
-    $url = 'http://127.0.0.1:8000/status';
+    $url = 'http://127.0.0.1:8001/status';
     
     // Create stream context with timeout
     $context = stream_context_create([
@@ -29,7 +29,7 @@ function checkAIServer() {
         }
     } else {
         // Check if port is open by trying to connect
-        $connection = @fsockopen('127.0.0.1', 8000, $errno, $errstr, 3);
+        $connection = @fsockopen('127.0.0.1', 8001, $errno, $errstr, 3);
         if ($connection) {
             fclose($connection);
             return ['status' => 'port_open_but_no_response'];

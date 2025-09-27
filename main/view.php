@@ -51,6 +51,13 @@ $evalId = $_GET['eval_id'] ?? null;
             font-weight: normal;
             padding-left: 20px;
         }
+        .box-header {
+            display: flex;
+            gap: 20px;
+        }
+        .h2 {
+            margin: 8px 0px 8px 20px;
+        }
     </style>
 </head>
 <body>
@@ -59,6 +66,8 @@ $evalId = $_GET['eval_id'] ?? null;
 <div class="header">Evaluation Results</div><br><br><br>
 
 <div class="content">
+    <div class="box-header">
+        <button>back</button>
     <h2>Employee: 
         <?php 
             echo ($emp['personal_info']['first_name'] ?? '') . " " .
@@ -66,9 +75,11 @@ $evalId = $_GET['eval_id'] ?? null;
                  ($emp['personal_info']['last_name'] ?? '');
         ?>
     </h2>
-
+        <Button>print</Button>
+    </div>
     <?php if (!$evalId): ?>
         <!-- Show summary table -->
+    <div class="box-body">
         <h3>Evaluation Summary</h3>
         <table>
             <tr>
@@ -95,7 +106,7 @@ $evalId = $_GET['eval_id'] ?? null;
             }
             ?>
         </table>
-
+            </div>
     <?php else: ?>
         <!-- Show detailed evaluation -->
         <?php
@@ -180,6 +191,7 @@ $evalId = $_GET['eval_id'] ?? null;
                 ]
             ];
 
+            echo "<div class='box-body'>";
             foreach ($categories as $key => $label) {
                 if (isset($evaluation['sections'][$key])) {
                     $section = $evaluation['sections'][$key];
@@ -191,15 +203,15 @@ $evalId = $_GET['eval_id'] ?? null;
                         echo "<tr><td>{$score}</td><td>{$criterion}</td></tr>";
                     }
                     echo "</table>";
-                    echo "<p><strong>Average:</strong> " . number_format($section['average'], 2) . 
-                        " | <strong>Percent:</strong> " . number_format($section['percent'], 2) . "</p>";
-                    echo "<p><strong>Comments:</strong> " . htmlspecialchars($section['comments'] ?? '') . "</p>";
                 }
             }
+            echo "</div>";
         }
         ?>
         <p><a href="view.php?id=<?php echo $id; ?>">⬅ Back to Summary</a></p>
     <?php endif; ?>
+
 </div>
+
 </body>
 </html>

@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "civil_status" => $_POST["civil_status"] ?? "",
             "birth_date" => $_POST["birth_date"] ?? "",
             "birth_place" => $_POST["birth_place"] ?? "",
-            "citizen" => $_POST["citizen"] ?? "",
+            "citizenship" => $_POST["citizen"] ?? "",
             "religion" => $_POST["religion"] ?? "",
             "height" => $_POST["height"] ?? "",
             "weight" => $_POST["weight"] ?? "",
@@ -79,9 +79,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ],
         
         "emergency_contact" => [
-            "name" => $_POST["emergency_contact_name"] ?? "",
+            "name" => $_POST["emergency_name"] ?? "",
             "relationship" => $_POST["emergency_relationship"] ?? "",
-            "contact_no" => $_POST["emergency_number"] ?? "",
+            "emergency_street" => $_POST["emergency_street"] ?? "",
+            "emergency_region" => $_POST["emergency_region"] ?? "",
+            "emergency_province" => $_POST["emergency_province"] ?? "",
+            "emergency_municipality" => $_POST["emergency_municipality"] ?? "",
+            "emergency_barangay" => $_POST["emergency_barangay"] ?? "",
+            "emergency_number" => $_POST["emergency_number"] ?? ""
 
         ],
                 "character_reference" => [

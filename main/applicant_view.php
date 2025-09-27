@@ -550,7 +550,7 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
                 <td colspan="3">
                   <label>Citizenship:</label> 
                    <span class="view-mode"><?php echo htmlspecialchars($personal['citizenship'] ?? ''); ?></span>
-                  <input type="text" name="citizenship" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['citizenship'] ?? ''); ?>">
+                  <input type="text" name="citizen" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['citizenship'] ?? ''); ?>">
                 </td>
                 <td colspan="3">
                   <label>Religion:</label> 
@@ -608,19 +608,19 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
               <td><strong>Father</strong></td>
               <td>
               <span class="view-mode"><?php echo htmlspecialchars($family['father']['name'] ?? ''); ?></span>
-                  <input type="text" name="father" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($family['father']['name'] ?? ''); ?>">
+                  <input type="text" name="father_name" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($family['father']['name'] ?? ''); ?>">
             </tr>
             <tr>
               <td><strong>Mother</strong></td>
               <td>
               <span class="view-mode"><?php echo htmlspecialchars($family['mother']['name'] ?? ''); ?></span>
-                  <input type="text" name="mother" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($family['mother']['name'] ?? ''); ?>">
+                  <input type="text" name="mother_name" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($family['mother']['name'] ?? ''); ?>">
             </tr>
             <tr>
               <td><strong>Spouse</strong></td>
               <td>
               <span class="view-mode"><?php echo htmlspecialchars($family['spouse']['name'] ?? ''); ?></span>
-                  <input type="text" name="spouse" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($family['spouse']['name'] ?? ''); ?>">
+                  <input type="text" name="spouse_name" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($family['spouse']['name'] ?? ''); ?>">
             </tr>
             <tr>
               <td><strong>Parents' Address</strong></td>
@@ -770,8 +770,23 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
               <td><strong>Address</strong></td>
               <td>
             <span class="view-mode"><?php echo htmlspecialchars($emergencyFullAddress); ?></span>
-                  <input type="text" name="relationship" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($emergencyFullAddress); ?>">
-            </td>
+          <input type="text" name="emergency_street" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($emergency['emergency_street']); ?>">
+                      <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <select class="edit-mode" style="display:none;" name="emergency_region" id="emergency_region" onchange="loadProvinces('emergency')" required>
+              <option value="">Region</option>
+          </select>
+          <select class="edit-mode" style="display:none;" name="emergency_province" id="emergency_province" onchange="loadMunicipalities('emergency')" disabled required>
+              <option value="">Province</option>
+          </select>
+          <select class="edit-mode" style="display:none;" name="emergency_municipality" id="emergency_municipality" onchange="loadBarangays('emergency')" disabled required>
+              <option value="">Municipality</option>
+          </select>
+          <select class="edit-mode" style="display:none;" name="emergency_barangay" id="emergency_barangay" disabled required>
+              <option value="">Barangays</option>
+          </select>
+      </div>
+                                </td>
+                </td>
             </tr>
             <tr>
               <td><strong>Contact Number</strong></td>
@@ -797,26 +812,27 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($references as $ref): ?>
-                <tr>
-                  <td>
-                <span class="view-mode"><?php echo htmlspecialchars($ref['name'] ?? ''); ?></span>
-                  <input type="text" name="name" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['name'] ?? ''); ?>">
-                </td>
-                  <td>
-                <span class="view-mode"><?php echo htmlspecialchars($ref['company'] ?? ''); ?></span>
-                  <input type="text" name="company" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['company'] ?? ''); ?>">
-                </td>
-                  <td>
-                <span class="view-mode"><?php echo htmlspecialchars($ref['position'] ?? ''); ?></span>
-                  <input type="text" name="position" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['position'] ?? ''); ?>">
-                </td>
-                  <td>
-                  <span class="view-mode"><?php echo htmlspecialchars($ref['contact'] ?? ''); ?></span>
-                  <input type="text" name="contact" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($references['contact'] ?? ''); ?>">
-                </td>
-                </tr>
-              <?php endforeach; ?>
+              <?php foreach ($references as $index => $ref): ?>
+<tr>
+  <td>
+    <span class="view-mode"><?php echo htmlspecialchars($ref['name'] ?? ''); ?></span>
+    <input type="text" name="ref<?php echo $index + 1; ?>_name" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($ref['name'] ?? ''); ?>">
+  </td>
+  <td>
+    <span class="view-mode"><?php echo htmlspecialchars($ref['company'] ?? ''); ?></span>
+    <input type="text" name="ref<?php echo $index + 1; ?>_company" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($ref['company'] ?? ''); ?>">
+  </td>
+  <td>
+    <span class="view-mode"><?php echo htmlspecialchars($ref['position'] ?? ''); ?></span>
+    <input type="text" name="ref<?php echo $index + 1; ?>_position" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($ref['position'] ?? ''); ?>">
+  </td>
+  <td>
+    <span class="view-mode"><?php echo htmlspecialchars($ref['contact'] ?? ''); ?></span>
+    <input type="text" name="ref<?php echo $index + 1; ?>_contact" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($ref['contact'] ?? ''); ?>">
+  </td>
+</tr>
+<?php endforeach; ?>
+
             </tbody>
           </table>
         <?php else: ?>
@@ -917,6 +933,8 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
 
     </div>
   </div>
+<script src="../assets/js/address.js"></script>
+
     <script>
     // Sample data injection (replace with dynamic content)
     document.getElementById("applicant-name").textContent = "<?php echo htmlspecialchars($fullName); ?>";
@@ -991,7 +1009,6 @@ document.getElementById("save-btn").addEventListener("click", function () {
 });
 
   </script>
-
 
 </body>
 
