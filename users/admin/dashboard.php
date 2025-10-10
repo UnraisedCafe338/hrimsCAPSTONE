@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HRIMS Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+<!-- FullCalendar JS -->
+
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    .dashboard-button {
+      background-color: #00124d;
+      border-left: 4px solid #ffffff;
+    }
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-left: 250px;
+      padding-bottom: 10px;
+    }
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .summary-card {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    .summary-title {
+      font-size: 14px;
+      color: #777;
+    }
+    .summary-value {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+    .birthday-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      width: 160px;
+      text-align: center;
+      background-color: #fafafa;
+    }
+    .birthday-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+    .birthday-name {
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .birthday-date {
+      font-size: 12px;
+      color: #666;
+    }
+    #yearlyChart {
+  width: 100% !important;
+  height: 400px !important;
+}
+.wide-chart {
+  grid-column: span 2;
+}
+#calendar {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+@media screen and (max-width: 768px) {
+  .wide-chart {
+    grid-column: span 1; /* Make it stack on smaller screens */
+  }
+}
+  </style>
+</head>
+<body>
+
+<?php include 'sidebar.php'; ?>
+<div class="header">Employee Dashboard</div>
+
+<div class="content">
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+  <div class="card" style="flex: 1; min-width: 200px;">
+    <h2><i class="fas fa-users" style="font-size: 30px;"></i> Total Employees</h2>
+    <div id="totalEmployees" style="font-size: 24px; font-weight: bold; text-align:center">0</div>
+  </div>
+
+  <div class="card" style="flex: 1; min-width: 200px;">
+    <h2><i class="fas fa-user-plus" style="font-size: 30px;"></i> Newly Hired This Month</h2>
+    <div id="newlyHired" style="font-size: 24px; font-weight: bold; text-align:center">0</div>
+  </div>
+
+  <div style="flex: 1; min-width: 200px;" class="card">
+    <h2>Filter by Department</h2>
+    <select id="deptFilter" style="width: 100%; padding: 8px; font-size: 16px;">
+      <option value="">All Departments</option>
+    </select>
+  </div>
+</div>
+
+
+  <div class="dashboard-grid">
+      <div class="card wide-chart">
+      <h2>Employee Type by Year</h2>
+      <canvas id="yearlyChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Teaching vs Non-Teaching</h2>
+      <canvas id="deptChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Teaching: Full-time vs Part-time</h2>
+      <canvas id="teachingTypeChart"></canvas>
+    </div>
+
+<div class="card wide-chart">
+  <h2>🎉 Events & Birthdays Calendar</h2>
+  <div id="calendar"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.19/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.19/index.global.min.js"></script>
+
+</div>
+
+  </div>
+  <div id="eventModal" style="display: none; position: fixed; top: 50%; left: 50%; 
+  transform: translate(-50%, -50%); background: white; padding: 20px; 
+  border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3); z-index: 10000; 
+  width: 320px; max-width: 90%;">
+  
+  <div style="text-align: right;">
+    <button onclick="document.getElementById('eventModal').style.display='none'" 
+      style="border: none; background: transparent; font-size: 18px; cursor: pointer;">&times;</button>
+  </div>
+
+  <div id="modalImageContainer" style="text-align: center; margin-bottom: 10px;">
+    <img id="eventPhoto" src="" alt="Event Photo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; display: none;" />
+  </div>
+
+  <h3 id="eventTitle" style="text-align: center; margin: 0;"></h3>
+  <p id="eventDate" style="font-size: 14px; color: #666; text-align: center;"></p>
+  <hr>
+  <p id="eventDescription" style="font-size: 14px;"></p>
+</div>
+
+</div>
+
+<script src="/hrims/assets/js/chart.umd.js"></script>
+<script>
+  let yearlyChartInstance = null;
+  let deptChartInstance = null;
+  let teachingTypeChartInstance = null;
+
+  function populateDepartments(departments) {
+    const select = document.getElementById('deptFilter');
+    // Keep the first option (All Departments), replace the rest
+    const currentValue = select.value;
+    select.innerHTML = '<option value="">All Departments</option>' + (departments || []).map(d => `<option value="${encodeURIComponent(d)}">${d}</option>`).join('');
+    // Try to preserve selection if still present
+    if ([...select.options].some(o => o.value === currentValue)) {
+      select.value = currentValue;
+    }
+  }
+
+  function render(data) {
+    document.getElementById('totalEmployees').textContent = data.totalEmployees || 0;
+    document.getElementById('newlyHired').textContent = data.newlyHired || 0;
+    populateDepartments(data.departments || []);
+
+    const years = Object.keys(data.yearlyStats || {}).sort();
+    const employmentTypes = ['full-time', 'part-time', 'permanent'];
+    const yearlyDatasets = employmentTypes.map(type => ({
+      label: type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      data: years.map(year => (data.yearlyStats?.[year]?.[type]) || 0),
+      backgroundColor: getColorForType(type)
+    }));
+
+    // Destroy existing charts if any
+    if (yearlyChartInstance) yearlyChartInstance.destroy();
+    if (deptChartInstance) deptChartInstance.destroy();
+    if (teachingTypeChartInstance) teachingTypeChartInstance.destroy();
+
+    yearlyChartInstance = new Chart(document.getElementById('yearlyChart'), {
+      type: 'line',
+      data: {
+        labels: years.length > 0 ? years : ['No Data'],
+        datasets: years.length > 0 ? yearlyDatasets.map(dataset => ({
+          ...dataset,
+          fill: false,
+          borderColor: dataset.backgroundColor,
+          tension: 0.3
+        })) : [{ label: 'No Data', data: [0], fill: false, borderColor: '#ccc' }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          title: { display: true, text: 'Employee Types by Year' }
+        },
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: 'Number of Employees' } },
+          x: { title: { display: true, text: 'Year' } }
+        }
+      }
+    });
+
+    deptChartInstance = new Chart(document.getElementById('deptChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Teaching', 'Non-Teaching'],
+        datasets: [{
+          data: [data.teachingStats?.teaching || 0, data.teachingStats?.non_teaching || 0].some(n => n > 0)
+            ? [data.teachingStats?.teaching || 0, data.teachingStats?.non_teaching || 0]
+            : [1, 0],
+          backgroundColor: ['#5700FF', '#FFF500']
+        }]
+      }
+    });
+
+    const teachTypeData = [data.teachingType?.full_time || 0, data.teachingType?.part_time || 0];
+    const hasData = teachTypeData.some(n => n > 0);
+
+    teachingTypeChartInstance = new Chart(document.getElementById('teachingTypeChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Full-time', 'Part-time'],
+        datasets: [{
+          data: hasData ? teachTypeData : [1, 1],
+          backgroundColor: hasData ? ['#3498db', '#f39c12'] : ['#e0e0e0', '#e0e0e0'],
+          borderColor: '#ccc',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: hasData ? 'Teaching: Full-time vs Part-time' : 'No data available'
+          },
+          tooltip: { enabled: hasData }
+        }
+      }
+    });
+  }
+
+  function loadData() {
+    const select = document.getElementById('deptFilter');
+    const raw = select.value || '';
+    const dept = raw ? decodeURIComponent(raw) : '';
+  const url = '/hrims/handlers/admin/get_dashboard_data.php' + (dept ? ('?department=' + encodeURIComponent(dept)) : '');
+    fetch(url)
+      .then(res => res.json())
+      .then(render)
+      .catch(err => {
+        console.error('Dashboard error:', err);
+        alert('Failed to load dashboard data. Please check the console.');
+      });
+  }
+
+  function getColorForType(type) {
+    switch (type) {
+      case 'full-time': return '#4CAF50';
+      case 'part-time': return '#2196F3';
+      case 'permanent': return '#FFC107';
+      case 'unknown': return '#E0E0E0';
+      default: return '#9E9E9E';
+    }
+  }
+
+  
+
+document.addEventListener('DOMContentLoaded', function () {
+  const calendarEl = document.getElementById('calendar');
+  const deptFilterEl = document.getElementById('deptFilter');
+  deptFilterEl.addEventListener('change', loadData);
+  loadData();
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    height: 500,
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      // right: 'dayGridMonth,timeGridWeek'
+    },
+  events: '/hrims/handlers/get_events.php', // <-- change to your PHP file path
+    eventDidMount: function(info) {
+      // Example: Add tooltip for description
+      if (info.event.extendedProps.description) {
+        info.el.title = info.event.extendedProps.description;
+      }
+    }
+  });
+
+  calendar.render();
+});
+</script>
+
+</body>
+</html>

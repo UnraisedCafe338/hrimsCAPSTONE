@@ -276,6 +276,70 @@ td a:hover {
     width: 100%;
 }
 
+/* Sidebar Toggle Styles */
+.sidebar-header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+    display: block;
+}
+
+.sidebar-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Collapsed sidebar styles */
+.sidebar-container.collapsed {
+    width: 60px;
+    transition: width 0.3s ease;
+}
+
+.sidebar-container.collapsed .admin-title {
+    display: none;
+}
+
+.sidebar-container.collapsed .menu li a {
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.sidebar-container.collapsed .menu li a span {
+    display: none;
+}
+
+.sidebar-container.collapsed .menu li a i {
+    margin-right: 0;
+    font-size: 20px;
+}
+
+.sidebar-container.collapsed .logo {
+    width: 40px;
+    height: 40px;
+    margin: 10px auto;
+}
+
+/* Disable transition during initial load to prevent glitch */
+.sidebar-container.no-transition {
+    transition: none !important;
+}
+
   
 body {
     margin: 0;
@@ -387,9 +451,9 @@ body {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    padding: 10px 20px;
+    padding: 12px 20px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
+    font-size: 13px;
     color: #333;
     width: calc(100% - 250px); 
     margin-left: 248px; 
@@ -398,12 +462,44 @@ body {
     bottom: 0;
     left: 0; 
     z-index: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 40px;
+}
+
+.box-footer span {
+    flex: 1;
+    text-align: center;
+    padding: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.box-footer span:first-child {
+    text-align: left;
+    flex: 0 0 auto;
+    min-width: 180px;
+}
+
+.box-footer span:last-child {
+    text-align: right;
+    flex: 1;
+    font-weight: 500;
+    min-width: 200px;
 }
     
     @media screen and (max-width: 1024px) {
         .box-footer {
             width: 100%;
             margin-left: 0;
+            padding: 10px 15px;
+            font-size: 12px;
+        }
+        
+        .box-footer span {
+            padding: 0 5px;
         }
         
         .sidebar-container {
@@ -467,6 +563,17 @@ body {
         
         .box-footer {
             margin-left: 0;
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 11px;
+        }
+        
+        .box-footer span {
+            font-size: 11px;
+        }
+        
+        .box-footer span:first-child {
+            min-width: 120px;
         }
         
         .sidebar-toggle {
@@ -573,7 +680,8 @@ body {
     height: 20px;
 } */
 .header {
-  background: #001a66;
+    background: #001a66;
+
   width: 100%;
   height: auto;
   padding: 20px;

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Test</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f7fa;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+
+      .instructions {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .instructions h2 {
+        color: #2575fc;
+      }
+
+      .instructions ul {
+        padding-left: 20px;
+      }
+
+      .instructions li {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>HRIMS AI Assistant - Messenger Style UI</h1>
+
+      <div class="instructions">
+        <h2>Test Instructions</h2>
+        <ul>
+          <li>
+            Look for the floating AI button in the bottom-right corner of the
+            screen
+          </li>
+          <li>Click the button to open the AI chat interface</li>
+          <li>The chat interface should appear as a messenger-style popup</li>
+          <li>
+            Try typing a message in the input field and pressing Enter or
+            clicking Send
+          </li>
+          <li>
+            Notice the modern styling with avatars, message bubbles, and
+            timestamps
+          </li>
+          <li>
+            Click the X button to close the chat or click outside the chat
+            window
+          </li>
+          <li>
+            The AI button should remain visible and functional at all times
+          </li>
+        </ul>
+      </div>
+
+      <div class="instructions">
+        <h2>Features Implemented</h2>
+        <ul>
+          <li>Floating AI button positioned at bottom-right corner</li>
+          <li>Messenger-style chat popup with modern design</li>
+          <li>Distinct message bubbles for user and AI with avatars</li>
+          <li>Message timestamps</li>
+          <li>Typing indicators</li>
+          <li>Responsive design that works on mobile and desktop</li>
+          <li>Smooth animations and transitions</li>
+          <li>Proper closing behavior (click X or outside the popup)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- This would normally be included from sidebar.php -->
+    <script>
+      // Create the AI button and chat interface for demonstration
+      document.addEventListener("DOMContentLoaded", function () {
+        // Create AI button
+        const aiButton = document.createElement("button");
+        aiButton.className = "aibutton";
+        aiButton.id = "aiToggleButton";
+        aiButton.innerHTML = '<img src="images/cutie_2.0.png" alt="AI" />';
+        aiButton.style.position = "fixed";
+        aiButton.style.bottom = "20px";
+        aiButton.style.right = "20px";
+        aiButton.style.width = "60px";
+        aiButton.style.height = "60px";
+        aiButton.style.borderRadius = "50%";
+        aiButton.style.background =
+          "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)";
+        aiButton.style.color = "white";
+        aiButton.style.fontSize = "24px";
+        aiButton.style.border = "none";
+        aiButton.style.boxShadow = "0 4px 15px rgba(37, 117, 252, 0.4)";
+        aiButton.style.cursor = "pointer";
+        aiButton.style.zIndex = "9999";
+        aiButton.style.display = "flex";
+        aiButton.style.alignItems = "center";
+        aiButton.style.justifyContent = "center";
+        aiButton.style.transition = "all 0.3s ease";
+
+        // Add hover effect
+        aiButton.addEventListener("mouseenter", function () {
+          this.style.transform = "scale(1.1)";
+          this.style.boxShadow = "0 6px 20px rgba(37, 117, 252, 0.6)";
+        });
+
+        aiButton.addEventListener("mouseleave", function () {
+          this.style.transform = "scale(1)";
+          this.style.boxShadow = "0 4px 15px rgba(37, 117, 252, 0.4)";
+        });
+
+        // Create chat modal
+        const chatModal = document.createElement("div");
+        chatModal.id = "aiChatModal";
+        chatModal.innerHTML = `
+                <div style="position: fixed; bottom: 80px; right: 20px; width: 380px; height: 500px; background: #fff; border-radius: 12px; box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; z-index: 10000; transform: translateY(20px); opacity: 0; visibility: hidden; transition: all 0.3s ease;">
+                    <div style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; padding: 15px 20px; border-radius: 12px 12px 0 0; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #2575fc;">AI</div>
+                            <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Qutie AI Assistant</h3>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button id="minimizeChat" title="Minimize" style="background: rgba(255, 255, 255, 0.2); border: none; width: 30px; height: 30px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">−</button>
+                            <button id="closeChat" title="Close" style="background: rgba(255, 255, 255, 0.2); border: none; width: 30px; height: 30px; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">×</button>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 10px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-size: 12px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: #ff4d4d;"></span>
+                        <span>AI Server Not Running</span>
+                    </div>
+                    
+                    <div id="chatMessages" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;">
+                        <div style="max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.4; background: #f0f0f0; border-bottom-left-radius: 5px; align-self: flex-start; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                            <span style="font-weight: 600; font-size: 12px; margin-bottom: 4px; display: block;">AI Assistant</span>
+                            <p style="margin: 0;">Hello! I'm your HRIMS AI assistant. How can I help you today?</p>
+                            <div style="font-size: 10px; text-align: right; margin-top: 5px; opacity: 0.7;">Just now</div>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px;">
+                        <textarea id="userInput" placeholder="Type your message..." style="flex: 1; border: 1px solid #ddd; border-radius: 20px; padding: 10px 15px; resize: none; height: 40px; font-family: inherit; font-size: 14px;"></textarea>
+                        <button id="sendMessageBtn" style="background: #2575fc; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">➤</button>
+                    </div>
+                </div>
+            `;
+
+        // Add elements to body
+        document.body.appendChild(aiButton);
+        document.body.appendChild(chatModal);
+
+        // Add functionality
+        const aiChatModal = document.getElementById("aiChatModal");
+        const closeChat = document.getElementById("closeChat");
+        const minimizeChat = document.getElementById("minimizeChat");
+        const chatMessages = document.getElementById("chatMessages");
+        const userInput = document.getElementById("userInput");
+        const sendMessageBtn = document.getElementById("sendMessageBtn");
+
+        // Toggle chat modal
+        aiButton.addEventListener("click", function () {
+          if (aiChatModal.style.opacity === "1") {
+            aiChatModal.style.transform = "translateY(20px)";
+            aiChatModal.style.opacity = "0";
+            aiChatModal.style.visibility = "hidden";
+          } else {
+            aiChatModal.style.transform = "translateY(0)";
+            aiChatModal.style.opacity = "1";
+            aiChatModal.style.visibility = "visible";
+            userInput.focus();
+          }
+        });
+
+        // Close chat modal
+        closeChat.addEventListener("click", function () {
+          aiChatModal.style.transform = "translateY(20px)";
+          aiChatModal.style.opacity = "0";
+          aiChatModal.style.visibility = "hidden";
+        });
+
+        // Minimize chat modal
+        minimizeChat.addEventListener("click", function () {
+          aiChatModal.style.transform = "translateY(20px)";
+          aiChatModal.style.opacity = "0";
+          aiChatModal.style.visibility = "hidden";
+        });
+
+        // Close when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            aiChatModal.style.opacity === "1" &&
+            !aiChatModal.contains(e.target) &&
+            !aiButton.contains(e.target)
+          ) {
+            aiChatModal.style.transform = "translateY(20px)";
+            aiChatModal.style.opacity = "0";
+            aiChatModal.style.visibility = "hidden";
+          }
+        });
+
+        // Send message function
+        function sendToAI() {
+          const userMessage = userInput.value.trim();
+          if (!userMessage) return;
+
+          // Add user message to chat
+          const now = new Date();
+          const timeString = now.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          const userMessageDiv = document.createElement("div");
+          userMessageDiv.style.cssText =
+            "max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.4; background: #2575fc; color: white; border-bottom-right-radius: 5px; align-self: flex-end; box-shadow: 0 1px 2px rgba(0,0,0,0.1);";
+          userMessageDiv.innerHTML = `
+                    <span style="font-weight: 600; font-size: 12px; margin-bottom: 4px; display: block;">You</span>
+                    <p style="margin: 0;">${userMessage}</p>
+                    <div style="font-size: 10px; text-align: right; margin-top: 5px; opacity: 0.9;">${timeString}</div>
+                `;
+          chatMessages.appendChild(userMessageDiv);
+
+          userInput.value = "";
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+          // Show typing indicator
+          const typingDiv = document.createElement("div");
+          typingDiv.style.cssText =
+            "display: flex; align-items: center; padding: 10px 15px; background: #f0f0f0; border-radius: 18px; align-self: flex-start; width: 80px;";
+          typingDiv.id = "typing-indicator";
+          typingDiv.innerHTML =
+            '<span style="width: 8px; height: 8px; background: #999; border-radius: 50%; display: inline-block; margin: 0 2px; animation: typing 1s infinite;"><span style="width: 8px; height: 8px; background: #999; border-radius: 50%; display: inline-block; margin: 0 2px; animation: typing 1s infinite; animation-delay: 0.2s;"></span><span style="width: 8px; height: 8px; background: #999; border-radius: 50%; display: inline-block; margin: 0 2px; animation: typing 1s infinite; animation-delay: 0.4s;"></span>';
+          chatMessages.appendChild(typingDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+          // Simulate AI response
+          setTimeout(function () {
+            // Remove typing indicator
+            document.getElementById("typing-indicator").remove();
+
+            // Add AI response
+            const aiResponseDiv = document.createElement("div");
+            aiResponseDiv.style.cssText =
+              "max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.4; background: #f0f0f0; border-bottom-left-radius: 5px; align-self: flex-start; box-shadow: 0 1px 2px rgba(0,0,0,0.05);";
+            aiResponseDiv.innerHTML = `
+                        <span style="font-weight: 600; font-size: 12px; margin-bottom: 4px; display: block;">AI Assistant</span>
+                        <p style="margin: 0;">I'm your HRIMS AI assistant. I can help you with employee records, applicant management, and other HR tasks. How can I assist you today?</p>
+                        <div style="font-size: 10px; text-align: right; margin-top: 5px; opacity: 0.7;">Just now</div>
+                    `;
+            chatMessages.appendChild(aiResponseDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }, 1500);
+        }
+
+        // Send message on button click
+        sendMessageBtn.addEventListener("click", sendToAI);
+
+        // Send message on Enter key
+        userInput.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendToAI();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

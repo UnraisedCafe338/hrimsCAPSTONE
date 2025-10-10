@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI FAQ Popup Demo</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: white;
+      }
+
+      .demo-container {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 50px 0;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        font-size: 1.2em;
+        margin-bottom: 40px;
+        opacity: 0.9;
+      }
+
+      .demo-button {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        margin: 10px;
+        display: inline-block;
+        text-decoration: none;
+      }
+
+      .demo-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 50px;
+      }
+
+      .feature {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 25px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .feature-icon {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+      }
+
+      .feature h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.3em;
+      }
+
+      .feature p {
+        margin: 0;
+        opacity: 0.9;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-container">
+      <h1>🤖 AI FAQ Assistant</h1>
+      <p class="subtitle">Experience the new futuristic popup chat interface</p>
+
+      <button class="demo-button" onclick="openAIFAQ()">
+        🚀 Open AI FAQ Assistant
+      </button>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">💫</div>
+          <h3>Futuristic Design</h3>
+          <p>
+            Beautiful glass morphism effects with neon gradients and smooth
+            animations
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">💬</div>
+          <h3>Chat Bubbles</h3>
+          <p>Messenger-style chat bubbles with avatars and pointing tails</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>Interactive</h3>
+          <p>
+            Quick help buttons, auto-resizing textarea, and smooth transitions
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">📱</div>
+          <h3>Responsive</h3>
+          <p>Optimized for both desktop and mobile devices</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include the AI Sidebar -->
+    <?php include 'main/aisidebar.php'; ?>
+
+    <script>
+      // If PHP include doesn't work, fallback to fetch
+      if (typeof openAIFAQ === "undefined") {
+        fetch("main/aisidebar.php")
+          .then((response) => response.text())
+          .then((html) => {
+            document.body.insertAdjacentHTML("beforeend", html);
+          })
+          .catch((error) => {
+            console.error("Error loading AI sidebar:", error);
+            alert("Please make sure aisidebar.php is accessible");
+          });
+      }
+
+      // Auto-open popup on page load for demo
+      setTimeout(() => {
+        if (typeof openAIFAQ !== "undefined") {
+          // openAIFAQ(); // Uncomment to auto-open
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

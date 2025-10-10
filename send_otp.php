@@ -1,6 +1,6 @@
 <?php
 // Include necessary files and configurations
-require 'vendor/autoload.php';  // Ensure Composer autoloader is included
+require_once __DIR__ . '/vendor/autoload.php';  // Ensure Composer autoloader is included
 include('connection.php');
 
 // Define sendOTPEmail function (either use mail() or PHPMailer as mentioned earlier)

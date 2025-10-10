@@ -1,7 +1,7 @@
 <?php
 session_start();
-require 'vendor/autoload.php';
-include('connection.php');
+require_once __DIR__ . '/vendor/autoload.php';
+include('handlers/connection.php');
 
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 

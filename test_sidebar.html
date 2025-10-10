@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Sidebar Footer</title>
+    <link rel="stylesheet" href="assets/css/all.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <?php include 'sidebar.php'; ?>
+
+    <div class="content">
+      <h1>Test Content</h1>
+      <p>
+        This is test content to see how the sidebar and footer behave when
+        toggled.
+      </p>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <p>More content to fill the page...</p>
+    </div>
+
+    <div class="box-footer">
+      <span>2024 | Copyright Team Quiet</span>
+      <span>OSA Faculty And Faculty Evaluation Management System</span>
+    </div>
+
+    <style>
+      .content {
+        margin-left: 248px;
+        padding: 20px;
+        min-height: 100vh;
+        transition: margin-left 0.3s ease;
+      }
+
+      @media screen and (max-width: 768px) {
+        .content {
+          margin-left: 0;
+        }
+      }
+
+      /* Adjust content when sidebar is collapsed */
+      .sidebar-container.collapsed ~ .content {
+        margin-left: 60px;
+      }
+    </style>
+  </body>
+</html>
