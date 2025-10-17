@@ -15,8 +15,8 @@ try {
     $messages = $data['messages'] ?? [];
     $title = $data['title'] ?? 'Chat Session';
     
-    if (!$sessionId || !is_array($messages)) {
-        throw new Exception("Session ID and messages are required");
+    if (!is_array($messages)) {
+        throw new Exception("Messages must be an array");
     }
     
     // Include MongoDB connection
@@ -25,42 +25,37 @@ try {
     // Select chat sessions collection
     $sessionsCollection = $database->selectCollection("ai_chat_sessions");
     
+    // Current timestamp
+    $currentTime = new MongoDB\BSON\UTCDateTime();
+    
     // Prepare session data
     $sessionData = [
         'title' => $title,
         'messages' => array_values($messages), // Ensure array is reindexed
-        'updated_at' => new MongoDB\BSON\UTCDateTime()
+        'updated_at' => $currentTime
     ];
     
-    // Check if session already exists by looking for similar content
-    $existingSession = null;
-    if (!preg_match('/^[0-9a-fA-F]{24}$/', $sessionId)) {
-        // For new sessions, check if similar session exists
-        $existingSession = $sessionsCollection->findOne([
-            'title' => $title,
-            'messages.0.content' => $messages[0]['content'] ?? ''
-        ]);
-    }
-    
-    if ($existingSession) {
+    // Handle new chat creation vs existing chat update
+    if (!$sessionId || $sessionId === 'new' || !preg_match('/^[0-9a-fA-F]{24}$/', $sessionId)) {
+        // Create new session
+        $sessionData['created_at'] = $currentTime;
+        $insertResult = $sessionsCollection->insertOne($sessionData);
+        $result = ['status' => 'created', 'session_id' => (string)$insertResult->getInsertedId()];
+    } else {
         // Update existing session
-        $sessionsCollection->updateOne(
-            ['_id' => $existingSession['_id']],
-            ['$set' => $sessionData]
-        );
-        $result = ['status' => 'updated', 'session_id' => (string)$existingSession['_id']];
-    } else if (preg_match('/^[0-9a-fA-F]{24}$/', $sessionId)) {
-        // Update existing session by ID
-        $sessionsCollection->updateOne(
+        $updateResult = $sessionsCollection->updateOne(
             ['_id' => new MongoDB\BSON\ObjectId($sessionId)],
             ['$set' => $sessionData]
         );
-        $result = ['status' => 'updated', 'session_id' => $sessionId];
-    } else {
-        // Create new session
-        $sessionData['created_at'] = new MongoDB\BSON\UTCDateTime();
-        $insertResult = $sessionsCollection->insertOne($sessionData);
-        $result = ['status' => 'created', 'session_id' => (string)$insertResult->getInsertedId()];
+        
+        if ($updateResult->getMatchedCount() > 0) {
+            $result = ['status' => 'updated', 'session_id' => $sessionId];
+        } else {
+            // If session not found, create new one
+            $sessionData['created_at'] = $currentTime;
+            $insertResult = $sessionsCollection->insertOne($sessionData);
+            $result = ['status' => 'created', 'session_id' => (string)$insertResult->getInsertedId()];
+        }
     }
     
     echo json_encode($result);

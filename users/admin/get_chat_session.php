@@ -23,8 +23,17 @@ try {
         throw new Exception("Session not found");
     }
     
+    // Add formatted timestamps to messages if they don't have them
+    $messages = $session['messages'] ?? [];
+    foreach ($messages as &$message) {
+        if (!isset($message['timestamp'])) {
+            // If no timestamp, use current time or derive from session creation time
+            $message['timestamp'] = date('c');
+        }
+    }
+    
     // Return the messages
-    echo json_encode($session['messages'] ?? []);
+    echo json_encode($messages);
 } catch (Exception $e) {
     echo json_encode([]);
 }

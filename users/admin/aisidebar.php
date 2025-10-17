@@ -5,7 +5,7 @@
   bottom: 80px;
   right: 100px;
   width: 750px; /* Increased width */
-  height: 600px; /* Increased height */
+  height: 750px; /* Increased height */
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
@@ -718,8 +718,11 @@ function loadConversationHistory() {
             } else if (session.created_at instanceof Date) {
               // Handle Date object
               date = session.created_at;
-            } else {
+            } else if (typeof session.created_at === 'number') {
               // Handle numeric timestamp
+              date = new Date(session.created_at);
+            } else {
+              // Try to parse as string
               date = new Date(session.created_at);
             }
             
@@ -763,10 +766,8 @@ function createNewChat() {
     saveCurrentSession();
   }
   
-  // Create new session with a unique identifier
-  const timestamp = Date.now();
-  const newSessionId = 'session_' + timestamp;
-  currentSessionId = newSessionId;
+  // Reset to a true "current" session (not saved yet)
+  currentSessionId = 'current';
   chatSessions[currentSessionId] = [];
   
   // Clear chat messages except welcome message
@@ -775,9 +776,6 @@ function createNewChat() {
   if (welcomeMessage) chatMessages.appendChild(welcomeMessage);
   
   updateSessionButtons();
-  
-  // Add a temporary session button for the new chat
-  addSessionButton(newSessionId, 'New Chat');
 }
 
 // Add a session button to the UI
@@ -956,9 +954,8 @@ function addMessageToChat(sender, message, isTemp = false, timestamp = null) {
     });
     
     // Auto-save after each message to prevent data loss
-    if (chatSessions[currentSessionId].length % 3 === 0) { // Save every 3 messages
-      saveCurrentSession();
-    }
+    // Save immediately for better reliability
+    saveCurrentSession();
   }
   
   return messageDiv;
@@ -1035,7 +1032,6 @@ function sendToAI() {
     hideTypingIndicator();
     const cleaned = data.replace(/llama_.*?\n/g, "").trim();
     addMessageToChat('ai', cleaned);
-    saveCurrentSession(); // Save session after each exchange
     sendMessageBtn.disabled = false;
   })
   .catch(error => {
@@ -1050,7 +1046,7 @@ function sendFAQ(question, answer) {
   // Switch to FAQ tab
   switchTab('faq');
 
-  // Add the selected question as a 'You' style message in the FAQ messages area
+  // Add the selected question as a 'You:' style message in the FAQ messages area
   addFaqMessage('user', question);
 
   // Add the AI answer as an AI message in the FAQ messages area
@@ -1129,13 +1125,22 @@ function sanitize(input) {
 
 // Save current session to server with better deduplication
 function saveCurrentSession() {
-  // Only save if this is not the temporary 'current' session and has messages
-  if (currentSessionId !== 'current' && 
-      chatSessions[currentSessionId] && 
-      chatSessions[currentSessionId].length > 0) {
-    
+  // Only save if this session has messages and is not the temporary 'current' session
+  // OR if it's the current session but has messages (we'll create a new DB session)
+  if (chatSessions[currentSessionId] && chatSessions[currentSessionId].length > 0) {
     // Generate a more descriptive title based on conversation content
     const title = generateSessionTitle();
+    
+    // For current/temporary sessions, we'll create a new DB session
+    // For named sessions, we'll update the existing one
+    let sessionIdToSend = currentSessionId;
+    if (currentSessionId === 'current' || currentSessionId.startsWith('session_')) {
+      // This is a temporary session, send as 'new' to create a new DB entry
+      sessionIdToSend = 'new';
+    } else if (currentSessionId.match(/^[0-9a-fA-F]{24}$/)) {
+      // This is a real DB session ID, send as-is to update
+      sessionIdToSend = currentSessionId;
+    }
     
     fetch('save_chat_session.php', {
       method: 'POST',
@@ -1143,16 +1148,26 @@ function saveCurrentSession() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        session_id: currentSessionId.replace('session_', ''), // Remove prefix for DB storage
+        session_id: sessionIdToSend,
         messages: chatSessions[currentSessionId],
         title: title
       })
     })
     .then(response => response.json())
     .then(result => {
-      // Only refresh session list if a new session was created
-      if (result.status === 'created') {
-        loadConversationHistory(); // Refresh session list
+      // If a new session was created, update our local session ID
+      if (result.status === 'created' && result.session_id) {
+        // Replace the temporary session with the real one
+        const oldMessages = chatSessions[currentSessionId];
+        delete chatSessions[currentSessionId];
+        currentSessionId = result.session_id;
+        chatSessions[currentSessionId] = oldMessages;
+        
+        // Update UI buttons
+        updateSessionButtons();
+        
+        // Refresh session list
+        loadConversationHistory();
       }
     })
     .catch(error => console.error('Error saving session:', error));
@@ -1184,17 +1199,17 @@ function isFollowUpQuestion(currentQuestion) {
   if (!chatSessions[currentSessionId] || chatSessions[currentSessionId].length === 0) return false;
   
   const followUpIndicators = [
-    // English follow-up patterns
-    /^(what about|how about|and|also|can you|what if|tell me more|continue|go on)/i,
-    /(more|another|other|else|next|expand|further|additional)/i,
-    /(that|this|it|they|them)\s/i,
+    // English follow-up patterns - using word boundaries
+    /^(what about|how about|and|also|can you|what if|tell me more|continue|go on)\b/i,
+    /\b(more|another|other|else|next|expand|further|additional)\b/i,
+    /\b(that|this|it|they|them)\s/i,
     /^(show|list|find)\s+(more|other|another)/i,
-    /(compare|versus|vs|difference)/i,
+    /\b(compare|versus|vs|difference)\b/i,
     
-    // Filipino/Taglish follow-up patterns
-    /^(paano|ano|at|pano|saka|tapos)/i,
-    /(pa|din|rin|naman|lang)/i,
-    /(yan|yun|iyan|iyon)/i
+    // Filipino/Taglish follow-up patterns - using word boundaries
+    /^(paano|ano|at|pano|saka|tapos)\b/i,
+    /\b(pa|din|rin|naman|lang)\b/i,
+    /\b(yan|yun|iyan|iyon)\b/i
   ];
   
   return followUpIndicators.some(pattern => pattern.test(currentQuestion.trim()));

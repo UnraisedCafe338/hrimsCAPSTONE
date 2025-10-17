@@ -211,7 +211,7 @@
         <!-- <li class="password-button"><a href=""><i class="fa-solid fa-calendar-check"></i><span>Attendance Management</span></a></li> -->
         <li class="performance-button"><a href="performance_appraisal.php"><i class="fa-solid fa-chart-line"></i><span>Performance Appraisal</span></a></li>
         <!-- <li class="document-button"><a href="document_mgmt.php"><i class="fa-solid fa-file-lines"></i><span>Document Management</span></a></li> -->
-        <li class="subject-button"><a href=""><i class="fa-solid fa-chart-pie"></i><span>Reports & Analytics</span></a></li>
+        <!-- <li class="subject-button"><a href="course_grouping.php"><i class="fa-solid fa-graduation-cap"></i><span>Course Grouping Report</span></a></li> -->
         <li class="settings-button"><a href="settings.php"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
   <li><a href="/hrims/index.php"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
        

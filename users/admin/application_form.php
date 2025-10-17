@@ -237,9 +237,7 @@
                                     <td style="width: 20%;"><input type="email" name="religion"></td>
                                 </div>
                             </tr>
-                            <tr style="width: 100% align-items: left;">
-
-                            <tr>
+                            <tr style="width: 100%; align-items: left;">
                                 <td style="width: 150px;"><label>Disabilities?</label></td>
                                 <td style="padding-left: 0;">
                                     <div style="display: flex; gap: 20px;">
@@ -750,7 +748,7 @@
                 </div>
              </form>   
 </body>
-<script src="../assets/js/address.js"></script>
+<script src="../../assets/js/address.js"></script>
 
 <script>
     function validateAndNext(currentPageId, nextPageId) {

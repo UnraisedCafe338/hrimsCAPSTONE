@@ -7,13 +7,13 @@ if ($bootstrapPath && file_exists($bootstrapPath)) {
     require_once $bootstrapPath;
 }
 
-$provinceId = isset($_GET['municipality_id']) ? (int) $_GET['municipality_id'] : null;
+$municipalityId = isset($_GET['municipality_id']) ? (int) $_GET['municipality_id'] : null;
 
 require '../connection.php'; // Database connection
 
 $collection = $client->hrims_db->barangays;
 
-$barangays = $collection->find(['city_municipality_id' => $provinceId], ['sort' => ['name' => 1]]);
+$barangays = $collection->find(['city_municipality_id' => $municipalityId], ['sort' => ['name' => 1]]);
 
 $result = [];
 foreach ($barangays as $bgy) {

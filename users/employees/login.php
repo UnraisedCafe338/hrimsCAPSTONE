@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -98,10 +98,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
-            width: 420px;
+            width: 100%;
+            max-width: 700px; /* Increased width for rectangular shape */
             height: auto;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 20px;
         }
 
         .login-container img {
@@ -111,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .login-container h2 {
-            font-size: 26px;
+            font-size: 28px;
             color: #1a2a6c;
             margin-bottom: 10px;
         }
@@ -120,6 +122,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #555;
             margin-bottom: 25px;
             font-size: 16px;
+        }
+
+        .info-section {
+            background: rgba(26, 42, 108, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-section p {
+            margin: 0;
+            color: #444;
+            font-size: 15px;
+        }
+
+        .info-btn {
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-btn:hover {
+            background: #2a4b8d;
+            transform: scale(1.1);
         }
 
         .error-message {
@@ -139,8 +178,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             background: rgba(240, 240, 240, 0.8);
             border-radius: 8px;
-            padding: 12px 15px;
-            margin-bottom: 20px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
             border: 1px solid #ddd;
             transition: all 0.3s ease;
         }
@@ -152,13 +191,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .input-group i {
             color: #1a2a6c;
-            margin-right: 12px;
-            font-size: 18px;
+            margin-right: 15px;
+            font-size: 20px;
         }
 
         .input-group input {
             border: none;
-            padding: 8px;
+            padding: 10px 0;
             width: 100%;
             background: transparent;
             outline: none;
@@ -166,9 +205,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #333;
         }
 
-        .login-container button {
+        .form-group {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #444;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .login-container .login-button {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: linear-gradient(to right, #1a2a6c, #2a4b8d);
             color: white;
             font-size: 18px;
@@ -177,32 +229,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(26, 42, 108, 0.3);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(26, 42, 108, 0.3);
         }
 
         .login-container button:hover {
             background: linear-gradient(to right, #2a4b8d, #3a6cb0);
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(26, 42, 108, 0.4);
-        }
-
-        .form-group {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #444;
-            font-weight: 500;
+            box-shadow: 0 6px 20px rgba(26, 42, 108, 0.4);
         }
 
         .footer-text {
             color: #666;
-            font-size: 14px;
-            margin-top: 20px;
+            font-size: 15px;
+            margin-top: 25px;
         }
 
         .admin-link {
@@ -214,23 +254,156 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .admin-link:hover {
             text-decoration: underline;
         }
+
+        .test-mode {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .test-mode label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .test-mode input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalopen 0.4s;
+        }
+
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-60px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #1a2a6c;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #1a2a6c;
+            font-size: 24px;
+        }
+
+        .modal-body ul {
+            text-align: left;
+            padding-left: 25px;
+            margin: 20px 0;
+        }
+
+        .modal-body li {
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .modal-body p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 15px;
+                max-width: 90%;
+            }
+            
+            .login-container h2 {
+                font-size: 24px;
+            }
+            
+            .input-group {
+                padding: 12px 15px;
+            }
+            
+            .input-group i {
+                margin-right: 10px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 25px 15px;
+                margin: 10px;
+            }
+            
+            .login-container h2 {
+                font-size: 22px;
+            }
+            
+            .login-container p {
+                font-size: 14px;
+            }
+            
+            .input-group {
+                padding: 10px 12px;
+            }
+            
+            .input-group input {
+                font-size: 14px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 20% auto;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <img src="../../images/exact logo.png" alt="Logo">
         <h2>Employee Portal</h2>
-        <p>Dean Evaluation System</p>
-        <div style="background: rgba(26, 42, 108, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0; font-size: 14px;">
-            <p><strong>Accessible Roles:</strong></p>
-            <ul style="text-align: left; margin: 5px 0; padding-left: 20px;">
-                <li>Employees</li>
-                <li>Department Heads</li>
-                <li>Faculty Members</li>
-                <li>Staff</li>
-                <li>Applicants</li>
-            </ul>
-            <p style="margin: 5px 0;">Login with your institutional email and OTP code (optional in test mode).</p>
+        <!-- <p>Dean Evaluation System</p> -->
+        
+        <div class="info-section">
+            <p>Login with your institutional email and OTP code</p>
+            <button class="info-btn" id="infoBtn" title="View accessible roles">i</button>
         </div>
         
         <form method="POST" action="">
@@ -250,16 +423,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             
-            <div class="form-group" style="text-align: left; margin-bottom: 15px;">
-                <label style="font-weight: normal; display: flex; align-items: center;">
-                    <input type="checkbox" id="testMode" name="test_mode" value="1" style="margin-right: 8px;">
+            <div class="test-mode">
+                <label>
+                    <input type="checkbox" id="testMode" name="test_mode" value="1">
                     Test Mode (Skip OTP verification)
                 </label>
             </div>
             
             <?php if (!empty($error_message)) { echo "<div class='error-message' id='errorMessage'>$error_message</div>"; } ?>
             
-            <button type="submit">Sign In</button>
+            <button class="login-button" type="submit">Sign In</button>
         </form>
         
         <p class="footer-text">
@@ -268,7 +441,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </p>
     </div>
 
+    <!-- Modal for accessible roles -->
+    <div id="rolesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h3>Accessible Roles</h3>
+            </div>
+            <div class="modal-body">
+                <p>The following roles can access this system:</p>
+                <ul>
+                    <li><strong>Employees</strong> - Regular staff members</li>
+                    <li><strong>Department Heads</strong> - Administrative leads</li>
+                    <li><strong>Faculty Members</strong> - Teaching staff</li>
+                    <li><strong>Staff</strong> - Support personnel</li>
+                    <!-- <li><strong>Applicants</strong> - Job candidates</li> -->
+                </ul>
+                <p>Each role has specific permissions and access levels within the system.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Get modal elements
+        const modal = document.getElementById("rolesModal");
+        const btn = document.getElementById("infoBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        // Open modal when info button is clicked
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Close modal when X is clicked
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
         setTimeout(function() {
             var errorMessage = document.getElementById("errorMessage");
             if (errorMessage) {
