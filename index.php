@@ -175,6 +175,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <button type="submit">Log In</button>
         </form>
+        
+        <p style="margin-top: 20px;">
+            <a href="users/employees/login.php" style="color: #002afc; text-decoration: none; font-weight: bold;">
+                Employee/Dean Login
+            </a>
+        </p>
+        
+        <!-- Admin Tools -->
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ccc;">
+            <h4>Admin Tools</h4>
+            <p>
+                <a href="view_users.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">View Users</a>
+                <a href="set_user_roles.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">Manage Roles</a>
+                <a href="add_sample_users.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">Add Sample Users</a>
+                <a href="add_test_users_no_otp.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">Add Test Users</a>
+                <a href="update_dept_heads_faculty.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">Update Dept Heads & Faculty</a>
+                <a href="view_all_users_with_roles.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">View All Users with Roles</a>
+                <a href="check_user_data.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">Check User Data</a>
+                <a href="test_mongodb.php" style="color: #002afc; text-decoration: none; margin-right: 15px;">Test MongoDB</a>
+                <a href="init_mongodb.php" style="color: #002afc; text-decoration: none;">Initialize DB</a>
+            </p>
+        </div>
     </div>
 
     <script>

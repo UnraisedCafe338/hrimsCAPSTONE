@@ -3,8 +3,8 @@
 #aiChatModal {
   position: fixed;
   bottom: 80px;
-  right: 20px;
-  width: 450px; /* Increased width */
+  right: 100px;
+  width: 750px; /* Increased width */
   height: 600px; /* Increased height */
   background: #fff;
   border-radius: 12px;
@@ -44,7 +44,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #fff;
+  background: blueviolet;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,6 +81,16 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+.ai-chat-header .memories-link {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+
 #chatMessages {
   flex: 1;
   padding: 15px;
@@ -99,7 +109,20 @@
   position: relative;
   animation: fadeIn 0.2s ease;
 }
-
+.close-button-sidebar {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  margin-left: 250px;
+}
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
@@ -204,8 +227,8 @@
 /* Floating AI Button */
 .aibutton {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 40px;
+  right: 7px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -281,10 +304,34 @@
 }
 
 .faq-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  /* Two-row horizontal scroller: lay out items in columns and allow horizontal scrolling */
+  display: grid;
+  grid-auto-flow: column; /* create columns */
+  /* fixed column width so multiple columns are visible and scrolling works predictably */
+  grid-auto-columns: 220px; /* each column holds up to 2 items stacked */
+  grid-template-rows: repeat(2, auto); /* two rows visible */
+  gap: 10px;
   margin-top: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  /* fix height to two rows so it doesn't expand vertically */
+  height: 100px; /* increase slightly to accommodate wrapped text */
+  padding-bottom: 6px;
+  align-items: start;
+}
+
+/* Scrollbar styling */
+.faq-buttons::-webkit-scrollbar {
+  height: 8px;
+}
+.faq-buttons::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 4px;
+}
+.faq-buttons::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .faq-button {
@@ -301,6 +348,18 @@
   background: #2575fc;
   color: white;
   border-color: #2575fc;
+}
+
+/* Make sure each button uses the full column width and text wraps nicely */
+.faq-button {
+  display: inline-block;
+  width: 100%;
+  min-height: 36px;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 8px 10px;
+  white-space: normal;
+  word-break: break-word;
 }
 
 /* Chat Sessions */
@@ -358,6 +417,83 @@
   gap: 10px;
 }
 
+/* Sessions Sidebar styles */
+.session-sidebar {
+  position: fixed;
+  right: 750px; /* sit to the left of the chat modal (450px width + 20px spacing + 16px buffer) */
+  bottom: 80px;
+  width: 300px;
+  max-height: 560px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 26px rgba(0,0,0,0.2);
+  overflow: auto;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.session-sidebar.collapsed {
+  transform: translateX(12px) scale(0.98);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.session-sidebar .sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid #eee;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.saved-sessions-list {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.session-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: #f8f9fa;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.session-title {
+  flex: 1 1 auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+  cursor: pointer;
+}
+
+.session-meta {
+  font-size: 11px;
+  color: #666;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+.delete-session {
+  background: transparent;
+  border: none;
+  color: #c0392b;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+
 .tab-button {
   flex: 1;
   background: #e9ecef;
@@ -393,18 +529,20 @@
 <div id="aiChatModal">
   <div class="ai-chat-header">
     <div class="header-info">
-      <div class="avatar">AI</div>
-      <h3>Qutie AI Assistant</h3>
+      <div class="avatar">
+        <img src="/hrims/images/PEARL_logo.png" alt="PEARL AI" style="width: 50px; height: 50px; border-radius: 50%;">
+      </div>
+      <h3>
+        PEARL – Personnel & Employee AI Resource Link
+      </h3>
     </div>
     <div class="controls">
+      <a class="memories-link" href="/hrims/users/admin/ai_memories.php" target="_blank" title="Open AI Memories">Memories</a>
       <button id="closeChat" title="Close">×</button>
     </div>
   </div>
   
-  <div class="ai-status">
-    <span class="status-indicator red" id="aiStatusIndicator"></span>
-    <span id="aiStatusText">AI Server Not Running</span>
-  </div>
+  <!-- ai-status removed: AI server status UI removed because local AI server not used -->
   
   <!-- Chat Tabs -->
   <div class="chat-tabs">
@@ -416,28 +554,35 @@
   <div class="chat-sessions">
     <button class="session-button active" data-session="current">Current Chat</button>
     <button class="new-chat-btn" id="newChatBtn">+ New Chat</button>
-    <div id="savedSessions"></div>
+    <!-- Sessions sidebar toggle -->
+    <button class="session-button" id="openSessionsSidebar" title="Open history">☰</button>
+  </div>
+
+  <!-- Sessions Sidebar (collapsible) -->
+  <div id="sessionSidebar" class="session-sidebar collapsed" aria-hidden="true">
+    <div class="sidebar-header">
+      <button id="closeSidebar"class="close-button-sidebar" title="Close">×</button>
+      <strong>Conversation History</strong>
+    </div>
+    <div id="savedSessions" class="saved-sessions-list">
+      <!-- Session items will be rendered here -->
+    </div>
   </div>
   
   <div id="chatMessages">
-    <!-- Welcome message with FAQs -->
+    <!-- Welcome message -->
     <div class="chat-message ai-message">
       <span class="message-sender">AI Assistant</span>
-      <p class="message-content">Hello! I'm your HRIMS AI assistant. How can I help you today?</p>
+      <p class="message-content">Hello! I'm PEARL, your personal HR AI Assistant. How can I help you today?</p>
       <div class="message-time">Just now</div>
-    </div>
-    
-    <!-- FAQ Section -->
-    <div class="faq-section">
-      <h4>Popular HR Queries:</h4>
-      <div class="faq-buttons" id="faqButtons">
-        <!-- FAQ buttons will be loaded here dynamically -->
-      </div>
     </div>
   </div>
   
   <div id="faqContainer" style="display: none; padding: 15px; overflow-y: auto; flex: 1;">
     <h4 style="margin-top: 0; color: #333;">Frequently Asked Questions:</h4>
+    <div id="faqMessages" style="margin-bottom:12px; display:flex; flex-direction:column; gap:10px;">
+      <!-- FAQ Q/A messages will appear here when a question is selected -->
+    </div>
     <div class="faq-buttons" id="faqButtonsTab">
       <!-- FAQ buttons will be loaded here dynamically -->
     </div>
@@ -464,19 +609,19 @@ const chatMessages = document.getElementById('chatMessages');
 const faqContainer = document.getElementById('faqContainer');
 const userInput = document.getElementById('userInput');
 const sendMessageBtn = document.getElementById('sendMessageBtn');
-const aiStatusIndicator = document.getElementById('aiStatusIndicator');
-const aiStatusText = document.getElementById('aiStatusText');
-const faqButtons = document.getElementById('faqButtons');
+// AI server status elements removed (no local AI server)
 const faqButtonsTab = document.getElementById('faqButtonsTab');
 const newChatBtn = document.getElementById('newChatBtn');
 const savedSessions = document.getElementById('savedSessions');
+const sessionSidebar = document.getElementById('sessionSidebar');
+const openSessionsSidebar = document.getElementById('openSessionsSidebar');
+const closeSidebar = document.getElementById('closeSidebar');
 const tabButtons = document.querySelectorAll('.tab-button');
 
 // Load FAQs and conversation history
 document.addEventListener('DOMContentLoaded', function() {
   loadFAQs();
   loadConversationHistory();
-  updateAIStatus('not_running');
   
   // Expose functions globally for the toggle button
   window.openAIChat = function() {
@@ -487,30 +632,22 @@ document.addEventListener('DOMContentLoaded', function() {
   window.closeAIChat = closeChatModal;
 });
 
-// Load FAQs from server
+// Load FAQs from server — populate only the FAQ tab, not the inline chat area
 function loadFAQs() {
   fetch('get_faqs.php')
     .then(response => response.json())
     .then(faqs => {
-      // Populate FAQ buttons in chat
-      faqButtons.innerHTML = '';
-      // Populate FAQ buttons in FAQ tab
+      // Populate FAQ buttons in FAQ tab only
       faqButtonsTab.innerHTML = '';
       
       faqs.forEach(faq => {
-        // Create button for chat FAQ section
-        const button1 = document.createElement('button');
-        button1.className = 'faq-button';
-        button1.textContent = faq.question;
-        button1.onclick = () => sendFAQ(faq.answer);
-        faqButtons.appendChild(button1);
-        
-        // Create button for FAQ tab
-        const button2 = document.createElement('button');
-        button2.className = 'faq-button';
-        button2.textContent = faq.question;
-        button2.onclick = () => sendFAQ(faq.answer);
-        faqButtonsTab.appendChild(button2);
+        const btn = document.createElement('button');
+        btn.className = 'faq-button';
+        btn.textContent = faq.question;
+        // When a FAQ is clicked we want to display the selected question as a "You:" message
+        // inside the FAQ tab and then show the AI answer below it.
+        btn.onclick = () => sendFAQ(faq.question, faq.answer);
+        faqButtonsTab.appendChild(btn);
       });
     })
     .catch(error => {
@@ -521,26 +658,14 @@ function loadFAQs() {
         { question: "How do I find applicant information?", answer: "To find applicant information, ask specific questions about their qualifications, education, or skills. For example: 'Show me applicants with a BSIS degree' or 'Find applicants with Java skills'." },
         { question: "What kind of data can I query?", answer: "You can query employee and applicant data including: personal information, education history, work experience, skills, position applied for, department, and more. Try asking specific questions about what you're looking for!" }
       ];
-      
-      // Populate FAQ buttons in chat
-      faqButtons.innerHTML = '';
-      // Populate FAQ buttons in FAQ tab
+
       faqButtonsTab.innerHTML = '';
-      
       defaultFAQs.forEach(faq => {
-        // Create button for chat FAQ section
-        const button1 = document.createElement('button');
-        button1.className = 'faq-button';
-        button1.textContent = faq.question;
-        button1.onclick = () => sendFAQ(faq.answer);
-        faqButtons.appendChild(button1);
-        
-        // Create button for FAQ tab
-        const button2 = document.createElement('button');
-        button2.className = 'faq-button';
-        button2.textContent = faq.question;
-        button2.onclick = () => sendFAQ(faq.answer);
-        faqButtonsTab.appendChild(button2);
+        const btn = document.createElement('button');
+        btn.className = 'faq-button';
+        btn.textContent = faq.question;
+        btn.onclick = () => sendFAQ(faq.question, faq.answer);
+        faqButtonsTab.appendChild(btn);
       });
     });
 }
@@ -550,40 +675,85 @@ function loadConversationHistory() {
   fetch('get_chat_sessions.php')
     .then(response => response.json())
     .then(sessions => {
-      // Clear existing saved sessions to prevent duplication
+      // Render sessions in the sidebar list
       savedSessions.innerHTML = '';
-      
-      // Keep track of added session IDs to prevent duplication
-      const addedSessionIds = new Set();
+      const seenSessions = new Set(); // To prevent duplicates
       
       sessions.forEach(session => {
-        // Check if session ID already exists
-        if (!addedSessionIds.has(session._id)) {
-          addedSessionIds.add(session._id);
-          
-          const button = document.createElement('button');
-          button.className = 'session-button';
-          button.textContent = session.title || `Chat ${session._id.substring(0, 8)}`;
-          button.dataset.session = session._id;
-          button.onclick = () => loadChatSession(session._id);
-          savedSessions.appendChild(button);
+        const sessionId = session._id;
+        
+        // Skip if we've already processed this session
+        if (seenSessions.has(sessionId)) {
+          return;
         }
+        
+        seenSessions.add(sessionId);
+
+        // Create session item
+        const item = document.createElement('div');
+        item.className = 'session-item';
+        item.dataset.session = sessionId;
+
+        const title = document.createElement('div');
+        title.className = 'session-title';
+        title.textContent = session.title || `Chat ${sessionId.substring(0, 8)}`;
+        title.onclick = () => {
+          loadChatSession(sessionId);
+          // close sidebar for clarity
+          collapseSidebar();
+        };
+
+        const meta = document.createElement('div');
+        meta.className = 'session-meta';
+        if (session.created_at) {
+          try {
+            // Handle different date formats from MongoDB
+            let date;
+            if (typeof session.created_at === 'object' && session.created_at.$date) {
+              // Handle $date format
+              date = new Date(session.created_at.$date);
+            } else if (typeof session.created_at === 'string') {
+              // Handle ISO string format
+              date = new Date(session.created_at);
+            } else if (session.created_at instanceof Date) {
+              // Handle Date object
+              date = session.created_at;
+            } else {
+              // Handle numeric timestamp
+              date = new Date(session.created_at);
+            }
+            
+            // Check if date is valid
+            if (date instanceof Date && !isNaN(date)) {
+              meta.textContent = date.toLocaleString();
+            } else {
+              meta.textContent = 'Unknown date';
+            }
+          } catch (e) {
+            meta.textContent = 'Invalid date';
+          }
+        } else {
+          meta.textContent = 'No date';
+        }
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'delete-session';
+        delBtn.title = 'Delete conversation';
+        delBtn.textContent = '×';
+        delBtn.onclick = (ev) => {
+          ev.stopPropagation();
+          if (confirm('Delete this conversation? This cannot be undone.')) {
+            deleteChatSession(sessionId, item);
+          }
+        };
+
+        item.appendChild(title);
+        item.appendChild(meta);
+        item.appendChild(delBtn);
+        savedSessions.appendChild(item);
       });
     })
     .catch(error => console.error('Error loading chat sessions:', error));
-}
-
-// Load a specific chat session
-function loadChatSession(sessionId) {
-  fetch(`get_chat_session.php?session_id=${sessionId}`)
-    .then(response => response.json())
-    .then(messages => {
-      currentSessionId = sessionId;
-      chatSessions[currentSessionId] = messages;
-      renderChatMessages();
-      updateSessionButtons();
-    })
-    .catch(error => console.error('Error loading chat session:', error));
 }
 
 // Create a new chat session
@@ -593,59 +763,67 @@ function createNewChat() {
     saveCurrentSession();
   }
   
-  // Create new session
-  const newSessionId = 'session_' + Date.now();
+  // Create new session with a unique identifier
+  const timestamp = Date.now();
+  const newSessionId = 'session_' + timestamp;
   currentSessionId = newSessionId;
   chatSessions[currentSessionId] = [];
   
-  // Clear chat messages except welcome message and FAQ section
+  // Clear chat messages except welcome message
   const welcomeMessage = chatMessages.querySelector('.ai-message');
-  const faqSection = chatMessages.querySelector('.faq-section');
-  
   chatMessages.innerHTML = '';
   if (welcomeMessage) chatMessages.appendChild(welcomeMessage);
-  if (faqSection) chatMessages.appendChild(faqSection);
   
   updateSessionButtons();
+  
+  // Add a temporary session button for the new chat
+  addSessionButton(newSessionId, 'New Chat');
 }
 
-// Save current session to server
-function saveCurrentSession() {
-  if (chatSessions[currentSessionId] && chatSessions[currentSessionId].length > 0) {
-    // Only save if this is not the temporary 'current' session
-    if (currentSessionId !== 'current') {
-      fetch('save_chat_session.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          session_id: currentSessionId,
-          messages: chatSessions[currentSessionId],
-          title: getSessionTitle()
-        })
-      })
-      .then(response => response.json())
-      .then(result => {
-        // Only refresh session list if a new session was created
-        if (result.status === 'created') {
-          loadConversationHistory(); // Refresh session list
-        }
-      })
-      .catch(error => console.error('Error saving session:', error));
-    }
+// Add a session button to the UI
+function addSessionButton(sessionId, title) {
+  // Check if button already exists
+  const existingButton = document.querySelector(`.session-button[data-session="${sessionId}"]`);
+  if (existingButton) return;
+  
+  // Create new session button
+  const sessionContainer = document.querySelector('.chat-sessions');
+  const newButton = document.createElement('button');
+  newButton.className = 'session-button';
+  newButton.dataset.session = sessionId;
+  newButton.textContent = title;
+  
+  // Insert before the "+ New Chat" button
+  const newChatBtn = document.getElementById('newChatBtn');
+  if (newChatBtn && sessionContainer) {
+    sessionContainer.insertBefore(newButton, newChatBtn);
   }
+  
+  // Add click event
+  newButton.addEventListener('click', () => {
+    loadChatSession(sessionId);
+  });
 }
 
-// Get a title for the current session based on first message
-function getSessionTitle() {
-  if (chatSessions[currentSessionId] && chatSessions[currentSessionId].length > 0) {
-    const firstUserMessage = chatSessions[currentSessionId].find(msg => msg.sender === 'user');
-    if (firstUserMessage) {
-      return firstUserMessage.content.substring(0, 30) + (firstUserMessage.content.length > 30 ? '...' : '');
-    }
+// Load a specific chat session
+function loadChatSession(sessionId) {
+  // If it's a temporary session, just switch to it
+  if (sessionId === 'current' || sessionId.startsWith('session_')) {
+    currentSessionId = sessionId;
+    renderChatMessages();
+    updateSessionButtons();
+    return;
   }
-  return 'New Chat';
+  
+  fetch(`get_chat_session.php?session_id=${sessionId}`)
+    .then(response => response.json())
+    .then(messages => {
+      currentSessionId = sessionId;
+      chatSessions[currentSessionId] = messages;
+      renderChatMessages();
+      updateSessionButtons();
+    })
+    .catch(error => console.error('Error loading chat session:', error));
 }
 
 // Update session button UI
@@ -683,7 +861,58 @@ function renderChatMessages() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Add message to conversation
+// Sidebar controls
+function expandSidebar() {
+  if (!sessionSidebar) return;
+  sessionSidebar.classList.remove('collapsed');
+  sessionSidebar.setAttribute('aria-hidden', 'false');
+}
+
+function collapseSidebar() {
+  if (!sessionSidebar) return;
+  sessionSidebar.classList.add('collapsed');
+  sessionSidebar.setAttribute('aria-hidden', 'true');
+}
+
+openSessionsSidebar.addEventListener('click', () => {
+  expandSidebar();
+});
+
+closeSidebar.addEventListener('click', () => {
+  collapseSidebar();
+});
+
+// Delete a chat session via API and remove from UI
+function deleteChatSession(sessionId, itemElement) {
+  fetch('delete_chat_session.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session_id: sessionId })
+  })
+  .then(resp => resp.json())
+  .then(result => {
+    if (result.status === 'deleted') {
+      // remove element from DOM
+      if (itemElement && itemElement.parentNode) itemElement.parentNode.removeChild(itemElement);
+
+      // If deleted session is currently loaded, switch back to current
+      if (currentSessionId === sessionId) {
+        currentSessionId = 'current';
+        chatSessions[currentSessionId] = chatSessions['current'] || [];
+        renderChatMessages();
+        updateSessionButtons();
+      }
+    } else {
+      alert('Failed to delete conversation');
+    }
+  })
+  .catch(err => {
+    console.error('Delete error', err);
+    alert('Error deleting conversation');
+  });
+}
+
+// Enhanced function to add message to conversation with better context tracking
 function addMessageToChat(sender, message, isTemp = false, timestamp = null) {
   const messageDiv = document.createElement('div');
   messageDiv.className = `chat-message ${sender}-message`;
@@ -725,6 +954,11 @@ function addMessageToChat(sender, message, isTemp = false, timestamp = null) {
       content: cleanMessage,
       timestamp: time.toISOString()
     });
+    
+    // Auto-save after each message to prevent data loss
+    if (chatSessions[currentSessionId].length % 3 === 0) { // Save every 3 messages
+      saveCurrentSession();
+    }
   }
   
   return messageDiv;
@@ -739,6 +973,9 @@ function formatTime(date) {
 function showTypingIndicator() {
   // Remove existing typing indicator
   hideTypingIndicator();
+  
+  // Dispatch event to show thinking GIF
+  document.dispatchEvent(new CustomEvent('aiThinkingStarted'));
   
   const typingDiv = document.createElement('div');
   typingDiv.className = 'typing-indicator';
@@ -762,9 +999,12 @@ function hideTypingIndicator() {
   if (typingIndicator) {
     typingIndicator.remove();
   }
+  
+  // Dispatch event to hide thinking GIF
+  document.dispatchEvent(new CustomEvent('aiThinkingEnded'));
 }
 
-// Send message to AI
+// Send message to AI with enhanced conversation context
 function sendToAI() {
   const userMessage = userInput.value.trim();
   if (!userMessage) return;
@@ -779,10 +1019,10 @@ function sendToAI() {
   // Disable send button
   sendMessageBtn.disabled = true;
   
-  // Build context-aware prompt
+  // Build context-aware prompt with conversation flow awareness
   const contextualPrompt = buildContextForAI(userMessage);
   
-  // In a real implementation, this would call your AI endpoint
+  // Send to AI with conversation context
   fetch("process_ai.php", {
     method: "POST",
     headers: {
@@ -805,9 +1045,44 @@ function sendToAI() {
   });
 }
 
-// Send FAQ response directly
-function sendFAQ(answer) {
-  addMessageToChat('ai', answer);
+// Send FAQ: show the selected question and the answer inside the FAQ tab
+function sendFAQ(question, answer) {
+  // Switch to FAQ tab
+  switchTab('faq');
+
+  // Add the selected question as a 'You' style message in the FAQ messages area
+  addFaqMessage('user', question);
+
+  // Add the AI answer as an AI message in the FAQ messages area
+  addFaqMessage('ai', answer);
+}
+
+// Add a message to the FAQ messages area (separate from the chatMessages stream)
+function addFaqMessage(sender, message) {
+  const faqMessages = document.getElementById('faqMessages');
+  if (!faqMessages) return;
+
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${sender}-message`;
+
+  const time = new Date();
+  const timeString = formatTime(time);
+
+  // Clean ANSI escape codes from message
+  const cleanMessage = message.replace(/\x1b\[[0-9;]*m/g, '');
+
+  messageDiv.innerHTML = `
+    <span class="message-sender">${sender === 'ai' ? 'AI Assistant' : 'You'}</span>
+    <p class="message-content">${sanitize(cleanMessage)}</p>
+    <div class="message-time">${timeString}</div>
+  `;
+
+  faqMessages.appendChild(messageDiv);
+
+  // Keep the FAQ messages area scrolled to bottom
+  faqMessages.scrollTop = faqMessages.scrollHeight;
+
+  // NOTE: do not add FAQ interactions to chatSessions so FAQ Q/A remain only in the FAQ tab
 }
 
 // Switch between tabs
@@ -835,6 +1110,12 @@ function closeChatModal() {
   // Save current session before closing
   saveCurrentSession();
   aiChatModal.classList.remove('active');
+  
+  // Remove thinking class from AI button when closing chat
+  const aiButton = document.getElementById('aiToggleButton');
+  if (aiButton) {
+    aiButton.classList.remove('thinking');
+  }
 }
 
 // Safe HTML escape
@@ -844,25 +1125,58 @@ function sanitize(input) {
   return div.innerHTML;
 }
 
-// Update AI status
-function updateAIStatus(status) {
-  switch(status) {
-    case 'running':
-      aiStatusIndicator.className = 'status-indicator green';
-      aiStatusText.textContent = 'AI Server Running';
-      break;
-    case 'starting':
-      aiStatusIndicator.className = 'status-indicator orange';
-      aiStatusText.textContent = 'AI Server Starting...';
-      break;
-    case 'stopping':
-      aiStatusIndicator.className = 'status-indicator orange';
-      aiStatusText.textContent = 'AI Server Stopping...';
-      break;
-    default:
-      aiStatusIndicator.className = 'status-indicator red';
-      aiStatusText.textContent = 'AI Server Not Running';
+// AI server status UI removed — kept for backward compatibility in older versions
+
+// Save current session to server with better deduplication
+function saveCurrentSession() {
+  // Only save if this is not the temporary 'current' session and has messages
+  if (currentSessionId !== 'current' && 
+      chatSessions[currentSessionId] && 
+      chatSessions[currentSessionId].length > 0) {
+    
+    // Generate a more descriptive title based on conversation content
+    const title = generateSessionTitle();
+    
+    fetch('save_chat_session.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        session_id: currentSessionId.replace('session_', ''), // Remove prefix for DB storage
+        messages: chatSessions[currentSessionId],
+        title: title
+      })
+    })
+    .then(response => response.json())
+    .then(result => {
+      // Only refresh session list if a new session was created
+      if (result.status === 'created') {
+        loadConversationHistory(); // Refresh session list
+      }
+    })
+    .catch(error => console.error('Error saving session:', error));
   }
+}
+
+// Generate a descriptive title for the session based on conversation content
+function generateSessionTitle() {
+  if (chatSessions[currentSessionId] && chatSessions[currentSessionId].length > 0) {
+    // Look for the first user message that seems like a main topic
+    const userMessages = chatSessions[currentSessionId].filter(msg => msg.sender === 'user');
+    
+    if (userMessages.length > 0) {
+      // Take the first message and truncate it appropriately
+      let firstMessage = userMessages[0].content;
+      
+      // Remove common question words for a cleaner title
+      firstMessage = firstMessage.replace(/^(what|how|why|when|where|who|can you|please|find|show me|list)\s+/i, '');
+      
+      // Truncate to reasonable length
+      return firstMessage.substring(0, 40) + (firstMessage.length > 40 ? '...' : '');
+    }
+  }
+  return 'Chat Session';
 }
 
 // Analyze if current question is a follow-up
@@ -871,10 +1185,11 @@ function isFollowUpQuestion(currentQuestion) {
   
   const followUpIndicators = [
     // English follow-up patterns
-    /^(what about|how about|and|also|can you|what if)/i,
-    /(more|another|other|else|next|continue|expand)/i,
+    /^(what about|how about|and|also|can you|what if|tell me more|continue|go on)/i,
+    /(more|another|other|else|next|expand|further|additional)/i,
     /(that|this|it|they|them)\s/i,
     /^(show|list|find)\s+(more|other|another)/i,
+    /(compare|versus|vs|difference)/i,
     
     // Filipino/Taglish follow-up patterns
     /^(paano|ano|at|pano|saka|tapos)/i,
@@ -885,7 +1200,7 @@ function isFollowUpQuestion(currentQuestion) {
   return followUpIndicators.some(pattern => pattern.test(currentQuestion.trim()));
 }
 
-// Build context for AI
+// Build context for AI with better conversation flow understanding
 function buildContextForAI(currentQuestion) {
   if (!chatSessions[currentSessionId] || chatSessions[currentSessionId].length === 0) {
     return currentQuestion;
@@ -895,7 +1210,7 @@ function buildContextForAI(currentQuestion) {
   
   if (isFollowUp) {
     // Include recent conversation for follow-up questions
-    const recentHistory = chatSessions[currentSessionId].slice(-6); // Last 3 exchanges (6 messages)
+    const recentHistory = chatSessions[currentSessionId].slice(-8); // Last 4 exchanges (8 messages)
     let contextPrompt = "Previous conversation context:\n";
     
     recentHistory.forEach((message, index) => {
@@ -906,13 +1221,21 @@ function buildContextForAI(currentQuestion) {
     contextPrompt += `\nCurrent follow-up question: ${currentQuestion}`;
     return contextPrompt;
   } else {
-    // For new questions, just mention we have context available
-    return `${currentQuestion} (Note: I have ${Math.ceil(chatSessions[currentSessionId].length/2)} previous exchanges in context if relevant)`;
+    // For new questions, provide context summary
+    const totalExchanges = Math.ceil(chatSessions[currentSessionId].length/2);
+    return `${currentQuestion} (Context: We have discussed ${totalExchanges} topics in our conversation so far)`;
   }
 }
 
 // Event Listeners
-closeChat.addEventListener('click', closeChatModal);
+closeChat.addEventListener('click', function() {
+  // Remove thinking class from AI button when closing chat
+  const aiButton = document.getElementById('aiToggleButton');
+  if (aiButton) {
+    aiButton.classList.remove('thinking');
+  }
+  closeChatModal();
+});
 newChatBtn.addEventListener('click', createNewChat);
 tabButtons.forEach(btn => {
   btn.addEventListener('click', () => switchTab(btn.dataset.tab));
@@ -932,6 +1255,11 @@ document.addEventListener('click', (e) => {
   if (aiChatModal.classList.contains('active') && 
       !aiChatModal.contains(e.target) && 
       !document.querySelector('.aibutton').contains(e.target)) {
+    // Remove thinking class from AI button when closing chat
+    const aiButton = document.getElementById('aiToggleButton');
+    if (aiButton) {
+      aiButton.classList.remove('thinking');
+    }
     closeChatModal();
   }
 });

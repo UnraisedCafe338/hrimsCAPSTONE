@@ -133,115 +133,340 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Evaluate Employee</title>
     <style>
-        tr:nth-child(even) {
-            background-color: none!important;
+        :root {
+            --primary-color: #00124d;
+            --secondary-color: #001a66;
+            --accent-color: #ffdd00;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+            --light-text: #fff;
+            --border-color: #ddd;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
         }
-       .performance-button {
-            background-color: #00124d;
-            border-left: 4px solid #ffffff;
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        h2 {
-            color: #00124d;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            table-layout: fixed;
-        }
-
-        th.rating,
-        td.rating {
-            width: 120px;
-            min-width: 120px;
-            max-width: 120px;
-            text-align: center;
-        }
-
-        th,
-        td {
-            vertical-align: middle;
-        }
-
-        .submit-btn {
-            background-color: #00124d;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .radio-group {
+            background-color: #f0f2f5;
+            color: var(--dark-text);
             display: flex;
-            gap: 10px;
-            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: #001a66;
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            color: white;
+            border-bottom: 5px solid #ffdd00; 
+            z-index: 2;
+            margin-bottom: 0px;
+            margin-left: 245px;
+            margin-top: 0px;
+            position: fixed;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            width: 100%;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            margin-top: 85px; /* Account for fixed header height */
+        }
+        
+        .sidebar-container.collapsed ~ .content {
+            margin-left: 60px;
+            width: calc(100% - 60px);
+        }
+        
+        .box-header {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .box-header h2 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .employee-info {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .info-card {
+            flex: 1;
+            background: var(--light-bg);
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            box-sizing: border-box;
+        }
+        
+        .box-body {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .evaluation-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
         }
-
-        .radio-group label {
-            min-width: 36px;
-            text-align: center;
-            display: inline-block;
+        
+        .evaluation-header h3 {
+            color: var(--primary-color);
+            font-size: 22px;
         }
-
-        input[type="radio"] {
-            margin-right: 3px;
-            width: 18px;
-            height: 18px;
+        
+        .progress-container {
+            background: var(--light-bg);
+            border-radius: 20px;
+            height: 12px;
+            overflow: hidden;
+            margin: 20px 0;
         }
-
-        .performance-button {
-            background-color: #00124d;
-            border-left: 4px solid #ffffff;
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
         }
-
-        .rating {
-            width: 30%;
-        }
-
-        .criteria {
-            width: 70%;
-        }
-
-        /* Pagination */
+        
         .page {
             display: none;
         }
-
+        
         .page.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
-
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h4 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .section-weight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .criteria-table {
+            width: 100%;
+            border-collapse: collapse;
+            box-sizing: border-box;
+        }
+        
+        .criteria-table th {
+            background: var(--light-bg);
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .criteria-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .criteria-text {
+            width: 70%;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        .rating-cell {
+            width: 30%;
+            text-align: center;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .radio-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            margin-bottom: 5px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .radio-option label {
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .comments-section {
+            padding: 20px;
+            background: var(--light-bg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .comments-section textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+            font-size: 15px;
+        }
+        
+        .comments-section textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 18, 77, 0.2);
+        }
+        
+        .summary-row {
+            background: var(--light-bg);
+            font-weight: 600;
+        }
+        
+        .summary-row td {
+            padding: 15px 20px;
+        }
+        
         .nav-controls {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
-
+        
         .btn {
-            background-color: #00124d;
-            color: #ffffff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 18, 77, 0.05);
+        }
+        
         .btn[disabled] {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
-
-        /* Modal */
+        
+        /* Modal Styles */
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -251,61 +476,100 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             justify-content: center;
             z-index: 1000;
         }
-
+        
         .modal {
             background: #ffffff;
-            border-radius: 8px;
+            border-radius: 12px;
             width: 100%;
-            max-width: 520px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 550px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            animation: modalAppear 0.3s ease;
         }
-
+        
+        @keyframes modalAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
         .modal-header {
-            background: #00124d;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: #ffffff;
-            padding: 14px 16px;
-            font-weight: bold;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 18px;
         }
-
+        
         .modal-body {
-            padding: 16px;
+            padding: 25px;
             max-height: 50vh;
             overflow: auto;
         }
-
-        .modal-footer {
-            padding: 12px 16px;
+        
+        .modal-message {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .modal-list {
+            margin: 15px 0;
+        }
+        
+        .modal-list-item {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: var(--light-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .modal-list-item span {
+            font-weight: 500;
+        }
+        
+        .modal-footer {
+            padding: 15px 25px;
+            display: flex;
+            gap: 12px;
             justify-content: flex-end;
             border-top: 1px solid #eee;
         }
-
-        .btn-secondary {
-            background-color: #6b7280;
-        }
-
-        .list {
-            margin: 8px 0 0 8px;
-            padding: 0px;
-        }
-
-        .list li {
-            margin: 6px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-small {
-            padding: 6px 10px;
-            font-size: 12px;
-            border-radius: 4px;
-        }
-
+        
         .hidden {
             display: none !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content {
+                margin-left: 0;
+                padding: 15px;
+                width: 100%;
+            }
+            
+            .employee-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .radio-group {
+                flex-wrap: wrap;
+            }
+            
+            .criteria-text, .rating-cell {
+                width: 100%;
+                display: block;
+                text-align: left;
+                margin-bottom: 10px;
+            }
+            
+            .nav-controls {
+                flex-direction: column;
+            }
         }
     </style>
     <script>
@@ -331,7 +595,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (section === "personal") percent = (avg * 0.10).toFixed(2);
                 if (section === "attendance") percent = (avg * 0.05).toFixed(2);
                 document.getElementById(section + "_percent").innerText = percent;
+                
+                // Update progress bar
+                updateProgressBar();
             }
+        }
+
+        function updateProgressBar() {
+            // This would calculate overall progress based on completed sections
+            // For simplicity, we'll just incrementally fill as sections are completed
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -365,9 +637,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     p.classList.toggle('active', i === index);
                     setRequiredForPage(p, i === index);
                 });
-                prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
-                nextBtn.style.display = index === pages.length - 1 ? 'none' : 'inline-block';
-                submitBtn.style.display = index === pages.length - 1 ? 'inline-block' : 'none';
+                prevBtn.style.display = index === 0 ? 'none' : 'inline-flex';
+                nextBtn.style.display = index === pages.length - 1 ? 'none' : 'inline-flex';
+                submitBtn.style.display = index === pages.length - 1 ? 'inline-flex' : 'none';
+                
+                // Update progress bar
+                const progressPercent = ((index + 1) / pages.length) * 100;
+                document.querySelector('.progress-bar').style.width = progressPercent + '%';
             }
 
             prevBtn.addEventListener('click', function() {
@@ -469,38 +745,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             function showIncompleteModal(missing) {
                 modalTitle.textContent = 'Incomplete Evaluation';
                 modalMessage.textContent = 'Please complete all ratings. Missing sections:';
-                // Use a flexbox list for missing sections (no table)
-                const listDiv = document.createElement('div');
-                listDiv.style.display = 'flex';
-                listDiv.style.flexDirection = 'column';
-                listDiv.style.gap = '8px';
-                missing.forEach(m => {
-                    const rowDiv = document.createElement('div');
-                    rowDiv.style.display = 'flex';
-                    rowDiv.style.justifyContent = 'space-between';
-                    rowDiv.style.alignItems = 'center';
-                    rowDiv.style.padding = '6px 0';
-                    rowDiv.style.borderRadius = '6px';
-                    rowDiv.style.background = 'none';
-                    const labelSpan = document.createElement('span');
-                    labelSpan.textContent = m.label;
-                    labelSpan.style.fontWeight = '500';
-                    labelSpan.style.fontSize = '15px';
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'btn btn-small';
-                    btn.textContent = 'Jump to page';
-                    btn.addEventListener('click', function() {
-                        currentPageIndex = m.pageIndex;
-                        showPage(currentPageIndex);
-                        closeModal();
-                    });
-                    rowDiv.appendChild(labelSpan);
-                    rowDiv.appendChild(btn);
-                    listDiv.appendChild(rowDiv);
-                });
+                
+                // Clear and populate modal list
                 modalList.innerHTML = '';
-                modalList.appendChild(listDiv);
+                missing.forEach(m => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'modal-list-item';
+                    listItem.innerHTML = `
+                        <span>${m.label}</span>
+                        <button type="button" class="btn btn-outline btn-small" onclick="jumpToPage(${m.pageIndex})">
+                            Jump to page
+                        </button>
+                    `;
+                    modalList.appendChild(listItem);
+                });
+                
                 modalOk.classList.remove('hidden');
                 modalNo.classList.add('hidden');
                 modalYes.classList.add('hidden');
@@ -509,13 +768,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             function showConfirmModal() {
                 modalTitle.textContent = 'Submit Evaluation';
-                modalMessage.textContent = 'Are you sure you want to submit?';
+                modalMessage.textContent = 'Are you sure you want to submit this evaluation?';
                 modalList.innerHTML = '';
                 modalOk.classList.add('hidden');
                 modalNo.classList.remove('hidden');
                 modalYes.classList.remove('hidden');
                 openModal();
             }
+
+            // Make jumpToPage function globally accessible
+            window.jumpToPage = function(pageIndex) {
+                currentPageIndex = pageIndex;
+                showPage(currentPageIndex);
+                closeModal();
+            };
 
             modalOk.addEventListener('click', function() {
                 closeModal();
@@ -551,369 +817,513 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <?php include 'sidebar.php'; ?>
-    <div class="header">Employee Evaluation</div><br><br><br>
-    <div class="content">
-        <div class="box-header">
-            <h2>Evaluate: <?php
-                            echo ($emp['personal_info']['first_name'] ?? '') . " " .
-                                ($emp['personal_info']['middle_name'] ?? '') . " " .
-                                ($emp['personal_info']['last_name'] ?? '');
-                            ?></h2>
-            <h2>Department: <?php
-                            echo ($emp['department'] ?? '') . " ";;
-                            ?></h2>
-        </div>
-        <div class="box-body">
-            <form method="POST" id="evalForm">
-                <!-- JOB KNOWLEDGE -->
-                <div class="page active" data-section="job">
-                    <h3>Job Knowledge & Skills (20%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $job_criteria = [
-                            "Has thorough knowledge and understanding of handled course/s",
-                            "Brings in useful information connecting lessons to actual experiences",
-                            "Discusses and analyzes subject matter effectively",
-                            "Objectives of the course are clearly stated and attained",
-                            "Prepares well constructed assessment/test items"
-                        ];
-                        foreach ($job_criteria as $i => $c) {
-                            echo "<tr><td>$c</td><td class='radio-group'>";
-                            for ($j = 1; $j <= 5; $j++) {
-                                echo "<label><input type='radio' name='job[$i]' value='$j' onchange='calcAverage(\\\"job\\\",5)'> $j</label>";
-                            }
-                            echo "</td></tr>";
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="job_avg">0</span> |
-                                <strong>%:</strong> <span id="job_percent">0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="job_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- CLASSROOM EFFECTIVENESS -->
-                <div class="page" data-section="class">
-                    <h3>Classroom Effectiveness (20%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $class_criteria = [
-                            "Provides organized delivery of instruction",
-                            "Elicits participation through critical/logic questions",
-                            "Uses supplementary materials and varied activities",
-                            "Provides instruction consistent with course goals",
-                            "Presents examples and illustrations effectively"
-                        ];
-                        foreach ($class_criteria as $i => $c) {
-                            echo "<tr><td>$c</td><td class='radio-group'>";
-                            for ($j = 1; $j <= 5; $j++) {
-                                echo "<label><input type='radio' name='class[$i]' value='$j' onchange='calcAverage(\\\"class\\\",5)'> $j</label>";
-                            }
-                            echo "</td></tr>";
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="class_avg">0</span> |
-                                <strong>%:</strong> <span id="class_percent">0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="class_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- PREPARATION -->
-                <div class="page" data-section="prep">
-                    <h3>Preparation & Use of Instructional Materials (15%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $prep_criteria = [
-                            "Instructional materials are clear and presentable",
-                            "Makes effective use of teaching aids",
-                            "Improves course contents and methods",
-                            "Revises and updates materials",
-                            "Coordinates modifications with training manager"
-                        ];
-                        foreach ($prep_criteria as $i => $c) {
-                            echo "<tr><td>$c</td><td class='radio-group'>";
-                            for ($j = 1; $j <= 5; $j++) {
-                                echo "<label><input type='radio' name='prep[$i]' value='$j' onchange='calcAverage(\\\"prep\\\",5)'> $j</label>";
-                            }
-                            echo "</td></tr>";
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="prep_avg">0</span> |
-                                <strong>%:</strong> <span id="prep_percent">0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="prep_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- CLASSROOM EFFECTIVENESS -->
-                <div class="page" data-section="dependres">
-                    <h3>Dependability & Resourcefullness (10%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $dependres_criteria = [
-                            "A self-starter with outstanding initiative. Always makes wothwihile suggestions and ideas",
-                            "Exerts effort to enhance his knowledge, skills and work methods. ",
-                            "Makes an attempt to work beyond what is required of him such as helping in 
-                the development of manual/hand-outs. ",
-                            "Highly dependable under most circumstances and performs work 
-                assignments without the need for checking. ",
-                            "Readily accepts additional load or work assignments without complain "
-                        ];
-                        foreach ($dependres_criteria as $i => $c) {
-                            echo "<tr><td>$c</td><td class='radio-group'>";
-                            for ($j = 1; $j <= 5; $j++) {
-                                echo "<label><input type='radio' name='dependres[$i]' value='$j' onchange='calcAverage(\\\"dependres\\\",5)'> $j</label>";
-                            }
-                            echo "</td></tr>";
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="dependres_avg">0</span> |
-                                <strong>%:</strong> <span id="dependres_percent">0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="dependres_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- CLASSROOM EFFECTIVENESS -->
-                <div class="page" data-section="humanrel">
-                    <h3>Human Relations (10%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $humanrel_criteria = [
-                            // Section 1
-                            ["section" => "Trainees/Students"],
-                            "Relates to trainees in ways which promotes mutual respect",
-                            "Has good rapport with trainees.",
-                            // Section 2
-                            ["section" => "Other Employees and Superior"],
-                            "Maintains harmonious relationship with co-workers or other employees.",
-                            "Easily deals with people with whom he/she works and comes in contact.",
-                            "Shows respect to subordinate, colleagues and superior."
-                        ];
-
-                        // Only count criteria that are not section labels
-                        $humanrel_criteria_count = 0;
-                        foreach ($humanrel_criteria as $c) {
-                            if (!is_array($c)) $humanrel_criteria_count++;
-                        }
-                        $humanrel_index = 0;
-                        foreach ($humanrel_criteria as $i => $c) {
-                            if (is_array($c) && isset($c['section'])) {
-                                // Section label row
-                                echo "<tr><td colspan='2'><strong>{$c['section']}</strong></td></tr>";
-                            } else {
-                                // Criteria with radio buttons
-                                echo "<tr><td class='criteria'>$c</td><td class='rating'><div class='radio-group'>";
-                                for ($j = 1; $j <= 5; $j++) {
-                                    echo "<label><input type='radio' name='humanrel[$humanrel_index]' value='$j' onchange='calcAverage(\\\"humanrel\\\",$humanrel_criteria_count)'> $j</label>";
-                                }
-                                echo "</div></td></tr>";
-                                $humanrel_index++;
-                            }
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="humanrel_avg">0</span> |
-                                <strong>%:</strong> <span id="humanrel_percent">0</span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="humanrel_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- CLASSROOM EFFECTIVENESS -->
-                <div class="page" data-section="jobcoop">
-                    <h3>Job Attitude/Cooperation (10%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $jobcoop_criteria = [
-                            "Gives whole-hearted cooperation with others and his superiors towards the 
-                attainment of corporate goal.",
-                            " Shows active participation in various activities of the Training Centre. ",
-                            "Shows enthusiasm for teaching the course and doing assigned tasks. ",
-                            " Shows positive work attitude at all times.",
-                            "Regularly coordinates and reports necessary information, or inquiries to 
-            concerned personnel and/or department. "
-                        ];
-                        foreach ($jobcoop_criteria as $i => $c) {
-                            echo "<tr><td>$c</td><td class='radio-group'>";
-                            for ($j = 1; $j <= 5; $j++) {
-                                echo "<label><input type='radio' name='jobcoop[$i]' value='$j' onchange='calcAverage(\\\"jobcoop\\\",5)'> $j</label>";
-                            }
-                            echo "</td></tr>";
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="jobcoop_avg">0</span> |
-                                <strong>%:</strong> <span id="jobcoop_percent">0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="jobcoop_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="page" data-section="personal">
-                    <h3>PERSONAL QUALITIES (10%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $personal_criteria = [
-                            "Has very respectable personality and appearance.",
-                            "Showed evidence of self-confidence when teaching a class. ",
-                            "Has a high level of patience as an instructor . ",
-                            "  Shows honesty in all dealings related to his/her work.",
-                            " Good communication skills and displays reasonable judgment. "
-                        ];
-                        foreach ($personal_criteria as $i => $c) {
-                            echo "<tr><td>$c</td><td class='radio-group'>";
-                            for ($j = 1; $j <= 5; $j++) {
-                                echo "<label><input type='radio' name='personal[$i]' value='$j' onchange='calcAverage(\\\"personal\\\",5)'> $j</label>";
-                            }
-                            echo "</td></tr>";
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="personal_avg">0</span> |
-                                <strong>%:</strong> <span id="personal_percent">0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="personal_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="page" data-section="attendance">
-                    <h3>ATTENDANCE & PUNCTUALITY (5%)</h3>
-                    <table>
-                        <tr>
-                            <th class="criteria">Criteria</th>
-                            <th class="rating">Rating</th>
-                        </tr>
-                        <?php
-                        $attendance_criteria = [
-                            "Shows punctuality in observing work hours.",
-                            "Good attendance record. Rarely absent to work. ",
-                            "Never leave post without any permission or a substitute co-worker. ",
-                            "Regularly attends, faculty meetings or other related function of the 
-            organization as required by his/her superior .",
-                            "Promptly return to his/her class after break time. "
-                        ];
-                        foreach ($attendance_criteria as $i => $c) {
-                            echo "<tr><td>$c</td><td class='radio-group'>";
-                            for ($j = 1; $j <= 5; $j++) {
-                                echo "<label><input type='radio' name='attendance[$i]' value='$j' onchange='calcAverage(\\\"attendance\\\",5)'> $j</label>";
-                            }
-                            echo "</td></tr>";
-                        }
-                        ?>
-                        <tr>
-                            <td colspan="2">
-                                <strong>Ave:</strong> <span id="attendance_avg">0</span> |
-                                <strong>%:</strong> <span id="attendance_percent">0</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea name="attendance_comments" rows="3" cols="80" placeholder="Comments..."></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="nav-controls">
-                    <button type="button" id="prevBtn" class="btn">Previous</button>
-                    <div style="flex:1"></div>
-                    <button type="button" id="nextBtn" class="btn">Next</button>
-                    <button type="submit" id="submitBtn" class="btn" style="display:none;">Submit</button>
-                </div>
-            </form>
-
-            <!-- Modal Markup -->
-            <div class="modal-backdrop" id="modalBackdrop">
-                <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-                    <div class="modal-header" id="modalTitle">Modal</div>
-                    <div class="modal-body">
-                        <div id="modalMessage">Message</div>
-                        <ul class="list" id="modalList"></ul>
+    <div class="header">Employee Performance Evaluation</div>
+    
+    <div class="main-content">
+        <div class="content">
+            <div class="box-header">
+                <h2>Employee Performance Evaluation</h2>
+                <div class="employee-info">
+                    <div class="info-card">
+                        <h3>Employee Information</h3>
+                        <p><strong>Name:</strong> <?php
+                            echo htmlspecialchars($emp['personal_info']['first_name'] ?? '') . " " .
+                                htmlspecialchars($emp['personal_info']['middle_name'] ?? '') . " " .
+                                htmlspecialchars($emp['personal_info']['last_name'] ?? '');
+                            ?></p>
+                        <p><strong>Employee ID:</strong> <?php echo htmlspecialchars($emp['employee_id'] ?? 'N/A'); ?></p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn" id="modalYes">Yes</button>
-                        <button type="button" class="btn btn-secondary" id="modalNo">No</button>
-                        <button type="button" class="btn" id="modalOk">OK</button>
+                    <div class="info-card">
+                        <h3>Department Information</h3>
+                        <p><strong>Department:</strong> <?php echo htmlspecialchars($emp['department'] ?? 'N/A'); ?></p>
+                        <p><strong>Position:</strong> <?php echo htmlspecialchars($emp['position'] ?? 'N/A'); ?></p>
                     </div>
                 </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <p>Section 1 of 8</p>
+            </div>
+            
+            <div class="box-body">
+                <form method="POST" id="evalForm" style="width: 100%;">
+                    <!-- JOB KNOWLEDGE -->
+                    <div class="page active" data-section="job">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Job Knowledge & Skills</h4>
+                                <div class="section-weight">Weight: 20%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $job_criteria = [
+                                        "Has thorough knowledge and understanding of handled course/s",
+                                        "Brings in useful information connecting lessons to actual experiences",
+                                        "Discusses and analyzes subject matter effectively",
+                                        "Objectives of the course are clearly stated and attained",
+                                        "Prepares well constructed assessment/test items"
+                                    ];
+                                    foreach ($job_criteria as $i => $c) {
+                                        echo "<tr>
+                                            <td class='criteria-text'>$c</td>
+                                            <td class='rating-cell'>
+                                                <div class='radio-group'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            echo "<div class='radio-option'>
+                                                <input type='radio' name='job[$i]' value='$j' id='job_{$i}_{$j}' onchange='calcAverage(\"job\",5)'>
+                                                <label for='job_{$i}_{$j}'>$j</label>
+                                            </div>";
+                                        }
+                                        echo "      </div>
+                                            </td>
+                                        </tr>";
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="job_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="job_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="job_comments" placeholder="Additional comments for Job Knowledge & Skills..."></textarea>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- CLASSROOM EFFECTIVENESS -->
+                    <div class="page" data-section="class">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Classroom Effectiveness</h4>
+                                <div class="section-weight">Weight: 20%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $class_criteria = [
+                                        "Provides organized delivery of instruction",
+                                        "Elicits participation through critical/logic questions",
+                                        "Uses supplementary materials and varied activities",
+                                        "Provides instruction consistent with course goals",
+                                        "Presents examples and illustrations effectively"
+                                    ];
+                                    foreach ($class_criteria as $i => $c) {
+                                        echo "<tr>
+                                            <td class='criteria-text'>$c</td>
+                                            <td class='rating-cell'>
+                                                <div class='radio-group'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            echo "<div class='radio-option'>
+                                                <input type='radio' name='class[$i]' value='$j' id='class_{$i}_{$j}' onchange='calcAverage(\"class\",5)'>
+                                                <label for='class_{$i}_{$j}'>$j</label>
+                                            </div>";
+                                        }
+                                        echo "      </div>
+                                            </td>
+                                        </tr>";
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="class_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="class_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="class_comments" placeholder="Additional comments for Classroom Effectiveness..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PREPARATION -->
+                    <div class="page" data-section="prep">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Preparation & Use of Instructional Materials</h4>
+                                <div class="section-weight">Weight: 15%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $prep_criteria = [
+                                        "Instructional materials are clear and presentable",
+                                        "Makes effective use of teaching aids",
+                                        "Improves course contents and methods",
+                                        "Revises and updates materials",
+                                        "Coordinates modifications with training manager"
+                                    ];
+                                    foreach ($prep_criteria as $i => $c) {
+                                        echo "<tr>
+                                            <td class='criteria-text'>$c</td>
+                                            <td class='rating-cell'>
+                                                <div class='radio-group'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            echo "<div class='radio-option'>
+                                                <input type='radio' name='prep[$i]' value='$j' id='prep_{$i}_{$j}' onchange='calcAverage(\"prep\",5)'>
+                                                <label for='prep_{$i}_{$j}'>$j</label>
+                                            </div>";
+                                        }
+                                        echo "      </div>
+                                            </td>
+                                        </tr>";
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="prep_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="prep_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="prep_comments" placeholder="Additional comments for Preparation & Use of Instructional Materials..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DEPENDABILITY & RESOURCEFULNESS -->
+                    <div class="page" data-section="dependres">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Dependability & Resourcefulness</h4>
+                                <div class="section-weight">Weight: 10%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $dependres_criteria = [
+                                        "A self-starter with outstanding initiative. Always makes worthwhile suggestions and ideas",
+                                        "Exerts effort to enhance his knowledge, skills and work methods.",
+                                        "Makes an attempt to work beyond what is required of him such as helping in the development of manual/hand-outs.",
+                                        "Highly dependable under most circumstances and performs work assignments without the need for checking.",
+                                        "Readily accepts additional load or work assignments without complain"
+                                    ];
+                                    foreach ($dependres_criteria as $i => $c) {
+                                        echo "<tr>
+                                            <td class='criteria-text'>$c</td>
+                                            <td class='rating-cell'>
+                                                <div class='radio-group'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            echo "<div class='radio-option'>
+                                                <input type='radio' name='dependres[$i]' value='$j' id='dependres_{$i}_{$j}' onchange='calcAverage(\"dependres\",5)'>
+                                                <label for='dependres_{$i}_{$j}'>$j</label>
+                                            </div>";
+                                        }
+                                        echo "      </div>
+                                            </td>
+                                        </tr>";
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="dependres_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="dependres_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="dependres_comments" placeholder="Additional comments for Dependability & Resourcefulness..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HUMAN RELATIONS -->
+                    <div class="page" data-section="humanrel">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Human Relations</h4>
+                                <div class="section-weight">Weight: 10%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $humanrel_criteria = [
+                                        // Section 1
+                                        ["section" => "Trainees/Students"],
+                                        "Relates to trainees in ways which promotes mutual respect",
+                                        "Has good rapport with trainees.",
+                                        // Section 2
+                                        ["section" => "Other Employees and Superior"],
+                                        "Maintains harmonious relationship with co-workers or other employees.",
+                                        "Easily deals with people with whom he/she works and comes in contact.",
+                                        "Shows respect to subordinate, colleagues and superior."
+                                    ];
+
+                                    // Only count criteria that are not section labels
+                                    $humanrel_criteria_count = 0;
+                                    foreach ($humanrel_criteria as $c) {
+                                        if (!is_array($c)) $humanrel_criteria_count++;
+                                    }
+                                    $humanrel_index = 0;
+                                    foreach ($humanrel_criteria as $i => $c) {
+                                        if (is_array($c) && isset($c['section'])) {
+                                            // Section label row
+                                            echo "<tr><td colspan='2'><strong>{$c['section']}</strong></td></tr>";
+                                        } else {
+                                            // Criteria with radio buttons
+                                            echo "<tr>
+                                                <td class='criteria-text'>$c</td>
+                                                <td class='rating-cell'>
+                                                    <div class='radio-group'>";
+                                            for ($j = 1; $j <= 5; $j++) {
+                                                echo "<div class='radio-option'>
+                                                    <input type='radio' name='humanrel[$humanrel_index]' value='$j' id='humanrel_{$humanrel_index}_{$j}' onchange='calcAverage(\"humanrel\",$humanrel_criteria_count)'>
+                                                    <label for='humanrel_{$humanrel_index}_{$j}'>$j</label>
+                                                </div>";
+                                            }
+                                            echo "          </div>
+                                                </td>
+                                            </tr>";
+                                            $humanrel_index++;
+                                        }
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="humanrel_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="humanrel_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="humanrel_comments" placeholder="Additional comments for Human Relations..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- JOB ATTITUDE/COOPERATION -->
+                    <div class="page" data-section="jobcoop">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Job Attitude/Cooperation</h4>
+                                <div class="section-weight">Weight: 10%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $jobcoop_criteria = [
+                                        "Gives whole-hearted cooperation with others and his superiors towards the attainment of corporate goal.",
+                                        "Shows active participation in various activities of the Training Centre.",
+                                        "Shows enthusiasm for teaching the course and doing assigned tasks.",
+                                        "Shows positive work attitude at all times.",
+                                        "Regularly coordinates and reports necessary information, or inquiries to concerned personnel and/or department."
+                                    ];
+                                    foreach ($jobcoop_criteria as $i => $c) {
+                                        echo "<tr>
+                                            <td class='criteria-text'>$c</td>
+                                            <td class='rating-cell'>
+                                                <div class='radio-group'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            echo "<div class='radio-option'>
+                                                <input type='radio' name='jobcoop[$i]' value='$j' id='jobcoop_{$i}_{$j}' onchange='calcAverage(\"jobcoop\",5)'>
+                                                <label for='jobcoop_{$i}_{$j}'>$j</label>
+                                            </div>";
+                                        }
+                                        echo "      </div>
+                                            </td>
+                                        </tr>";
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="jobcoop_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="jobcoop_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="jobcoop_comments" placeholder="Additional comments for Job Attitude/Cooperation..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PERSONAL QUALITIES -->
+                    <div class="page" data-section="personal">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Personal Qualities</h4>
+                                <div class="section-weight">Weight: 10%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $personal_criteria = [
+                                        "Has very respectable personality and appearance.",
+                                        "Showed evidence of self-confidence when teaching a class.",
+                                        "Has a high level of patience as an instructor.",
+                                        "Shows honesty in all dealings related to his/her work.",
+                                        "Good communication skills and displays reasonable judgment."
+                                    ];
+                                    foreach ($personal_criteria as $i => $c) {
+                                        echo "<tr>
+                                            <td class='criteria-text'>$c</td>
+                                            <td class='rating-cell'>
+                                                <div class='radio-group'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            echo "<div class='radio-option'>
+                                                <input type='radio' name='personal[$i]' value='$j' id='personal_{$i}_{$j}' onchange='calcAverage(\"personal\",5)'>
+                                                <label for='personal_{$i}_{$j}'>$j</label>
+                                            </div>";
+                                        }
+                                        echo "      </div>
+                                            </td>
+                                        </tr>";
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="personal_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="personal_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="personal_comments" placeholder="Additional comments for Personal Qualities..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ATTENDANCE & PUNCTUALITY -->
+                    <div class="page" data-section="attendance">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h4>Attendance & Punctuality</h4>
+                                <div class="section-weight">Weight: 5%</div>
+                            </div>
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criteria</th>
+                                        <th>Rating (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $attendance_criteria = [
+                                        "Shows punctuality in observing work hours.",
+                                        "Good attendance record. Rarely absent to work.",
+                                        "Never leave post without any permission or a substitute co-worker.",
+                                        "Regularly attends, faculty meetings or other related function of the organization as required by his/her superior.",
+                                        "Promptly return to his/her class after break time."
+                                    ];
+                                    foreach ($attendance_criteria as $i => $c) {
+                                        echo "<tr>
+                                            <td class='criteria-text'>$c</td>
+                                            <td class='rating-cell'>
+                                                <div class='radio-group'>";
+                                        for ($j = 1; $j <= 5; $j++) {
+                                            echo "<div class='radio-option'>
+                                                <input type='radio' name='attendance[$i]' value='$j' id='attendance_{$i}_{$j}' onchange='calcAverage(\"attendance\",5)'>
+                                                <label for='attendance_{$i}_{$j}'>$j</label>
+                                            </div>";
+                                        }
+                                        echo "      </div>
+                                            </td>
+                                        </tr>";
+                                    }
+                                    ?>
+                                    <tr class="summary-row">
+                                        <td colspan="2">
+                                            <strong>Average:</strong> <span id="attendance_avg">0.00</span> | 
+                                            <strong>Weighted Score:</strong> <span id="attendance_percent">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="comments-section">
+                                <textarea name="attendance_comments" placeholder="Additional comments for Attendance & Punctuality..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nav-controls">
+                        <button type="button" id="prevBtn" class="btn btn-outline">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <div style="flex:1"></div>
+                        <button type="button" id="nextBtn" class="btn btn-primary">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button type="submit" id="submitBtn" class="btn btn-primary" style="display:none;">
+                            <i class="fas fa-paper-plane"></i> Submit Evaluation
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Modal Markup -->
+                <div class="modal-backdrop" id="modalBackdrop">
+                    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                        <div class="modal-header" id="modalTitle">Modal</div>
+                        <div class="modal-body">
+                            <div class="modal-message" id="modalMessage">Message</div>
+                            <div class="modal-list" id="modalList"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="modalYes">Yes</button>
+                            <button type="button" class="btn btn-secondary" id="modalNo">No</button>
+                            <button type="button" class="btn btn-primary" id="modalOk">OK</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    <script src="../../assets/js/all.js"></script>
 </body>
 
 </html>

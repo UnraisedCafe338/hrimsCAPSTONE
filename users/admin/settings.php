@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require '../connection.php';
-require_once __DIR__ . '/../vendor/autoload.php';
+require '../../handlers/connection.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use MongoDB\BSON\ObjectId;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;

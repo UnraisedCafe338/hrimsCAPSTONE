@@ -28,13 +28,29 @@ try {
     // Prepare session data
     $sessionData = [
         'title' => $title,
-        'messages' => $messages,
+        'messages' => array_values($messages), // Ensure array is reindexed
         'updated_at' => new MongoDB\BSON\UTCDateTime()
     ];
     
-    // If this is a new session (not an existing ObjectId), create a new document
-    if (preg_match('/^[0-9a-fA-F]{24}$/', $sessionId)) {
+    // Check if session already exists by looking for similar content
+    $existingSession = null;
+    if (!preg_match('/^[0-9a-fA-F]{24}$/', $sessionId)) {
+        // For new sessions, check if similar session exists
+        $existingSession = $sessionsCollection->findOne([
+            'title' => $title,
+            'messages.0.content' => $messages[0]['content'] ?? ''
+        ]);
+    }
+    
+    if ($existingSession) {
         // Update existing session
+        $sessionsCollection->updateOne(
+            ['_id' => $existingSession['_id']],
+            ['$set' => $sessionData]
+        );
+        $result = ['status' => 'updated', 'session_id' => (string)$existingSession['_id']];
+    } else if (preg_match('/^[0-9a-fA-F]{24}$/', $sessionId)) {
+        // Update existing session by ID
         $sessionsCollection->updateOne(
             ['_id' => new MongoDB\BSON\ObjectId($sessionId)],
             ['$set' => $sessionData]
