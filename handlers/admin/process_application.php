@@ -60,9 +60,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         "date_applied" => date("Y-m-d H:i:s"),
         "status" => "Pending",
         "personal_info" => [
+            "prefix_name" => $_POST["prefix_name"] ?? "",
             "last_name" => $_POST["last_name"] ?? "",
             "first_name" => $_POST["first_name"] ?? "",
             "middle_name" => $_POST["middle_name"] ?? "",
+            "suffix_name" => $_POST["suffix_name"] ?? "",
             "personal_street" => $_POST["personal_street"] ?? "",
             "personal_region" => $_POST["personal_region"] ?? "",
             "personal_province" => $_POST["personal_province"] ?? "",

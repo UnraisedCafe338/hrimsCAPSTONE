@@ -1,7 +1,7 @@
 <?php
 session_start();
-require '../connection.php'; // Assuming this is where the connection to your DB is established
-require_once __DIR__ . '/../vendor/autoload.php'; // Make sure the autoloader is included
+require '../../handlers/connection.php'; // Assuming this is where the connection to your DB is established
+require_once __DIR__ . '/../../vendor/autoload.php'; // Make sure the autoloader is included
 
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 use Sonata\GoogleAuthenticator\GoogleQrUrl;

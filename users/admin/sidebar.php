@@ -101,6 +101,118 @@
   display: block;
 }
 
+/* Notification Styles */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.notification-bell {
+  position: relative;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.notification-bell:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ffdd00;
+  color: #001a66;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 300px;
+  z-index: 1000;
+  display: none;
+}
+
+.notification-dropdown.show {
+  display: block;
+}
+
+.notification-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+  color: #003366;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.notification-item:hover {
+  background-color: #f8f9ff;
+}
+
+.notification-item.unread {
+  background-color: #eef5ff;
+}
+
+.notification-title {
+  font-weight: 600;
+  color: #003366;
+  margin-bottom: 5px;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #666;
+}
+
+.notification-message {
+  font-size: 14px;
+  color: #444;
+  margin: 5px 0;
+}
+
+.mark-read {
+  font-size: 12px;
+  color: #003366;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* Sidebar Toggle Styles */
 .sidebar-header {
   position: relative;
@@ -210,6 +322,7 @@
         <li class="employee-button"><a href="employee.php"><i class="fa-solid fa-users"></i><span>Employee Records</span></a></li>
         <!-- <li class="password-button"><a href=""><i class="fa-solid fa-calendar-check"></i><span>Attendance Management</span></a></li> -->
         <li class="performance-button"><a href="performance_appraisal.php"><i class="fa-solid fa-chart-line"></i><span>Performance Appraisal</span></a></li>
+        <li class="teaching-demos-button"><a href="view_teaching_demos.php"><i class="fa-solid fa-chalkboard-user"></i><span>Teaching Demos</span></a></li>
         <!-- <li class="document-button"><a href="document_mgmt.php"><i class="fa-solid fa-file-lines"></i><span>Document Management</span></a></li> -->
         <!-- <li class="subject-button"><a href="course_grouping.php"><i class="fa-solid fa-graduation-cap"></i><span>Course Grouping Report</span></a></li> -->
         <li class="settings-button"><a href="settings.php"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
@@ -222,6 +335,23 @@
     
 
 </div>
+</div>
+
+<!-- Notification Bell -->
+<div class="notification-container" id="notificationContainer">
+  <div class="notification-bell">
+    <i class="fas fa-bell"></i>
+    <div class="notification-badge" id="notificationBadge">0</div>
+  </div>
+  <div class="notification-dropdown" id="notificationDropdown">
+    <div class="notification-header">
+      <span>Notifications</span>
+      <span class="mark-read" id="markAllRead">Mark all as read</span>
+    </div>
+    <div class="notification-list" id="notificationList">
+      <!-- Notifications will be populated here -->
+    </div>
+  </div>
 </div>
 
 <button class="aibutton" id="aiToggleButton">
@@ -272,7 +402,223 @@
     }
   })();
 
+  // Function to request notification permission
+  function requestNotificationPermission() {
+    if ('Notification' in window) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission().then(function(permission) {
+          console.log('Notification permission:', permission);
+        });
+      }
+    }
+  }
+
+  // Function to show system notification
+  function showSystemNotification(title, message, demoId, isUrgent = false) {
+    // Check if browser supports notifications and permission is granted
+    if ('Notification' in window && Notification.permission === 'granted') {
+      const options = {
+        body: message,
+        icon: '/hrims/images/SYSTEM-LOGOv4.png',
+        badge: '/hrims/images/SYSTEM-LOGOv4.png',
+        tag: 'hrims-notification-' + demoId,
+        renotify: true,
+        requireInteraction: isUrgent // Keep notification open for urgent messages
+      };
+      
+      const notification = new Notification(title, options);
+      
+      // Auto-close non-urgent notifications after 5 seconds
+      if (!isUrgent) {
+        setTimeout(() => {
+          notification.close();
+        }, 5000);
+      }
+      
+      // Handle click on notification - redirect to start demo page
+      notification.addEventListener('click', function() {
+        window.focus();
+        window.location.href = 'start_teaching_demo.php?id=' + demoId;
+        this.close();
+      });
+    }
+  }
+
+  // Function to check for scheduled notifications at specific times
+  function checkForScheduledNotifications() {
+    // Get current time in HH:MM format
+    const now = new Date();
+    const currentHours = now.getHours();
+    const currentMinutes = now.getMinutes();
+    const currentTimeString = `${currentHours.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}`;
+    
+    console.log('Checking notifications at:', currentTimeString);
+    
+    // Check for notifications
+    fetch('../../handlers/admin/get_notifications.php')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.notifications.length > 0) {
+          // Update bell badge with total count
+          updateNotificationBadge(data.count);
+          
+          // Process each notification
+          data.notifications.forEach(notification => {
+            // Check if this is a demo reminder
+            if (notification.type === 'demo_reminder' && notification.demo_time) {
+              // Check if it's time to show the notification (exact match)
+              if (notification.demo_time === currentTimeString) {
+                // Only show system notification if we haven't shown it before today
+                const notificationKey = `${notification.id}-${currentTimeString}-${now.toDateString()}`;
+                const shownNotifications = JSON.parse(localStorage.getItem('shownNotifications') || '[]');
+                
+                if (!shownNotifications.includes(notificationKey)) {
+                  // Add to shown notifications
+                  shownNotifications.push(notificationKey);
+                  // Keep only the last 20 shown notifications
+                  if (shownNotifications.length > 20) {
+                    shownNotifications.shift();
+                  }
+                  localStorage.setItem('shownNotifications', JSON.stringify(shownNotifications));
+                  
+                  console.log('Showing system notification for demo:', notification.title);
+                  
+                  // Show system notification
+                  showSystemNotification(
+                    notification.title, 
+                    notification.message, 
+                    notification.id,
+                    notification.is_urgent || false
+                  );
+                } else {
+                  console.log('Notification already shown today:', notificationKey);
+                }
+              } else {
+                console.log('Not time yet for demo. Current:', currentTimeString, 'Demo time:', notification.demo_time);
+              }
+            }
+          });
+        } else {
+          // Update bell badge with 0 count
+          updateNotificationBadge(0);
+        }
+      })
+      .catch(error => {
+        console.error('Error checking scheduled notifications:', error);
+      });
+  }
+
+  // Function to set up scheduled notification checks
+  function setupScheduledNotifications() {
+    // Check immediately when page loads
+    checkForScheduledNotifications();
+    
+    // Set up interval to check every minute
+    setInterval(checkForScheduledNotifications, 60000); // Check every minute
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    // Request notification permission when page loads
+    requestNotificationPermission();
+    
+    // Set up scheduled notifications
+    setupScheduledNotifications();
+    
+    // Notification system functionality
+    const notificationContainer = document.getElementById('notificationContainer');
+    const notificationDropdown = document.getElementById('notificationDropdown');
+    const notificationBadge = document.getElementById('notificationBadge');
+    const markAllRead = document.getElementById('markAllRead');
+    const notificationList = document.getElementById('notificationList');
+    
+    // Toggle notification dropdown
+    notificationContainer.addEventListener('click', function(e) {
+      e.stopPropagation();
+      notificationDropdown.classList.toggle('show');
+      if (notificationDropdown.classList.contains('show')) {
+        loadNotifications();
+      }
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function() {
+      notificationDropdown.classList.remove('show');
+    });
+    
+    // Mark all as read
+    markAllRead.addEventListener('click', function(e) {
+      e.stopPropagation();
+      // Send request to mark notifications as read
+      fetch('../../handlers/admin/mark_notifications_read.php', {
+        method: 'POST'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const unreadItems = document.querySelectorAll('.notification-item.unread');
+          unreadItems.forEach(item => {
+            item.classList.remove('unread');
+          });
+          updateNotificationBadge(0);
+        }
+      })
+      .catch(error => {
+        console.error('Error marking notifications as read:', error);
+        // Fallback to client-side update
+        const unreadItems = document.querySelectorAll('.notification-item.unread');
+        unreadItems.forEach(item => {
+          item.classList.remove('unread');
+        });
+        updateNotificationBadge(0);
+      });
+    });
+    
+    // Function to update notification badge count
+    function updateNotificationBadge(count) {
+      notificationBadge.textContent = count;
+      notificationBadge.style.display = count > 0 ? 'flex' : 'none';
+    }
+    
+    // Function to load notifications
+    function loadNotifications() {
+      fetch('../../handlers/admin/get_notifications.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            notificationList.innerHTML = '';
+            data.notifications.forEach(notification => {
+              const newItem = document.createElement('div');
+              newItem.className = `notification-item ${!notification.is_read ? 'unread' : ''}`;
+              newItem.innerHTML = `
+                <div class="notification-title">${notification.title}</div>
+                <div class="notification-message">${notification.message}</div>
+                <div class="notification-time">${notification.created_at}</div>
+              `;
+              
+              // Add click handler to redirect to demo if it's a demo reminder
+              if (notification.type === 'demo_reminder') {
+                newItem.style.cursor = 'pointer';
+                newItem.addEventListener('click', function() {
+                  window.location.href = 'start_teaching_demo.php?id=' + notification.id;
+                });
+              }
+              
+              notificationList.appendChild(newItem);
+            });
+            // Update badge with count
+            updateNotificationBadge(data.count);
+          }
+        })
+        .catch(error => {
+          console.error('Error loading notifications:', error);
+        });
+    }
+    
+    // Periodically update notifications (every 30 seconds)
+    setInterval(loadNotifications, 30000);
+    // Initial load
+    loadNotifications();
+    
     const aiButton = document.getElementById('aiToggleButton');
     const mainSidebar = document.getElementById('mainSidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');

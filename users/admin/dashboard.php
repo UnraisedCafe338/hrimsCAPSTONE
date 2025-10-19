@@ -3,14 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>HRIMS Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-
-<!-- FullCalendar JS -->
-
-
+  <!-- Using system fonts instead of Google Fonts to avoid internet dependency -->
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
       background-color: #f4f6f8;
       margin: 0;
       padding: 20px;
@@ -157,10 +153,8 @@
 <div class="card wide-chart">
   <h2>🎉 Events & Birthdays Calendar</h2>
   <div id="calendar"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.19/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.19/index.global.min.js"></script>
-
+  <!-- Using local FullCalendar files instead of CDN to avoid internet dependency -->
+  <script src="../../assets/js/fullcalendar.global.min.js"></script>
 </div>
 
   </div>

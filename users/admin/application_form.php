@@ -116,7 +116,6 @@
                                         <option value="">-- Select Type --</option>
                                         <option value="full-time">Full-Time</option>
                                         <option value="part-time">Part-Time</option>
-                                        
                                     </select></td>
                                     
                     </div>
@@ -137,10 +136,19 @@
                                 <td colspan="1"><label>Name:</label></td>
                                 <td colspan="5">
                                     <div style="width: 100%; display: flex; gap: 2px;">
+                                    <!-- <label>Prefix:</label> -->
+                                    <select id="prefix_name" name="prefix_name" style="padding: 8px; width:30%;" required>
+                                        <option value="">--Prefix --</option>
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Ms.">Ms.</option>
+                                        <option value="Dr.">Dr.</option>
+                                        <option value="Mrs.">Mrs.</option>
+
+                                    </select>
                                         <input name="last_name" type="text" placeholder="Last Name">
                                         <input name="first_name" placeholder="First Name">
                                         <input name="middle_name" placeholder="Middle Name">
-                                        <input name="suffix" placeholder="Suffix">
+                                        <input name="suffix_name" placeholder="Suffix">
                                     </div>
                                 </td>
                             </tr>

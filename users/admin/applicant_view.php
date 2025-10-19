@@ -17,16 +17,18 @@ if ($id) {
   }
 
   // Extract the needed data
+  $prefixName = $applicant['personal_info']['prefix_name'] ?? '';
   $firstName = $applicant['personal_info']['first_name'] ?? '';
   $middleName = $applicant['personal_info']['middle_name'] ?? '';
   $lastName = $applicant['personal_info']['last_name'] ?? '';
-  $fullName = "$firstName $middleName $lastName";
-
+  $suffixName = $applicant['personal_info']['suffix_name'] ?? '';
+  $fullName = "$prefixName $firstName $middleName $lastName $suffixName";
   $positionApplied = $applicant['position_applied'] ?? '';
   $desiredSalary = $applicant['desired_salary'] ?? '';
   $status = $applicant['status'] ?? '';
 }
 $personal = $applicant['personal_info'] ?? [];
+$skill = $applicant['skills'] ?? [];
 $family = $applicant['family_background'] ?? [];
 $education = $applicant['education'] ?? [];
 $employment = $applicant['employment_history'] ?? [];
@@ -447,6 +449,37 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
     .doc-button:hover {
       background: #3578c9;
     }
+    
+    .btn {
+      display: inline-block;
+      padding: 8px 15px;
+      background: #003366;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    
+    .btn:hover {
+      background: #002244;
+    }
+    
+    .header {
+      background: linear-gradient(90deg, #001a66 0%, #00124d 100%);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header-title {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    /* Notification styles removed - now handled globally in sidebar.php */
   </style>
 
 
@@ -456,7 +489,9 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
 
 <body>
   <?php include 'sidebar.php'; ?>
-  <div class="header">Applicant View</div><br><br><br>
+  <div class="header">
+    <h1 class="header-title">Applicant View</h1>
+  </div>
   <div class="content">
 
     <div class="container">
@@ -484,6 +519,9 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
               <option>Rejected</option>
             </select>
           </div>
+          <div style="margin-top: 15px;">
+            <a href="teaching_demo.php?id=<?php echo htmlspecialchars($id); ?>" class="btn" style="background: #003366; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; display: inline-block;">Schedule Teaching Demo</a>
+          </div>
         </div>
       </div>
 
@@ -508,75 +546,76 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
           <table class="personal-table">
             <thead>
               <tr>
-                <th colspan="6" style="font-size: 16px;">Personal Information</th>
+                <th colspan="4" style="font-size: 16px;">Personal Information</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td colspan="6">
+                <td colspan="4">
                   <label>Current Address:</label> <?php echo htmlspecialchars($currentAddress); ?>
                 </td>
               </tr>
               <tr>
-                <td colspan="3">
+                <td>
                   <label>Birth Date:</label>
                   <span class="view-mode"><?php echo htmlspecialchars($personal['birth_date'] ?? ''); ?></span>
                   <input type="text" name="birth_date" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['birth_date'] ?? ''); ?>">
                 </td>
-                <td colspan="3">
+                <td>
                   <label>Birth Place:</label> 
                   <span class="view-mode"><?php echo htmlspecialchars($personal['birth_place'] ?? ''); ?></span>
                   <input type="text" name="birth_place" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['birth_place'] ?? ''); ?>">
                 </td>
-              </tr>
-              <tr>
-                <td colspan="2">
+                <td>
                   <label>Age:</label> 
                   <span class="view-mode"><?php echo htmlspecialchars($personal['age'] ?? ''); ?></span>
                   <input type="text" name="age" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['age'] ?? ''); ?>">
                 </td>
-                <td colspan="2">
+                <td>
                   <label>Gender:</label>
                   <span class="view-mode"><?php echo htmlspecialchars($personal['gender'] ?? ''); ?></span>
                   <input type="text" name="gender" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['gender'] ?? ''); ?>">
                 </td>
-                <td colspan="2">
+              </tr>
+              <tr>
+                <td>
                   <label>Civil Status:</label> 
                   <span class="view-mode"><?php echo htmlspecialchars($personal['civil_status'] ?? ''); ?></span>
                   <input type="text" name="civil_status" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['civil_status'] ?? ''); ?>">
                 </td>
-              </tr>
-              <tr>
-                <td colspan="3">
+                <td>
                   <label>Citizenship:</label> 
                    <span class="view-mode"><?php echo htmlspecialchars($personal['citizenship'] ?? ''); ?></span>
                   <input type="text" name="citizen" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['citizenship'] ?? ''); ?>">
                 </td>
-                <td colspan="3">
+                <td>
                   <label>Religion:</label> 
                   <span class="view-mode"><?php echo htmlspecialchars($personal['religion'] ?? ''); ?></span>
                   <input type="text" name="religion" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['religion'] ?? ''); ?>">
                 </td>
+                <td>
+                  <!-- Empty cell for spacing -->
+                </td>
               </tr>
               <tr>
-                <td colspan="3">
+                <td colspan="2">
                   <label>Email:</label>
                   <span class="view-mode"><?php echo htmlspecialchars($personal['email'] ?? ''); ?></span>
                   <input type="text" name="email" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['email'] ?? ''); ?>">
                 </td>
-                <td colspan="3">
+                <td colspan="2">
                   <label>Contact No:</label> 
                   <span class="view-mode"><?php echo htmlspecialchars($personal['contact_no'] ?? ''); ?></span>
                   <input type="text" name="contact_no" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['contact_no'] ?? ''); ?>">
                 </td>
               </tr>
               <tr>
-                <td colspan="2">
+                <td>
                   <label>Height:</label> 
                   <span class="view-mode"><?php echo htmlspecialchars($personal['height'] ?? ''); ?></span>
                   <input type="text" name="height" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['height'] ?? ''); ?>">
                 </td>
-                <td colspan="2">
+                <td>
                   <label>Weight:</label> 
                   <span class="view-mode"><?php echo htmlspecialchars($personal['weight'] ?? ''); ?></span>
                   <input type="text" name="weight" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($personal['weight'] ?? ''); ?>">
@@ -585,6 +624,13 @@ $emergencyFullAddress .= ', ' . ($emergencyregion['name'] ?? 'Unknown Region');
                   <label>Disability:</label>
                   <span class="view-mode"><?php echo htmlspecialchars($personal['disability'] ?? ''); ?></span>
                   <input type="text" name="disability" class="disability" style="display:none;" value="<?php echo htmlspecialchars($personal['disability'] ?? ''); ?>">
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <label>Skills:</label> 
+                  <span class="view-mode"><?php echo htmlspecialchars($skill ?? ''); ?></span>
+                  <input type="text" name="skills" class="edit-mode" style="display:none;" value="<?php echo htmlspecialchars($skill ?? ''); ?>">
                 </td>
               </tr>
             </tbody>
@@ -1008,6 +1054,7 @@ document.getElementById("save-btn").addEventListener("click", function () {
     });
 });
 
+    // Notification system functionality removed - now handled globally in sidebar.php
   </script>
 
 </body>

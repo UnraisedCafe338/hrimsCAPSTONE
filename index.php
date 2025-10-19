@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_email'] = $user['email'];    // Store email
 
             // Redirect to sidebar menu
-            header("Location: sidebar_menu/dashboard.php");
+            header("Location: users/admin/dashboard.php");
             exit();
         } else {
             $error_message = "Invalid OTP.";
